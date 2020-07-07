@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Personalized Inputs</title>
+        <link href="./inputs-style.css" type="text/css" rel="stylesheet">
+        <script type='text/javascript' src="handlebars-v4.7.6.js"></script>
+        <script id="kidTemplate" type="text/x-handlebars-template">
+            <table id="kidTable">
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                {{#each kidArray}}
+                    <tr>
+                        <td colspan="2" class="dynamicHeader">Kid {{this}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="kidYear{{this}}">Year Born</label></td>
+                        <td><input type="number" id="kidYear{{this}}" name="kidYear" step="1" min="2000" max="2100" value="2025"></td>
+                    </tr>
+                    <tr id="dayCareRow{{this}}">
+                        <td><label for="dayCare{{this}}">Monthly Daycare Cost</label></td>
+                        <td><input id="dayCare{{this}}" name="dayCare" type="number" value="0" min="0" max="10000"></td>
+                    </tr>
+                    <tr id=collegeRow{{this}}>
+                        <td><label for="college{{this}}">Annual College Cost</label></td>
+                        <td><input id="college{{this}}" name="college{{this}}" type="number" value="30000" min="0" max="100000"></td>
+                    </tr>
+                {{/each}}
+            </table>
+        </script>
+        <script id="houseTemplate" type="text/x-handlebars-template">
+            <table id="houseTable">
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                {{#each houseArray}}
+                    <tr>
+                        <td colspan="2" class="dynamicHeader">House {{this}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="houseYear{{this}}">First Year of Residence</label></td>
+                        <td><input type="number" id="houseYear{{this}}" name="houseYear{{this}}" step="1" min="2000" max="2100" value="2024"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="renting{{this}}">Renting?</label></td>
+                        <td><input id="renting{{this}}" name="renting{{this}}" type="checkbox" value="true"></td>
+                    </tr>
+                    <tr id="hideRent{{this}}">
+                        <td><label for="monthlyRent{{this}}">Monthly Rent</label></td>
+                        <td><input type="number" id="monthlyRent{{this}}" name="monthlyRent{{this}}" min="0" max="20000" value="0"></td>
+                    </tr>
+                    <tbody id="hideHouse{{this}}">
+                        <tr>
+                            <td><label for="houseAmount{{this}}">Original Value</label></td>
+                            <td><input type="number" id="houseAmount{{this}}" name="houseAmount{{this}}" min="50000" max="50000000" value="500000"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="downPayment{{this}}">Down Payment</label></td>
+                            <td><input type="number" id="downPayment{{this}}" name="downPayment{{this}}" min="0" max="1" value=".2" step=".01"></td>
+                        </tr>
+                        <tr id="HOARow{{this}}">
+                            <td><label for="HOA{{this}}">Monthly HOA</label></td>
+                            <td><input type="number" id="HOA{{this}}" name="HOA{{this}}" min="0" max="2000" value="0"></td>
+                        </tr>
+                        <tr id="hideTransfer{{this}}">
+                            <td><label for="fullTransfer{{this}}">Full Transfer?</label></td>
+                            <td><input id="fullTransfer{{this}}" name="fullTransfer{{this}}" type="checkbox" value="true"></td>
+                        </tr>
+                    </tbody>
+                {{/each}}
+            </table>
+        </script>
+        <script id="accountTemplate" type="text/x-handlebars-template">
+            <table id="accountTable">
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                {{#each accountArray}}
+                    <tr>
+                        <td colspan="2" class="dynamicHeader" id="accountHeader{{this}}">Account {{this}}</td>
+                    </tr>
+                    <tr id="accountTypeRow{{this}}">
+                        <td><label for="accountType{{this}}">Type</label></td>
+                        <td>
+                            <select id="accountType{{this}}" name="accountType{{this}}">
+                                <option value="Regular">Regular</option>
+                                <option value="401k">401k</option>
+                                <option value="Roth">Roth</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="ownerRow{{this}}">
+                        <td><label for="accountOwner{{this}}">Owner of Account</label></td>
+                        <td>
+                            <select id="accountOwner{{this}}" name="accountOwner{{this}}">
+                                <option value="PersonA">Person A</option>
+                                <option value="PersonB">Person B</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="accountAmount{{this}}">Starting Value</label></td>
+                        <td><input type="number" id="accountAmount{{this}}" name="accountAmount{{this}}" min="0" max="10000000" value="25000"></td>
+                    </tr>
+                    <tr id="posPrecRow{{this}}">
+                        <td><label for="posPrecedence{{this}}">Positive Order of Precedence</label></td>
+                        <td><input type="number" id="posPrecedence{{this}}" name="posPrecedence{{this}}" min="1" max="10" value="{{this}}"></td>
+                    </tr>
+                    <tr id="negPrecRow{{this}}">
+                        <td><label for="negPrecedence{{this}}">Negative Order of Precedence</label></td>
+                        <td><input type="number" id="negPrecedence{{this}}" name="negPrecedence{{this}}" min="1" max="10" value="{{this}}"></td>
+                    </tr>
+                {{/each}}
+            </table>
+        </script>
+        <script id="bumpTemplateA" type="text/x-handlebars-template">
+            <table id="bumpTableA" class="bumpTable">
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                {{#each bumpArrayA}}
+                    <tr>
+                        <td colspan="2" class="dynamicHeader">Enter Year and % For Salary Bump {{this}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="bumpYearA{{this}}">Salary Bump Year</label></td>
+                        <td> <input type="number" id="bumpYearA{{this}}" name="bumpYearA{{this}}" min="2000" max="2100" step="1" value="2030"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bumpGrowthA{{this}}">Salary Bump %</label></td>
+                        <td><input type="number" id="bumpGrowthA{{this}}" name="bumpGrowthA{{this}}" min="0" max=".5" step=".005" value=".05"></td>
+                    </tr>
+                {{/each}}
+            </table>
+        </script>
+        <script id="bumpTemplateB" type="text/x-handlebars-template">
+            <table id="bumpTableB" class="bumpTable">
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                {{#each bumpArrayB}}
+                    <tr>
+                        <td colspan="2" class="dynamicHeader">Enter Year and % For Salary Bump {{this}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="bumpYearB{{this}}">Salary Bump Year</label></td>
+                        <td><input type="number" id="bumpYearB{{this}}" name="bumpYearB{{this}}" min="2000" max="2100" step="1" value="2035"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bumpGrowthB{{this}}">Salary Bump %</label></td>
+                        <td><input type="number" id="bumpGrowthB{{this}}" name="bumpGrowthB{{this}}" min="0" max=".5" step=".005" value=".03"></td>
+                    </tr>
+                {{/each}}
+            </table>
+        </script>
+        <script id="loanTemplate" type="text/x-handlebars-template">
+            <table id="loanTable">
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                {{#each loanArray}}
+                    <tr>
+                        <td colspan="2" class="dynamicHeader">Loan {{this}}</td>
+                    </tr>
+                    <tr>
+                        <td><label for="loanYear{{this}}">First Year of Loan</label></td>
+                        <td><input type="number" id="loanYear{{this}}" name="loanYear{{this}}" step="1" min="2000" max="2100" value="2023"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="loanAmount{{this}}">Amount</label></td>
+                        <td><input type="number" id="loanAmount{{this}}" name="loanAmount{{this}}" min="0" max="5000000" value="50000"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="loanRate{{this}}">Interest Rate</label></td>
+                        <td><input type="number" id="loanRate{{this}}" name="loanRate{{this}}" min="0" max="1" value=".05" step=".005"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="loanLength{{this}}">Length of Loan</label></td>
+                        <td><input type="number" id="loanLength{{this}}" name="loanLength{{this}}" step="1" min="1" max="100" value="10"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="cashInflow{{this}}">Cash Inflow?</label></td>
+                        <td><input id="cashInflow{{this}}" name="cashInflow{{this}}" type="checkbox" value="true"></td>
+                    </tr>
+                {{/each}}
+            </table>
+        </script>
+    </head>
+    <body class="grid">
+        <header>
+            <h1>Personalized Inputs</h1>
+        </header>
+        <nav>
+            <div id="sideNav" class="sideNav">
+                <ul>
+                    <li><a href="./index.html"><h2>Home</h2></a></li>
+                    <li id="basicNav"><a href="#" id="basicAnchor">Basic Mode</a></li>
+                    <li id="defaultNav"><a href="#default" id="defaultAnchor">Default Rates</a></li>
+                    <li id="housingNav"><a href="#housing" id="housingAnchor">Housing</a></li>
+                    <li id="salaryNav"><a href="#salary" id="salaryAnchor">Salary</a></li>
+                    <li id="costNav"><a href="#cost" id="costAnchor">Kids and Costs</a></li>
+                    <li id="investmentNav"><a href="#investment" id="investmentAnchor">Investment Accounts</a></li>
+                    <li id="loanNav"><a href="#loan" id="loanAnchor">Loans</a></li>
+                </ul>
+                <section class="calc">
+                    <button id="calcPage" class="button" type="button">Calculate Page</button>
+                    <h5 id="instructions">Enter/Save All Input Values to Activate Calculate Page</h5>
+                </section>
+            </div>
+        </nav>
+        <section class="box" id="saveBasic1">
+            <button id="saveBasicButton1" class="button" type="button">Save and Move to Calculate Page!</button>
+        </section>
+        <section class="box" id="values">
+            <h3 id="valuesHeading">Default Rates</h3>
+            <br>
+            <table>
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr>
+                    <td><label for="growthRate">Annual Investment Growth w/o Inflation</label>
+                        <div class="tooltip">?
+                            <span class="tooltipText">Enter the expected annual growth rate of your investments, without considering inflation
+                                <a href="https://www.nerdwallet.com/blog/investing/average-stock-market-return/" target="_blank"><p>More info</p></a>
+                            </span>
+                        </div>
+                    </td>
+                    <td><input type="number" id="growthRate" name="growthRate" min="0" max=".5" step=".005" value=".05"></td>
+                </tr>
+                <tr>
+                    <td><label for="inflation">Annual Inflation Rate</label>
+                        <div class="tooltip">?
+                            <span class="tooltipText">Enter the expected annual inflation rate.  Historically the US inflation rate has averaged around 2%
+                                <a href="https://www.usinflationcalculator.com/inflation/current-inflation-rates/" target="_blank"><p>More info</p></a>
+                            </span>
+                        </div>
+                    </td>
+                    <td><input type="number" id="inflation" name="inflation" min="0" max=".25" step=".005" value=".02"></td>
+                </tr>
+                <tr>
+                    <td><label for="propertyTax">Annual Property Tax Rate</label>
+                        <div class="tooltip">?
+                            <span class="tooltipText">Enter the property tax rate in your county
+                                <a href="https://smartasset.com/taxes/property-taxes" target="_blank"><p>What's my propery tax rate?</p></a>
+                            </span>
+                        </div>
+                    </td>
+                    <td><input type="number" id="propertyTax" name="propertyTax" min="0" max=".25" step=".005" value=".02"></td>
+                </tr>
+                <tr>
+                    <td><label for="mortgageLength">Length of Mortgage (years)</label></td>
+                    <td><input type="number" id="mortgageLength" name="mortgageLength" min="0" max="40" step="5" value="30"></td>
+                </tr>
+                <tr>
+                    <td><label for="mortgageRate">Mortgage Interest Rate</label></td>
+                    <td><input type="number" id="mortgageRate" name="mortgageRate" min="0" max=".25" step=".005" value=".04"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="homeGrowth">Annual Home Value Growth Rate</label>
+                        <div class="tooltip">?
+                            <span class="tooltipText">Enter the expected annual growth rate of your home(s), without considering inflation
+                                <a href="https://www.zillow.com/home-values/" target="_blank"><p>More info</p></a>
+                            </span>
+                        </div>
+                    </td>
+                    <td><input type="number" id="homeGrowth" name="homeGrowth" min="0" max=".25" step=".005" value=".03"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="broker">Broker Commission on House Sale</label>
+                        <div class="tooltip">?
+                            <span class="tooltipText">Enter the expected commission % for real estate brokers (seller's agent)
+                                <a href="https://listwithclever.com/average-real-estate-commission-rate/#fees-by-state" target="_blank"><p>Averages by state</p></a>
+                            </span>
+                        </div>
+                    </td>
+                    <td><input type="number" id="broker" name="broker" min="0" max=".25" step=".005" value=".06"></td>
+                </tr>
+            </table>
+            <br>
+            <button id="saveDefault" class="button" type="button">Save Default Values</button>
+        </section>
+        <section class="box" id="housing">
+            <h3 id="housingHeading">Housing Values</h3>
+            <br>
+            <table>
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr id="houseNumberRow">
+                    <td><label for="houseNumber">Number of Houses</label></td>
+                    <td><input type="number" id="houseNumber" name="houseNumber" min="0" max="10" step="1"></td>
+                </tr>
+            </table>
+            <br>
+            <div id="houses" class="instructions">Enter a number of residences to simulate (including current one)</div>
+            <br>
+            <button id="saveHousing" class="button" type="button">Save Housing Values</button>
+        </section>
+        <section class="box" id="salary">
+            <h3>Salary Values</h3>
+            <table>
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr>
+                    <td><label for="personNumber">Number of People</label></td>
+                    <td><input type="number" id="personNumber" name="personNumber" min="1" max="2" step="1" value="1"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="dynamicHeader">Enter Values for Person A</td>
+                </tr>
+                <tr id="nameARow" class="nameRow">
+                    <td><label for="nameA">Name</label></td>
+                    <td><input type="text" id="nameA" name="nameA" value="PersonA"></td>
+                </tr>
+                <tr>
+                    <td><label for="ageA">Age</label></td>
+                    <td><input type="number" id="ageA" name="ageA" min="0" max="100" step="1" value="30"></td>
+                </tr>
+                <tr>
+                    <td><label for="startingSalaryA">Starting Salary</label></td>
+                    <td><input type="number" id="startingSalaryA" name="startingSalaryA" min="0" max="5000000" value="50000"></td>
+                </tr>
+                <tr id="salaryGrowthARow">
+                    <td><label for="growthA">Salary Growth Rate</label></td>
+                    <td><input type="number" id="growthA" name="growthA" min="0" max="1" step=".005" value=".03"></td>
+                </tr>
+                <tr id="bumpARow">
+                    <td><label for="bumpNumberA">Number of Salary Bumps</label></td>
+                    <td><input type="number" id="bumpNumberA" name="bumpNumberA" min="0" max="5" step="1" value="0"></td>
+                </tr>
+            </table>
+            <div id="bumpsA" class="instructions"></div>
+            <table id="personATable2">
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr>
+                    <td><label for="plateauYearA">Salary Plateau Year</label></td>
+                    <td><input type="number" id="plateauYearA" name="plateauYearA" min="2000" max="2100" step="1" value="2040"></td>
+                </tr>
+                <tr>
+                    <td><label for="plateauGrowthA">Salary Growth Rate After Plateau</label></td>
+                    <td><input type="number" id="plateauGrowthA" name="plateauGrowthA" min="0" max=".5" step=".005" value=".02"></td>
+                </tr>
+                <tr>
+                    <td><label for="retirementA">Retirement Year</label></td>
+                    <td><input type="number" id="retirementA" name="retirementA" min="2000" max="2100" step="1" value="2059"></td>
+                </tr>
+                <tr>
+                    <td><label for="preTaxA">Pre Tax Salary Contribution %</label></td>
+                    <td><input type="number" id="preTaxA" name="preTaxA" min="0" max=".5" step=".005" value=".05"></td>
+                </tr>
+                <tr>
+                    <td><label for="companyMatchA">Company Match %</label></td>
+                    <td><input type="number" id="companyMatchA" name="companyMatchA" min="0" max=".5" step=".005" value=".06"></td>
+                </tr>
+            </table>
+            <div id="personB">
+                <table>
+                    <tr>
+                        <th class="col1"></th>
+                        <th class="col2"></th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="dynamicHeader">Enter Values for Person B</td>
+                    </tr>
+                    <tr id="nameBRow" class="nameRow">
+                        <td><label for="nameB">Name</label></td>
+                        <td><input type="text" id="nameB" name="nameB" value="PersonB"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="ageB">Age</label></td>
+                        <td><input type="number" id="ageB" name="ageB" min="0" max="100" step="1" value="31"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="startingSalaryB">Starting Salary</label></td>
+                        <td><input type="number" id="startingSalaryB" name="startingSalaryB" min="0" max="5000000" value="75000"></td>
+                    </tr>
+                    <tr id="salaryGrowthBRow">
+                        <td><label for="growthB">Salary Growth Rate</label></td>
+                        <td><input type="number" id="growthB" name="growthB" min="0" max="1" step=".005" value=".04"></td>
+                    </tr>
+                    <tr id="bumpBRow">
+                        <td><label for="bumpNumberB">Number of Salary Bumps</label></td>
+                        <td><input type="number" id="bumpNumberB" name="bumpNumberB" min="0" max="5" step="1" value="0"></td>
+                    </tr>
+                </table>
+                <div id="bumpsB" class="instructions"></div>
+                <table id="personBTable2">
+                    <tr>
+                        <th class="col1"></th>
+                        <th class="col2"></th>
+                    </tr>
+                    <tr>
+                        <td><label for="plateauYearB">Salary Plateau Year</label></td>
+                        <td><input type="number" id="plateauYearB" name="plateauYearB" min="2000" max="2100" step="1" value="2045"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="plateauGrowthB">Salary Growth Rate After Plateau</label></td>
+                        <td><input type="number" id="plateauGrowthB" name="plateauGrowthB" min="0" max=".5" step=".005" value=".025"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="retirementB">Retirement Year</label></td>
+                        <td><input type="number" id="retirementB" name="retirementB min="2000" max="2100" step="1" value="2060"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="preTaxB">Pre Tax Salary Contribution %</label></td>
+                        <td><input type="number" id="preTaxB" name="preTaxB" min="0" max=".5" step=".005" value="0"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="companyMatchB">Company Match %</label></td>
+                        <td><input type="number" id="companyMatchB" name="companyMatchB" min="0" max=".5" step=".005" value="0"></td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div id="person">Add a second person as needed</div>
+            <button id="savePerson" class="button" type="button">Save Salary Values</button>
+        </section>
+        <section class="box" id="cost">
+            <h3>Cost Values</h3>
+            <table>
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="monthlySpend">Monthly Spending</label>
+                        <button id="openSpendModal" class="button">Estimate Spending</button>
+                    </td>
+                    <td><input type="number" id="monthlySpend" name="monthlySpend" min="0" max="25000" value="5000"></td>
+                </tr>
+                <tr id="retirementSpendRow">
+                    <td><label for="monthlyRetir">Monthly Retirement Spending</label></td>
+                    <td><input type="number" id="monthlyRetir" name="monthlyRetir" min="0" max="25000" value="7500"></td>
+                </tr>
+                <tr id="kidSpendRow">
+                    <td><label for="monthlyKid">Monthly Spending Per Kid</label></td>
+                    <td><input type="number" id="monthlyKid" name="monthlyKid" min="0" max="5000" value="1500"></td>
+                </tr>
+                <tr>
+                    <td><label for="kidNumber">Number of kids</label></td>
+                    <td><input type="number" id="kidNumber" name="kidNumber" min="0" max="10" value="0"></td>
+                </tr>
+            </table>
+            <div id="spendModal" class="modal">
+                <div class="spendModalContent">
+                    <span class="close">&times;</span>
+                    <h4>Estimate your monthly spending</h4>
+                    <br><br>
+                    <button id="estimate" class="button">Estimate Spending</button>
+                    <input type="number" id="total" name="total" min="0" max="10000">
+                    <br><br>
+                    <h5>Categories</h5>
+                    <table>
+                        <tr>
+                            <th class="col1"></th>
+                            <th class="col2"></th>
+                        </tr>
+                        <tr>
+                            <td><label for="groceries">Groceries</label></td>
+                            <td><input type="number" id="groceries" name="groceries" min="0" max="3000" value="500"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="travel">Travel</label></td>
+                            <td><input type="number" id="travel" name="travel" min="0" max="3000" value="500"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="entertainment">Entertainment</label></td>
+                            <td><input type="number" id="entertainment" name="entertainment" min="0" max="3000" value="500"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="transportation">Transportation</label></td>
+                            <td><input type="number" id="transportation" name="transportation" min="0" max="3000" value="500"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="retail">Retail</label></td>
+                            <td><input type="number" id="retail" name="retail" min="0" max="3000" value="500"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="utilities">Utilities</label></td>
+                            <td><input type="number" id="utilities" name="utilities" min="0" max="3000" value="500"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="personal">Personal</label></td>
+                            <td><input type="number" id="personal" name="personal" min="0" max="3000" value="500"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="kiddos" class="instructions">Enter a number of kids</div>
+            <button id="saveCost" class="button" type="button">Save Cost Values</button>
+        </section>
+        <section class="box" id="investment">
+            <h3 id="investmentHeading">Investment Values</h3>
+            <table>
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr id="accountNumberRow">
+                    <td><label for="accountNumber">Number of Investment Accounts</label></td>
+                    <td><input type="number" id="accountNumber" name="accountNumber" min="0" max="10" step="1"></td>
+                </tr>
+            </table>
+            <br>
+            <div id="accounts" class="instructions">Enter a number of accounts</div>
+            <br>
+            <button id="saveAccounts" class="button" type="button">Save Account Values</button>
+        </section>
+        <section class="box" id="loan">
+            <h3 id="loanHeading">Loan Values</h3>
+            <table>
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr>
+                    <td><label for="loanNumber">Number of Loans</label></td>
+                    <td><input type="number" id="loanNumber" name="loanNumber" min="0" max="10" step="1" value="0"></td>
+                </tr>
+            </table>
+            <div id="loans" class="instructions">Enter a number of relevant loans</div>
+            <button id="saveLoans" class="button" type="button">Save Loan Values</button>
+        </section>
+        <section class="box" id="saveBasic2">
+            <button id="saveBasicButton2" class="button" type="button">Save and Move to Calculate Page!</button>
+        </section>
+        <script src="./inputs.js" defer></script>
+    </body>
+</html>

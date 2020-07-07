@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculate Page</title>
+    </head>
+    <body>
+        <section class="home">
+            <a href="./index.html"><h3>Home</h3></a>
+            <a href="./inputs.html"><h3>Inputs</h3></a>
+        </section>
+        <button id="loadStatus" class="button" type="button">Run Test Calcs</button>
+        <button id="resetStatus" class="button" type="button">Reset All Statuses</button>
+        <br><br>
+        <label for="calcYear">Year to Calculate To</label>
+        <input type="number" id="calcYear" name="calcYear" min="2000" max="2100" step="1" value="2022">
+        <br>
+        <button id="bigCalc" class="button" type="button">Big Calc</button>
+        <section id="output">
+            <p>Total net up to input year:</p>
+            <p id="totalNet"></p>
+        </section>
+        <section id="charts">
+            <canvas id="netChart" width="500px" height="150px"></canvas>
+            <canvas id="cumNetChart" width="500px" height="150px"></canvas>
+            <canvas id="preTaxSalaryChart" width="500px" height="150px"></canvas>
+            <canvas id="netSalaryChart" width="500px" height="150px"></canvas>
+            <canvas id="costChart" width="500px" height="150px"></canvas>
+            <canvas id="accountChart" width="500px" height="150px"></canvas>
+            <canvas id="chart1" width="500px" height="150px"></canvas>
+        </section>
+        <div>
+            <h5>Status of Default Inputs</h5>
+            <p>Stored?</p>
+            <div id="defaultStored"></div>
+            <p>Distributed?</p>
+            <div id="defaultDistributed"></div>
+            <p>Consumed?</p>
+            <div id="defaultConsumed"></div>
+        </div>
+        <div>
+            <h5>Status of Housing Inputs</h5>
+            <p>Stored?</p>
+            <div id="housingStored"></div>
+            <p>Distributed?</p>
+            <div id="housingDistributed"></div>
+            <p>Consumed?</p>
+            <div id="housingConsumed"></div>
+        </div>
+        <div>
+            <h5>Status of Salary Inputs</h5>
+            <p>Stored?</p>
+            <div id="salaryStored"></div>
+            <p>Distributed?</p>
+            <div id="salaryDistributed"></div>
+            <p>Consumed?</p>
+            <div id="salaryConsumed"></div>
+        </div>
+        <div>
+            <h5>Status of Cost Inputs</h5>
+            <p>Stored?</p>
+            <div id="costStored"></div>
+            <p>Reg Distributed?</p>
+            <div id="regCostDistributed"></div>
+            <p>Reg Consumed?</p>
+            <div id="regCostConsumed"></div>
+            <p>Kid Distributed?</p>
+            <div id="kidCostDistributed"></div>
+            <p>Kid Consumed?</p>
+            <div id="kidCostConsumed"></div>
+        </div>
+        <div>
+            <h5>Status of Account Inputs</h5>
+            <p>Stored?</p>
+            <div id="accountStored"></div>
+            <p>Distributed?</p>
+            <div id="accountDistributed"></div>
+            <p>Consumed?</p>
+            <div id="accountConsumed"></div>
+        </div>
+        <script src="./calculate.js"></script>
+    </body>
+    
+</html>

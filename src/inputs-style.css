@@ -1,0 +1,297 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-image: url(./interlaced.png);
+  margin-left: 225px; /* Same as the width of the sidenav */
+}
+/* .grid{
+  display: grid;
+  position: relative;
+  grid-template-areas: "header2 header2 header2 header2"
+                        "nav nav nav nav"
+                        "values values housing housing"
+                        "investment investment cost cost"
+                        "salary salary loan loan";
+  grid-template-rows: 75px 50px 350px 350px 750px;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  align-items: start;
+  padding: 10px;
+} */
+.box{
+  padding: 10px;
+  text-align: left;
+  padding-left: 2.5%;
+}
+.home{
+  grid-area: 1/1/1/1;
+   justify-self: start;
+}
+.calc{
+  grid-area: 1/4/1/4;
+  text-align: center;
+}
+header{
+  text-align: center;
+  padding: 20px 20px 20px 20px;
+  /* grid-area: header2; */
+}
+header h1{
+  display: block;
+}
+nav{
+  grid-area: nav;
+}
+/* #values{
+  grid-area: values;
+}
+#housing{
+  grid-area: housing;
+} */
+#salary{
+  grid-area: salary;
+}
+#cost{
+  grid-area: cost;
+}
+#investment{
+  grid-area: investment;
+}
+#loan{
+  grid-area: loan;
+}
+h1, h4, h3 {
+  font-family: "Arial Black";
+  color: rgb(56, 56, 58);
+  text-transform: uppercase;
+  /* border: 2px solid black; */
+  display: inline-block;
+}
+h1{
+  font-size: 50px;
+}
+h3{
+  font-size: 30px;
+}
+table{
+  border-collapse: collapse;
+}
+.bumpTable{
+  border-bottom: 2px solid black;
+}
+.col1{
+  width: 350px;
+}
+.col2{
+  width: 100px;
+}
+td{
+  height: 40px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+tr:hover{
+  background-color: #b3b0b0;
+}
+label, input, .instructions{
+  font-size: 18px;
+  font-family: "Trebuchet MS";
+  font-weight: light;
+}
+input[type=text], select{
+  width:90px;
+  height: 30px;
+  float: right;
+  text-align: left;
+}
+input[type=number]{
+  line-height: 30px;
+  width: 80px;
+  text-align: center;
+  float: right;
+}
+input[type=checkbox]{
+  width: 30px;
+  height: 30px;
+  float: right;
+}
+ul input[type=checkbox]{
+  width: 20px;
+  height: 20px;
+  align-self: center;
+/*   margin-right: 10px;
+  margin-top: 5px; */
+}
+li {
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 2px;
+  padding: 4px;
+}
+.dynamicHeader{
+  text-align: center;
+  font-family: "Trebuchet MS";
+  font-size: 22px;
+  font-weight: bold;
+}
+h5, #home {
+  font-family: "Trebuchet MS";
+  font-size: 22px;
+  font-weight: light;
+}
+#personB{
+  display: none;
+}
+.nameRow{
+  display: none;
+}
+.button{
+  margin-top: 5px;
+  background-color: #555555; 
+  border: none;
+  color: white;
+  padding: 14px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+}
+.button:hover{
+  cursor: pointer;
+  background-color: white;
+  color: #555555;
+  border: 2px solid #555555;
+  padding: 12px 22px;
+}
+#accountNote{
+  display: inline-block;
+}
+#calcPage{
+  display: none;
+  font-size: 24px;
+}
+#openSpendModal, #estimate{
+  margin-top: initial;
+  font-size: 12px;
+  padding: 8px 16px;
+  margin-left: 10px;
+}
+#openSpendModal:hover, #estimate:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #555555;
+  border: 2px solid #555555;
+  padding: 6px 14px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4);
+}
+.spendModalContent {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 10px;
+  border: 1px solid black;
+  width: 30%;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  color: blue;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltipText {
+  visibility: hidden;
+  width: 200px;
+  background-color: rgb(131, 130, 130);
+  color: #fff;
+  text-align: center;
+  padding: 5px 5px;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltipText::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}
+/* The sidenav */
+.sideNav {
+  height: 100%;
+  width: 225px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(145, 145, 145);
+  overflow-x: hidden;
+  padding-top: 20px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+.sideNav a {
+  padding: 4px 8px 4px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  font-family: "Trebuchet MS";
+  color: #000000;
+  display: inline-block;
+  transition: 0.3s;
+}
+.sideNav a:hover {
+  color: #f1f1f1;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sideNav {padding-top: 15px;}
+  .sideNav a {font-size: 18px;}
+}

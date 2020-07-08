@@ -329,10 +329,13 @@ function loadStatus(){
     let accountConsumed = window.sessionStorage.getItem('accountConsumed');
     document.getElementById('accountConsumed').innerHTML=accountConsumed;
 
+    let storedProduct =parseInt(window.sessionStorage.getItem('regCostConsumed'),10)*parseInt(window.sessionStorage.getItem('kidCostConsumed'),10)*parseInt(window.sessionStorage.getItem('accountConsumed'),10)*parseInt(window.sessionStorage.getItem('defaultConsumed'),10)
+        *parseInt(window.sessionStorage.getItem('housingConsumed'),10)*parseInt(window.sessionStorage.getItem('salaryConsumed'),10)*parseInt(window.sessionStorage.getItem('loanConsumed'),10);
+    bigCalc();
     console.log(`Time Calculate js page load status at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
 }
 
-setTimeout(loadStatus, 2000);
+setTimeout(loadStatus, 1000);
 
 function resetStatus(){
     window.sessionStorage.setItem('defaultStored', 0);
@@ -353,6 +356,5 @@ function resetStatus(){
     window.sessionStorage.setItem('defaultConsumed', 0);
     window.sessionStorage.setItem('accountConsumed', 0);
 }
-document.getElementById('resetStatus').addEventListener("click", resetStatus);
 
 console.log(`Time Calculate js page bottom part at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);

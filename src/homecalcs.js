@@ -233,34 +233,6 @@ let houseProgression = [];
 let housePurchaseCashFlow = [];
 
 function insertHousingValues (){
-    /* let numberOfHouses;
-    let yearsPurchased=[];
-    let originalValues=[];
-    let fullTransfer=[];
-    let downPayments=[];
-    let HOA=[];
-    let renting=[];
-    let monthlyRent=[];
-    numberOfHouses=parseInt(window.sessionStorage.getItem('NOH'), 10);
-    
-    for(let i=0; i<numberOfHouses; i++){
-        yearsPurchased[i]=houseArray[i][0];
-        originalValues[i]=houseArray[i][1];
-        fullTransfer[i]=houseArray[i][2];
-        downPayments[i]=houseArray[i][3]*houseArray[i][1];
-        HOA[i]=houseArray[i][4];
-        renting[i]=houseArray[i][5];
-        monthlyRent[i]=houseArray[i][6];                
-    }
-    console.log(`House page NOH is ${numberOfHouses}`);
-    console.log(`House page years purchased is ${yearsPurchased}`);
-    console.log(`House page original values is ${originalValues}`);
-    console.log(`House page full transfer y/n is ${fullTransfer}`);
-    console.log(`House page down payments is ${downPayments}`);
-    console.log(`House page HOA is ${HOA}`);
-    console.log(`House page renting y/n is ${renting}`);
-    console.log(`House page monthly rent is ${monthlyRent}`); */
-
     const houseArray = JSON.parse(window.sessionStorage.getItem('houseArray'));
     houseArray.push([2200]);
     window.sessionStorage.setItem('housingDistributed', 1);

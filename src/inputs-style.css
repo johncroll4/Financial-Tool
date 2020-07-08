@@ -148,6 +148,9 @@ h5, #home {
 .nameRow{
   display: none;
 }
+#inputStatus, #output{
+  display: none;
+}
 .button{
   margin-top: 5px;
   background-color: #555555; 

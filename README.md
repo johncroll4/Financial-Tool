@@ -1,6 +1,7 @@
 # Financial-Tool
 From VS Code
 
+Must run from root folder (Financial Tool):
 1. parcel build .\src\index.html --out-file index.html --public-url ./
 This packages everything up together pulling from index.html from the src folder, creates the index.html output file, adds a little "./" extension to the url
 

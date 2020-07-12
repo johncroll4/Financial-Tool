@@ -31,6 +31,12 @@ let person2Salaries=[];
 let regAccountTotals=[];
 let retirementAccountTotals=[];
 let netWorth=[];
+let netChart;
+let cumNetChart;
+let preTaxSalaryChart;
+let netSalaryChart;
+let costChart;
+let accountChart;
 
 const netAfterCost = year => {
     const yearlyHouseSalaryReturn = yearlyHouseSalary(year);
@@ -75,8 +81,11 @@ function resetChartArrays(){
     costs=[];
     netSalaries=[];
     preTaxSalaries=[];
+    person1Salaries=[];
+    person2Salaries=[];
     regAccountTotals=[];
     retirementAccountTotals=[];
+    netWorth=[];
 }
 
 function bigCalc(){
@@ -130,9 +139,11 @@ function bigCalc(){
                 },
             }
     });
-       
     const netChartElement = document.getElementById('netChart');
-    const netChart = new Chart(netChartElement, {
+    if(netChart){
+        netChart.destroy();
+    }
+    netChart = new Chart(netChartElement, {
         type: 'bar',
         data: {
             labels: years,
@@ -148,8 +159,11 @@ function bigCalc(){
             }
         ]},
     });
+    if(cumNetChart){
+        cumNetChart.destroy();
+    }
     const cumNetChartElement = document.getElementById('cumNetChart');
-    const cumNetChart = new Chart(cumNetChartElement, {
+    cumNetChart = new Chart(cumNetChartElement, {
         type: 'line',
         data: {
             labels: years,
@@ -164,8 +178,11 @@ function bigCalc(){
             }
         ]},
     });
+    if(preTaxSalaryChart){
+        preTaxSalaryChart.destroy();
+    }
     const preTaxSalaryChartElement = document.getElementById('preTaxSalaryChart');
-    const preTaxSalaryChart = new Chart(preTaxSalaryChartElement, {
+    preTaxSalaryChart = new Chart(preTaxSalaryChartElement, {
         type: 'bar',
         data: {
             labels: years,
@@ -200,8 +217,11 @@ function bigCalc(){
             }
         }
     });
+    if(netSalaryChart){
+        netSalaryChart.destroy();
+    }
     const netSalaryChartElement = document.getElementById('netSalaryChart');
-    const netSalaryChart = new Chart(netSalaryChartElement, {
+    netSalaryChart = new Chart(netSalaryChartElement, {
         type: 'line',
         data: {
             labels: years,
@@ -216,8 +236,11 @@ function bigCalc(){
             }
         ]},
     });
+    if(costChart){
+        costChart.destroy();
+    }
     const costChartElement = document.getElementById('costChart');
-    const costChart = new Chart(costChartElement, {
+    costChart = new Chart(costChartElement, {
         type: 'bar',
         data: {
             labels: years,
@@ -234,8 +257,11 @@ function bigCalc(){
             }
         ]},
     });
+    if(accountChart){
+        accountChart.destroy();
+    }
     const accountChartElement = document.getElementById('accountChart');
-    const accountChart = new Chart(accountChartElement, {
+    accountChart = new Chart(accountChartElement, {
         type: 'line',
         data: {
             labels: years,

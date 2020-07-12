@@ -86,9 +86,9 @@
                         <td><label for="accountType{{this}}">Type</label></td>
                         <td>
                             <select id="accountType{{this}}" name="accountType{{this}}">
-                                <option value="Regular">Regular</option>
-                                <option value="401k">401k</option>
-                                <option value="Roth">Roth</option>
+                                <option value="Regular">Investment</option>
+                                <option value="401k">401k pre-tax</option>
+                                <option value="Roth">Roth IRA</option>
                             </select>
                         </td>
                     </tr>
@@ -331,7 +331,7 @@
                 </tr>
                 <tr>
                     <td><label for="startingSalaryA">Starting Salary</label></td>
-                    <td><input type="number" id="startingSalaryA" name="startingSalaryA" min="0" max="5000000" value="50000"></td>
+                    <td><input type="number" id="startingSalaryA" name="startingSalaryA" min="0" max="5000000" value="75000"></td>
                 </tr>
                 <tr id="salaryGrowthARow">
                     <td><label for="growthA">Salary Growth Rate</label></td>
@@ -350,7 +350,7 @@
                 </tr>
                 <tr>
                     <td><label for="plateauYearA">Salary Plateau Year</label></td>
-                    <td><input type="number" id="plateauYearA" name="plateauYearA" min="2000" max="2100" step="1" value="2040"></td>
+                    <td><input type="number" id="plateauYearA" name="plateauYearA" min="2000" max="2100" step="1" value="2050"></td>
                 </tr>
                 <tr>
                     <td><label for="plateauGrowthA">Salary Growth Rate After Plateau</label></td>
@@ -358,15 +358,15 @@
                 </tr>
                 <tr>
                     <td><label for="retirementA">Retirement Year</label></td>
-                    <td><input type="number" id="retirementA" name="retirementA" min="2000" max="2100" step="1" value="2059"></td>
+                    <td><input type="number" id="retirementA" name="retirementA" min="2000" max="2100" step="1" value="2060"></td>
                 </tr>
                 <tr>
                     <td><label for="preTaxA">Pre Tax Salary Contribution Rate</label></td>
-                    <td><input type="number" id="preTaxA" name="preTaxA" min="0" max=".5" step=".005" value=".05"></td>
+                    <td><input type="number" id="preTaxA" name="preTaxA" min="0" max=".5" step=".005" value="0"></td>
                 </tr>
                 <tr>
                     <td><label for="companyMatchA">Company Match Rate</label></td>
-                    <td><input type="number" id="companyMatchA" name="companyMatchA" min="0" max=".5" step=".005" value=".06"></td>
+                    <td><input type="number" id="companyMatchA" name="companyMatchA" min="0" max=".5" step=".005" value="0"></td>
                 </tr>
             </table>
             <div id="personB">
@@ -384,7 +384,7 @@
                     </tr>
                     <tr>
                         <td><label for="ageB">Age</label></td>
-                        <td><input type="number" id="ageB" name="ageB" min="0" max="100" step="1" value="31"></td>
+                        <td><input type="number" id="ageB" name="ageB" min="0" max="100" step="1" value="30"></td>
                     </tr>
                     <tr>
                         <td><label for="startingSalaryB">Starting Salary</label></td>
@@ -392,7 +392,7 @@
                     </tr>
                     <tr id="salaryGrowthBRow">
                         <td><label for="growthB">Salary Growth Rate</label></td>
-                        <td><input type="number" id="growthB" name="growthB" min="0" max="1" step=".005" value=".04"></td>
+                        <td><input type="number" id="growthB" name="growthB" min="0" max="1" step=".005" value=".03"></td>
                     </tr>
                     <tr id="bumpBRow">
                         <td><label for="bumpNumberB">Number of Salary Bumps</label></td>
@@ -407,11 +407,11 @@
                     </tr>
                     <tr>
                         <td><label for="plateauYearB">Salary Plateau Year</label></td>
-                        <td><input type="number" id="plateauYearB" name="plateauYearB" min="2000" max="2100" step="1" value="2045"></td>
+                        <td><input type="number" id="plateauYearB" name="plateauYearB" min="2000" max="2100" step="1" value="2050"></td>
                     </tr>
                     <tr>
                         <td><label for="plateauGrowthB">Salary Growth Rate After Plateau</label></td>
-                        <td><input type="number" id="plateauGrowthB" name="plateauGrowthB" min="0" max=".5" step=".005" value=".025"></td>
+                        <td><input type="number" id="plateauGrowthB" name="plateauGrowthB" min="0" max=".5" step=".005" value=".02"></td>
                     </tr>
                     <tr>
                         <td><label for="retirementB">Retirement Year</label></td>

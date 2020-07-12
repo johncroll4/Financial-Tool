@@ -14,8 +14,8 @@ In VS Code
 10. Delete branch.  Delete both copies of the branch (local and remote)
 
 To push these changes to be visible/usable from Github pages website
-From VS Code terminal
-Must run from root folder (Financial Tool):
+From VS Code terminal.  First make sure the local master branch is synced with the remote branch (Might be numbers next to up/down arrows in the bottom right corner)
+Must run these commands from root folder (Financial Tool):
 1. parcel build .\src\index.html --out-file index.html --public-url ./
 This packages everything up together pulling from index.html from the src folder, creates the index.html output file, adds a little "./" extension to the url
 

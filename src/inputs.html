@@ -37,7 +37,11 @@
                 </tr>
                 {{#each houseArray}}
                     <tr>
-                        <td colspan="2" class="dynamicHeader">House {{this}}</td>
+                        <td colspan="2" class="dynamicHeader" id="houseNameHeader{{this}}">House {{this}}</td>
+                    </tr>
+                    <tr id="houseNameRow{{this}}" class="nameRow">
+                        <td><label for="houseName{{this}}">Name</label></td>
+                        <td><input type="text" id="houseName{{this}}" name="houseName{{this}}" value="Home{{this}}"></td>
                     </tr>
                     <tr>
                         <td><label for="houseYear{{this}}">First Year of Residence</label></td>
@@ -319,7 +323,7 @@
                     <td><input type="number" id="personNumber" name="personNumber" min="1" max="2" step="1" value="1"></td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="dynamicHeader">Enter Values for Person A</td>
+                    <td colspan="2" class="dynamicHeader" id="personAHeader">Enter Values for Person A</td>
                 </tr>
                 <tr id="nameARow" class="nameRow">
                     <td><label for="nameA">Name</label></td>
@@ -376,7 +380,7 @@
                         <th class="col2"></th>
                     </tr>
                     <tr>
-                        <td colspan="2" class="dynamicHeader">Enter Values for Person B</td>
+                        <td colspan="2" class="dynamicHeader" id="personBHeader">Enter Values for Person B</td>
                     </tr>
                     <tr id="nameBRow" class="nameRow">
                         <td><label for="nameB">Name</label></td>

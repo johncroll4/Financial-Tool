@@ -102,13 +102,13 @@ label, input, .instructions{
 }
 input[type=text], select{
   width:90px;
-  height: 30px;
+  line-height: 30px;
   float: right;
   text-align: left;
 }
 input[type=number]{
   line-height: 30px;
-  width: 80px;
+  width: 90px;
   text-align: center;
   float: right;
 }
@@ -144,9 +144,9 @@ h5, #home {
 #personB{
   display: none;
 }
-.nameRow{
+/* .nameRow{
   display: none;
-}
+} */
 #inputStatus, #output{
   display: none;
 }

@@ -70,37 +70,37 @@ function replaceInputValues(){
         window.sessionStorage.setItem('salaryStored', 0);
     }else if(window.sessionStorage.getItem('salaryStored')==1){
         document.getElementById("personNumber").value=parseInt(window.sessionStorage.getItem('NOP'),10);
-        const personArray = JSON.parse(window.sessionStorage.getItem('personArray'));
+        const personArray2 = JSON.parse(window.sessionStorage.getItem('personArray'));
         const bumpArray = JSON.parse(window.sessionStorage.getItem('bumpArray'));
-        document.getElementById("nameA").value=personArray[0][0];
-        document.getElementById("ageA").value=personArray[0][1];
-        document.getElementById("startingSalaryA").value=personArray[0][2];
-        document.getElementById("growthA").value=personArray[0][3];
-        document.getElementById("plateauYearA").value=personArray[0][4];
-        document.getElementById("plateauGrowthA").value=personArray[0][5];
-        document.getElementById("retirementA").value=personArray[0][6];
-        document.getElementById("preTaxA").value=personArray[0][7];
-        document.getElementById("companyMatchA").value=personArray[0][8];
+        document.getElementById("nameA").value=personArray2[0][0];
+        document.getElementById("ageA").value=personArray2[0][1];
+        document.getElementById("startingSalaryA").value=personArray2[0][2];
+        document.getElementById("growthA").value=personArray2[0][3];
+        document.getElementById("plateauYearA").value=personArray2[0][4];
+        document.getElementById("plateauGrowthA").value=personArray2[0][5];
+        document.getElementById("retirementA").value=personArray2[0][6];
+        document.getElementById("preTaxA").value=personArray2[0][7];
+        document.getElementById("companyMatchA").value=personArray2[0][8];
         document.getElementById("bumpNumberA").value=bumpArray[0].length;
         addNOBA();
         if(parseInt(window.sessionStorage.getItem('NOP'),10)==2){
             addPeople();
-            document.getElementById("nameB").value=personArray[1][0];
-            document.getElementById("ageB").value=personArray[1][1];
-            document.getElementById("startingSalaryB").value=personArray[1][2];
-            document.getElementById("growthB").value=personArray[1][3];
-            document.getElementById("plateauYearB").value=personArray[1][4];
-            document.getElementById("plateauGrowthB").value=personArray[1][5];
-            document.getElementById("retirementB").value=personArray[1][6];
-            document.getElementById("preTaxB").value=personArray[1][7];
-            document.getElementById("companyMatchB").value=personArray[1][8];
+            document.getElementById("nameB").value=personArray2[1][0];
+            document.getElementById("ageB").value=personArray2[1][1];
+            document.getElementById("startingSalaryB").value=personArray2[1][2];
+            document.getElementById("growthB").value=personArray2[1][3];
+            document.getElementById("plateauYearB").value=personArray2[1][4];
+            document.getElementById("plateauGrowthB").value=personArray2[1][5];
+            document.getElementById("retirementB").value=personArray2[1][6];
+            document.getElementById("preTaxB").value=personArray2[1][7];
+            document.getElementById("companyMatchB").value=personArray2[1][8];
             document.getElementById("bumpNumberB").value=bumpArray[1].length;
             addNOBB();
-
         }
         if(window.sessionStorage.getItem('calcPageFromBasic')==null || window.sessionStorage.getItem('calcPageFromBasic')==0){
             confirmValueSave("salaryNav");
         }
+        replacePersonNamesInHeaders(personArray2, document.getElementById("personNumber").valueAsNumber);
         calcPageButton();
     }
     if(window.sessionStorage.getItem('loanStored')==null){
@@ -283,7 +283,9 @@ function addNOH (){
                 document.getElementById('HOA' + l).value=houseArray2[k][4];
                 document.getElementById('renting' + l).checked=houseArray2[k][5];
                 document.getElementById('monthlyRent' + l).value=houseArray2[k][6];
+                document.getElementById('houseName' + l).value=houseArray2[k][7];
             }
+            replaceHouseNamesInHeaders(houseArray2, numberOfHouses);
         }
     }
     for(let m=1; m<numberOfHouses+1; m++){
@@ -321,12 +323,14 @@ function pullHousingValues(){
     for(let i=0; i<numberOfHouses; i++){
         let j=i+1;
         houseArray[i] = [document.getElementById('houseYear' + j).valueAsNumber, document.getElementById('houseAmount' + j).valueAsNumber, document.getElementById('fullTransfer' + j).checked,
-        document.getElementById('downPayment' + j).valueAsNumber, document.getElementById('HOA' + j).valueAsNumber, document.getElementById('renting' + j).checked, document.getElementById('monthlyRent' + j).valueAsNumber,];
+        document.getElementById('downPayment' + j).valueAsNumber, document.getElementById('HOA' + j).valueAsNumber, document.getElementById('renting' + j).checked, document.getElementById('monthlyRent' + j).valueAsNumber,
+        document.getElementById('houseName' + j).value];
     }
     window.sessionStorage.setItem('houseArray', JSON.stringify(houseArray));
     console.log(`Storage Page house array is ${window.sessionStorage.getItem('houseArray')}`);
     window.sessionStorage.setItem('housingStored', 1);
     confirmValueSave("housingNav");
+    replaceHouseNamesInHeaders(houseArray, numberOfHouses);
     calcPageButton();   
 }
 const pullHousingButton = document.getElementById("saveHousing");
@@ -504,7 +508,7 @@ function pullPersonValues(){
     const preTaxB = document.getElementById("preTaxB").valueAsNumber;
     const companyMatchB = document.getElementById("companyMatchB").valueAsNumber;
 
-    let personArray=[];
+    const personArray=[];
     personArray[0] = [nameA, ageA, startingSalaryA, growthA, plateauYearA, plateauGrowthA, retirementA, preTaxA, companyMatchA];
     if (numberOfPeople==2){
         personArray[1] = [nameB, ageB, startingSalaryB, growthB, plateauYearB, plateauGrowthB, retirementB, preTaxB, companyMatchB];
@@ -557,11 +561,26 @@ function pullPersonValues(){
     window.sessionStorage.setItem('bumpArray', JSON.stringify(bumpArray));
     console.log(`Storage Page bump array is ${window.sessionStorage.getItem('bumpArray')}`);
     window.sessionStorage.setItem('salaryStored', 1);
+    replacePersonNamesInHeaders(personArray, numberOfPeople);
     confirmValueSave("salaryNav");
     calcPageButton();   
 }
 const pullPersonButton = document.getElementById("savePerson");
 pullPersonButton.addEventListener("click", pullPersonValues);
+
+function replacePersonNamesInHeaders (personInputsArray, numPeople){
+    document.getElementById('personAHeader').innerHTML=`Enter Values for ${personInputsArray[0][0]}`;
+    if(numPeople==2){
+        document.getElementById('personBHeader').innerHTML=`Enter Values for ${personInputsArray[1][0]}`;
+    }
+}
+
+function replaceHouseNamesInHeaders (houseInputsArray, numHouses){
+    for (let h=0; h<houseInputsArray.length && h<numHouses; h++){
+        let h1=h+1;
+        document.getElementById('houseNameHeader'+h1).innerHTML=houseInputsArray[h][7];
+    }
+}
 
 function pullDefaultValues(){
     const growthElement=document.getElementById("growthRate");
@@ -656,7 +675,6 @@ function showOneSection(){
         document.getElementById("cost").style.display='none';
         document.getElementById("investment").style.display='none';
         document.getElementById("loan").style.display='none';
-        
         document.getElementById("saveDefault").style.display='block';
     }else if (event.target.id=="housingAnchor"){
         showHousingInputs();
@@ -667,6 +685,7 @@ function showOneSection(){
         document.getElementById("cost").style.display='none';
         document.getElementById("investment").style.display='none';
         document.getElementById("loan").style.display='none';
+        document.getElementById("nameARow").style.display='table-row';
         document.getElementById("salaryGrowthARow").style.display='table-row';
         document.getElementById("bumpARow").style.display='table-row';
         document.getElementById("bumpsA").style.display='table-row';
@@ -724,6 +743,7 @@ function showHousingInputs(){
     document.getElementById("investment").style.display='none';
     document.getElementById("loan").style.display='none';
     document.getElementById("houseNumberRow").style.display='table-row';
+    document.getElementById("houseNameRow1").style.display='table-row';
     document.getElementById("HOARow1").style.display='table-row';
     document.getElementById("saveHousing").style.display='block';
 }
@@ -758,6 +778,7 @@ function showBasicInputs(){
     document.getElementById("houseNumber").value=1;
     addNOH();
     document.getElementById("houseNumberRow").style.display='none';
+    document.getElementById("houseNameRow1").style.display='none';
     document.getElementById("HOARow1").style.display='none';
     document.getElementById("saveHousing").style.display='none';
 

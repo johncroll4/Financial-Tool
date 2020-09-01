@@ -9,7 +9,7 @@ In VS Code
 5. Shut down parcel test server
 6. Stage only the changes to the actual files that were edited (not the parcel files)
 7. Commit Staged (from VS Code Source Control drop down) and add a relevant message
-8. Go to Github window in VS Code and Create new Pull Request.  Choose Master as target branch and previously created/named feature branch as "upstraem" branch.  For pull request title, can choose last commit message, branch name, or add a new PR name
+8. Go to Github window in VS Code and Create new Pull Request.  Choose Master as target branch and previously created/named feature branch as "upstream" branch.  For pull request title, can choose last commit message, branch name, or add a new PR name
 9. Pull Request tab opens.  Can review changes in Github if needed.  Click Merge Pull Request in VS Code, then Create Merge Commit.  If prompted about uncommitted changes on PR branch, click Yes to proceed.  These are the parcel file changes which don't need to be committed
 10. Delete branch.  Delete both copies of the branch (local and remote)
 

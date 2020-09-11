@@ -1,4 +1,4 @@
-console.log(`Time Calculate js page top part at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
+console.log(`?? Time Calculate js page top part at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
 
 const basicFunctions = require('./basicfunctions.js');
 const numberFormatter = basicFunctions.numberFormatter;

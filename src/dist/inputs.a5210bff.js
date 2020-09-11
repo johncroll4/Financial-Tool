@@ -7361,31 +7361,31 @@ function replaceInputValues() {
     window.sessionStorage.setItem('salaryStored', 0);
   } else if (window.sessionStorage.getItem('salaryStored') == 1) {
     document.getElementById("personNumber").value = parseInt(window.sessionStorage.getItem('NOP'), 10);
-    var personArray = JSON.parse(window.sessionStorage.getItem('personArray'));
+    var personArray2 = JSON.parse(window.sessionStorage.getItem('personArray'));
     var bumpArray = JSON.parse(window.sessionStorage.getItem('bumpArray'));
-    document.getElementById("nameA").value = personArray[0][0];
-    document.getElementById("ageA").value = personArray[0][1];
-    document.getElementById("startingSalaryA").value = personArray[0][2];
-    document.getElementById("growthA").value = personArray[0][3];
-    document.getElementById("plateauYearA").value = personArray[0][4];
-    document.getElementById("plateauGrowthA").value = personArray[0][5];
-    document.getElementById("retirementA").value = personArray[0][6];
-    document.getElementById("preTaxA").value = personArray[0][7];
-    document.getElementById("companyMatchA").value = personArray[0][8];
+    document.getElementById("nameA").value = personArray2[0][0];
+    document.getElementById("ageA").value = personArray2[0][1];
+    document.getElementById("startingSalaryA").value = personArray2[0][2];
+    document.getElementById("growthA").value = personArray2[0][3];
+    document.getElementById("plateauYearA").value = personArray2[0][4];
+    document.getElementById("plateauGrowthA").value = personArray2[0][5];
+    document.getElementById("retirementA").value = personArray2[0][6];
+    document.getElementById("preTaxA").value = personArray2[0][7];
+    document.getElementById("companyMatchA").value = personArray2[0][8];
     document.getElementById("bumpNumberA").value = bumpArray[0].length;
     addNOBA();
 
     if (parseInt(window.sessionStorage.getItem('NOP'), 10) == 2) {
       addPeople();
-      document.getElementById("nameB").value = personArray[1][0];
-      document.getElementById("ageB").value = personArray[1][1];
-      document.getElementById("startingSalaryB").value = personArray[1][2];
-      document.getElementById("growthB").value = personArray[1][3];
-      document.getElementById("plateauYearB").value = personArray[1][4];
-      document.getElementById("plateauGrowthB").value = personArray[1][5];
-      document.getElementById("retirementB").value = personArray[1][6];
-      document.getElementById("preTaxB").value = personArray[1][7];
-      document.getElementById("companyMatchB").value = personArray[1][8];
+      document.getElementById("nameB").value = personArray2[1][0];
+      document.getElementById("ageB").value = personArray2[1][1];
+      document.getElementById("startingSalaryB").value = personArray2[1][2];
+      document.getElementById("growthB").value = personArray2[1][3];
+      document.getElementById("plateauYearB").value = personArray2[1][4];
+      document.getElementById("plateauGrowthB").value = personArray2[1][5];
+      document.getElementById("retirementB").value = personArray2[1][6];
+      document.getElementById("preTaxB").value = personArray2[1][7];
+      document.getElementById("companyMatchB").value = personArray2[1][8];
       document.getElementById("bumpNumberB").value = bumpArray[1].length;
       addNOBB();
     }
@@ -7394,6 +7394,7 @@ function replaceInputValues() {
       confirmValueSave("salaryNav");
     }
 
+    replacePersonNamesInHeaders(personArray2, document.getElementById("personNumber").valueAsNumber);
     calcPageButton();
   }
 
@@ -7596,7 +7597,10 @@ function addNOH() {
         document.getElementById('HOA' + l).value = houseArray2[k][4];
         document.getElementById('renting' + l).checked = houseArray2[k][5];
         document.getElementById('monthlyRent' + l).value = houseArray2[k][6];
+        document.getElementById('houseName' + l).value = houseArray2[k][7];
       }
+
+      replaceHouseNamesInHeaders(houseArray2, numberOfHouses);
     }
   }
 
@@ -7642,13 +7646,14 @@ function pullHousingValues() {
 
   for (var i = 0; i < numberOfHouses; i++) {
     var j = i + 1;
-    houseArray[i] = [document.getElementById('houseYear' + j).valueAsNumber, document.getElementById('houseAmount' + j).valueAsNumber, document.getElementById('fullTransfer' + j).checked, document.getElementById('downPayment' + j).valueAsNumber, document.getElementById('HOA' + j).valueAsNumber, document.getElementById('renting' + j).checked, document.getElementById('monthlyRent' + j).valueAsNumber];
+    houseArray[i] = [document.getElementById('houseYear' + j).valueAsNumber, document.getElementById('houseAmount' + j).valueAsNumber, document.getElementById('fullTransfer' + j).checked, document.getElementById('downPayment' + j).valueAsNumber, document.getElementById('HOA' + j).valueAsNumber, document.getElementById('renting' + j).checked, document.getElementById('monthlyRent' + j).valueAsNumber, document.getElementById('houseName' + j).value];
   }
 
   window.sessionStorage.setItem('houseArray', JSON.stringify(houseArray));
   console.log("Storage Page house array is ".concat(window.sessionStorage.getItem('houseArray')));
   window.sessionStorage.setItem('housingStored', 1);
   confirmValueSave("housingNav");
+  replaceHouseNamesInHeaders(houseArray, numberOfHouses);
   calcPageButton();
 }
 
@@ -7687,9 +7692,8 @@ function addNOA() {
         var l = k + 1;
         document.getElementById('accountType' + l).value = accountArray2[k][0];
         document.getElementById('accountOwner' + l).value = accountArray2[k][1];
-        document.getElementById('accountAmount' + l).value = accountArray2[k][2];
-        document.getElementById('posPrecedence' + l).value = accountArray2[k][3];
-        document.getElementById('negPrecedence' + l).value = accountArray2[k][4];
+        document.getElementById('accountAmount' + l).value = accountArray2[k][2]; //document.getElementById('posPrecedence' + l).value=accountArray2[k][3];  
+        //document.getElementById('negPrecedence' + l).value=accountArray2[k][4];                  
       }
     }
   }
@@ -7706,7 +7710,7 @@ function pullAccountValues() {
 
   for (var i = 0; i < numberOfAccounts; i++) {
     var j = i + 1;
-    accountArray[i] = [document.getElementById('accountType' + j).value, document.getElementById('accountOwner' + j).value, document.getElementById('accountAmount' + j).valueAsNumber, document.getElementById('posPrecedence' + j).valueAsNumber, document.getElementById('negPrecedence' + j).valueAsNumber];
+    accountArray[i] = [document.getElementById('accountType' + j).value, document.getElementById('accountOwner' + j).value, document.getElementById('accountAmount' + j).valueAsNumber];
   }
 
   window.sessionStorage.setItem('accountArray', JSON.stringify(accountArray));
@@ -7908,12 +7912,28 @@ function pullPersonValues() {
   window.sessionStorage.setItem('bumpArray', JSON.stringify(bumpArray));
   console.log("Storage Page bump array is ".concat(window.sessionStorage.getItem('bumpArray')));
   window.sessionStorage.setItem('salaryStored', 1);
+  replacePersonNamesInHeaders(personArray, numberOfPeople);
   confirmValueSave("salaryNav");
   calcPageButton();
 }
 
 var pullPersonButton = document.getElementById("savePerson");
 pullPersonButton.addEventListener("click", pullPersonValues);
+
+function replacePersonNamesInHeaders(personInputsArray, numPeople) {
+  document.getElementById('personAHeader').innerHTML = "Enter Values for ".concat(personInputsArray[0][0]);
+
+  if (numPeople == 2) {
+    document.getElementById('personBHeader').innerHTML = "Enter Values for ".concat(personInputsArray[1][0]);
+  }
+}
+
+function replaceHouseNamesInHeaders(houseInputsArray, numHouses) {
+  for (var h = 0; h < houseInputsArray.length && h < numHouses; h++) {
+    var h1 = h + 1;
+    document.getElementById('houseNameHeader' + h1).innerHTML = houseInputsArray[h][7];
+  }
+}
 
 function pullDefaultValues() {
   var growthElement = document.getElementById("growthRate");
@@ -8028,6 +8048,7 @@ function showOneSection() {
     document.getElementById("cost").style.display = 'none';
     document.getElementById("investment").style.display = 'none';
     document.getElementById("loan").style.display = 'none';
+    document.getElementById("nameARow").style.display = 'table-row';
     document.getElementById("salaryGrowthARow").style.display = 'table-row';
     document.getElementById("bumpARow").style.display = 'table-row';
     document.getElementById("bumpsA").style.display = 'table-row';
@@ -8055,9 +8076,9 @@ function showOneSection() {
     document.getElementById("accountHeader1").innerHTML = "Account 1";
     document.getElementById("accountNumberRow").style.display = 'table-row';
     document.getElementById("accountTypeRow1").style.display = 'table-row';
-    document.getElementById("ownerRow1").style.display = 'table-row';
-    document.getElementById("posPrecRow1").style.display = 'table-row';
-    document.getElementById("negPrecRow1").style.display = 'table-row';
+    document.getElementById("ownerRow1").style.display = 'table-row'; // document.getElementById("posPrecRow1").style.display='table-row';
+    // document.getElementById("negPrecRow1").style.display='table-row';
+
     document.getElementById("saveAccounts").style.display = 'block';
   } else if (event.target.id == "loanAnchor") {
     document.getElementById("values").style.display = 'none';
@@ -8086,6 +8107,7 @@ function showHousingInputs() {
   document.getElementById("investment").style.display = 'none';
   document.getElementById("loan").style.display = 'none';
   document.getElementById("houseNumberRow").style.display = 'table-row';
+  document.getElementById("houseNameRow1").style.display = 'table-row';
   document.getElementById("HOARow1").style.display = 'table-row';
   document.getElementById("saveHousing").style.display = 'block';
 }
@@ -8121,6 +8143,7 @@ function showBasicInputs() {
   document.getElementById("houseNumber").value = 1;
   addNOH();
   document.getElementById("houseNumberRow").style.display = 'none';
+  document.getElementById("houseNameRow1").style.display = 'none';
   document.getElementById("HOARow1").style.display = 'none';
   document.getElementById("saveHousing").style.display = 'none';
   document.getElementById("salary").style.display = 'block';
@@ -8141,9 +8164,9 @@ function showBasicInputs() {
   addNOA();
   document.getElementById("accountNumberRow").style.display = 'none';
   document.getElementById("accountTypeRow1").style.display = 'none';
-  document.getElementById("ownerRow1").style.display = 'none';
-  document.getElementById("posPrecRow1").style.display = 'none';
-  document.getElementById("negPrecRow1").style.display = 'none';
+  document.getElementById("ownerRow1").style.display = 'none'; // document.getElementById("posPrecRow1").style.display='none';
+  // document.getElementById("negPrecRow1").style.display='none';
+
   document.getElementById("accountHeader1").innerHTML = "All cash on hand, including retirement $";
   document.getElementById("saveAccounts").style.display = 'none';
   document.getElementById("loan").style.display = 'none';
@@ -8208,7 +8231,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61919" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60162" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

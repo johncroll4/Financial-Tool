@@ -1230,17 +1230,18 @@ function insertAccountValues() {
 
   for (var m = 0; m < accountArray.length; m++) {
     if (accountArray[m][0] == "401k") {
-      allAccounts[m] = [new F401k(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), accountArray[m][3], accountArray[m][4]];
+      allAccounts[m] = [new F401k(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), (m + 1) * 100, (m + 1) * 100];
     } else if (accountArray[m][0] == "Regular") {
-      allAccounts[m] = [new RegInvestment(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), accountArray[m][3], accountArray[m][4]];
+      allAccounts[m] = [new RegInvestment(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), (m + 1) * 10, m + 1];
     } else if (accountArray[m][0] == "Roth") {
-      allAccounts[m] = [new RothIRA(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), accountArray[m][3], accountArray[m][4]];
+      allAccounts[m] = [new RothIRA(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), m + 1, (m + 1) * 10];
     } else {
       console.log("Something wrong with account type for account ".concat(m, " in account array"));
     }
   }
 
   console.log("Retirement page all acounts list is ".concat(JSON.stringify(allAccounts)));
+  debugger;
 
   function returnFirstElements(array) {
     var newArray = array.map(function (element) {
@@ -1262,6 +1263,7 @@ function insertAccountValues() {
     return x[2] - y[2];
   });
   sortedAccountsNeg = returnFirstElements(sortedAccountsNeg);
+  debugger;
   investmentAccounts = [];
   rothAccounts = [];
   f401kAccounts = [];
@@ -1277,6 +1279,7 @@ function insertAccountValues() {
     return account[0] instanceof F401k;
   });
   f401kAccounts = returnFirstElements(f401kAccounts);
+  debugger;
   console.log("Retirement page sorted pos accounts list is ".concat(JSON.stringify(sortedAccountsPos)));
   console.log("Retirement page sorted neg accounts list is ".concat(JSON.stringify(sortedAccountsNeg)));
   console.log("Retirement page reg accounts2 list is ".concat(JSON.stringify(investmentAccounts)));
@@ -1693,6 +1696,7 @@ var balanceYearOfCashFlow = function balanceYearOfCashFlow(year, net) {
       }
     }
 
+    debugger;
     return net;
   } else {
     console.log("Net was exactly 0???");
@@ -22216,6 +22220,12 @@ var person2Salaries = [];
 var regAccountTotals = [];
 var retirementAccountTotals = [];
 var netWorth = [];
+var netChart;
+var cumNetChart;
+var preTaxSalaryChart;
+var netSalaryChart;
+var costChart;
+var accountChart;
 
 var netAfterCost = function netAfterCost(year) {
   var yearlyHouseSalaryReturn = yearlyHouseSalary(year);
@@ -22262,8 +22272,11 @@ function resetChartArrays() {
   costs = [];
   netSalaries = [];
   preTaxSalaries = [];
+  person1Salaries = [];
+  person2Salaries = [];
   regAccountTotals = [];
   retirementAccountTotals = [];
+  netWorth = [];
 }
 
 function bigCalc() {
@@ -22319,7 +22332,12 @@ function bigCalc() {
   });
 
   var netChartElement = document.getElementById('netChart');
-  var netChart = new _ChartBundle.default(netChartElement, {
+
+  if (netChart) {
+    netChart.destroy();
+  }
+
+  netChart = new _ChartBundle.default(netChartElement, {
     type: 'bar',
     data: {
       labels: years,
@@ -22334,8 +22352,13 @@ function bigCalc() {
       }]
     }
   });
+
+  if (cumNetChart) {
+    cumNetChart.destroy();
+  }
+
   var cumNetChartElement = document.getElementById('cumNetChart');
-  var cumNetChart = new _ChartBundle.default(cumNetChartElement, {
+  cumNetChart = new _ChartBundle.default(cumNetChartElement, {
     type: 'line',
     data: {
       labels: years,
@@ -22348,8 +22371,13 @@ function bigCalc() {
       }]
     }
   });
+
+  if (preTaxSalaryChart) {
+    preTaxSalaryChart.destroy();
+  }
+
   var preTaxSalaryChartElement = document.getElementById('preTaxSalaryChart');
-  var preTaxSalaryChart = new _ChartBundle.default(preTaxSalaryChartElement, {
+  preTaxSalaryChart = new _ChartBundle.default(preTaxSalaryChartElement, {
     type: 'bar',
     data: {
       labels: years,
@@ -22382,8 +22410,13 @@ function bigCalc() {
       }
     }
   });
+
+  if (netSalaryChart) {
+    netSalaryChart.destroy();
+  }
+
   var netSalaryChartElement = document.getElementById('netSalaryChart');
-  var netSalaryChart = new _ChartBundle.default(netSalaryChartElement, {
+  netSalaryChart = new _ChartBundle.default(netSalaryChartElement, {
     type: 'line',
     data: {
       labels: years,
@@ -22396,8 +22429,13 @@ function bigCalc() {
       }]
     }
   });
+
+  if (costChart) {
+    costChart.destroy();
+  }
+
   var costChartElement = document.getElementById('costChart');
-  var costChart = new _ChartBundle.default(costChartElement, {
+  costChart = new _ChartBundle.default(costChartElement, {
     type: 'bar',
     data: {
       labels: years,
@@ -22412,8 +22450,13 @@ function bigCalc() {
       }]
     }
   });
+
+  if (accountChart) {
+    accountChart.destroy();
+  }
+
   var accountChartElement = document.getElementById('accountChart');
-  var accountChart = new _ChartBundle.default(accountChartElement, {
+  accountChart = new _ChartBundle.default(accountChartElement, {
     type: 'line',
     data: {
       labels: years,
@@ -22557,7 +22600,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61919" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60162" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

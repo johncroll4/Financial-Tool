@@ -27,16 +27,17 @@ function insertAccountValues (){
     allAccounts=[];
     for (let m=0; m<accountArray.length; m++){
         if(accountArray[m][0]=="401k"){
-            allAccounts[m]= [new F401k(accountArray[m][0]+(m+1), accountArray[m][2], undefined, accountArray[m][1]), accountArray[m][3], accountArray[m][4]];
+            allAccounts[m]= [new F401k(accountArray[m][0]+(m+1), accountArray[m][2], undefined, accountArray[m][1]), (m+1)*100, (m+1)*100];
         }else if(accountArray[m][0]=="Regular"){
-            allAccounts[m]= [new RegInvestment(accountArray[m][0]+(m+1), accountArray[m][2], undefined, accountArray[m][1]), accountArray[m][3], accountArray[m][4]];
+            allAccounts[m]= [new RegInvestment(accountArray[m][0]+(m+1), accountArray[m][2], undefined, accountArray[m][1]), (m+1)*10, m+1];
         }else if(accountArray[m][0]=="Roth"){
-            allAccounts[m]= [new RothIRA(accountArray[m][0]+(m+1), accountArray[m][2], undefined, accountArray[m][1]), accountArray[m][3], accountArray[m][4]];            
+            allAccounts[m]= [new RothIRA(accountArray[m][0]+(m+1), accountArray[m][2], undefined, accountArray[m][1]), m+1, (m+1)*10];
         }else{
             console.log(`Something wrong with account type for account ${m} in account array`);
         }
     }
     console.log(`Retirement page all acounts list is ${JSON.stringify(allAccounts)}`);
+    debugger
 
     function returnFirstElements(array){
         const newArray=array.map(element =>{
@@ -59,6 +60,7 @@ function insertAccountValues (){
         return x[2] - y[2];
     });
     sortedAccountsNeg=returnFirstElements(sortedAccountsNeg);
+    debugger
 
     investmentAccounts=[];
     rothAccounts=[];
@@ -77,6 +79,7 @@ function insertAccountValues (){
         return account[0] instanceof F401k;
     });
     f401kAccounts=returnFirstElements(f401kAccounts);
+    debugger
 
     console.log(`Retirement page sorted pos accounts list is ${JSON.stringify(sortedAccountsPos)}`);
     console.log(`Retirement page sorted neg accounts list is ${JSON.stringify(sortedAccountsNeg)}`);
@@ -408,6 +411,7 @@ const balanceYearOfCashFlow = (year, net) =>{
             console.log(sortedAccountsNeg[i]);
             if(net===0){break;}
         }
+        debugger
         return net;
     }else{
         console.log(`Net was exactly 0???`);

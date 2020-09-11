@@ -363,8 +363,8 @@ function addNOA(){
                 document.getElementById('accountType' + l).value=accountArray2[k][0];
                 document.getElementById('accountOwner' + l).value=accountArray2[k][1];
                 document.getElementById('accountAmount' + l).value=accountArray2[k][2];
-                document.getElementById('posPrecedence' + l).value=accountArray2[k][3];  
-                document.getElementById('negPrecedence' + l).value=accountArray2[k][4];                  
+                //document.getElementById('posPrecedence' + l).value=accountArray2[k][3];  
+                //document.getElementById('negPrecedence' + l).value=accountArray2[k][4];                  
             }
         }
     } 
@@ -379,8 +379,7 @@ function pullAccountValues(){
     let accountArray=[];
     for(let i=0; i<numberOfAccounts; i++){
         let j=i+1;
-        accountArray[i] = [document.getElementById('accountType' + j).value, document.getElementById('accountOwner' + j).value, document.getElementById('accountAmount' + j).valueAsNumber,
-                        document.getElementById('posPrecedence' + j).valueAsNumber, document.getElementById('negPrecedence' + j).valueAsNumber];
+        accountArray[i] = [document.getElementById('accountType' + j).value, document.getElementById('accountOwner' + j).value, document.getElementById('accountAmount' + j).valueAsNumber];
     }
     window.sessionStorage.setItem('accountArray', JSON.stringify(accountArray));
     console.log(`Storage Page account array is ${window.sessionStorage.getItem('accountArray')}`);
@@ -714,8 +713,8 @@ function showOneSection(){
         document.getElementById("accountNumberRow").style.display='table-row';
         document.getElementById("accountTypeRow1").style.display='table-row';
         document.getElementById("ownerRow1").style.display='table-row';
-        document.getElementById("posPrecRow1").style.display='table-row';
-        document.getElementById("negPrecRow1").style.display='table-row';
+        // document.getElementById("posPrecRow1").style.display='table-row';
+        // document.getElementById("negPrecRow1").style.display='table-row';
         document.getElementById("saveAccounts").style.display='block';
     }else if (event.target.id=="loanAnchor"){
         document.getElementById("values").style.display='none';
@@ -804,8 +803,8 @@ function showBasicInputs(){
     document.getElementById("accountNumberRow").style.display='none';
     document.getElementById("accountTypeRow1").style.display='none';
     document.getElementById("ownerRow1").style.display='none';
-    document.getElementById("posPrecRow1").style.display='none';
-    document.getElementById("negPrecRow1").style.display='none';
+    // document.getElementById("posPrecRow1").style.display='none';
+    // document.getElementById("negPrecRow1").style.display='none';
     document.getElementById("accountHeader1").innerHTML="All cash on hand, including retirement $";
     document.getElementById("saveAccounts").style.display='none';
 

@@ -17,6 +17,8 @@ window.sessionStorage.setItem('loanDistributed', 0);
 window.sessionStorage.setItem('loanConsumed', 0);
 window.sessionStorage.setItem('basicMode', 0);
 
+console.log("Hope this commit worked");
+
 function replaceInputValues(){
     if (window.sessionStorage.getItem('defaultStored')==null){
         window.sessionStorage.setItem('defaultStored', 0);

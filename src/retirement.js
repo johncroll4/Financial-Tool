@@ -10,7 +10,7 @@ const taxImports = require('./taxes.js');
 const calculateNetIncome = taxImports.calculateNetIncome;
 const calculateAddtlNetIncome = taxImports.calculateAddtlNetIncome;
 
-console.log(`Time retirement page top at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
+console.log(`??Time retirement page top at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
 
 let investmentAccounts=[];
 let rothAccounts=[];
@@ -37,7 +37,6 @@ function insertAccountValues (){
         }
     }
     console.log(`Retirement page all acounts list is ${JSON.stringify(allAccounts)}`);
-    debugger
 
     function returnFirstElements(array){
         const newArray=array.map(element =>{
@@ -60,7 +59,6 @@ function insertAccountValues (){
         return x[2] - y[2];
     });
     sortedAccountsNeg=returnFirstElements(sortedAccountsNeg);
-    debugger
 
     investmentAccounts=[];
     rothAccounts=[];
@@ -79,7 +77,6 @@ function insertAccountValues (){
         return account[0] instanceof F401k;
     });
     f401kAccounts=returnFirstElements(f401kAccounts);
-    debugger
 
     console.log(`Retirement page sorted pos accounts list is ${JSON.stringify(sortedAccountsPos)}`);
     console.log(`Retirement page sorted neg accounts list is ${JSON.stringify(sortedAccountsNeg)}`);
@@ -411,7 +408,6 @@ const balanceYearOfCashFlow = (year, net) =>{
             console.log(sortedAccountsNeg[i]);
             if(net===0){break;}
         }
-        debugger
         return net;
     }else{
         console.log(`Net was exactly 0???`);

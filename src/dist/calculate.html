@@ -5,26 +5,33 @@
         <link href="/inputs-style.cdc54771.css" type="text/css" rel="stylesheet">
     </head>
     <body>
-        <section class="home">
-            <a href="/index.html"><h3>Home</h3></a>
-            <a href="/inputs.html"><h3>Inputs</h3></a>
+        <header>
+            <h1>Calculate and Analyze ??</h1>
+        </header>
+        <div id="calcSideNav" class="sideNav">
+            <ul>
+                <li><a href="/index.html"><h2>Home</h2></a></li>
+                <li><a href="/inputs.html"><button id="inputsPage" class="button" type="button">Inputs Page</button></a></li>
+            </ul>
+        </div>
+        <section class="box">
+            <button id="bigCalc" class="button" type="button">Calculate!</button>
+            <table>
+                <tr>
+                    <th class="col1"></th>
+                    <th class="col2"></th>
+                </tr>
+                <tr>
+                    <td><label for="calcYear">Year to Calculate To</label></td>
+                    <td><input type="number" id="calcYear" name="calcYear" min="2000" max="2100" step="1" value="2030"></td>
+                </tr>
+            </table>
         </section>
-        <button id="bigCalc" class="button" type="button">Calculate!</button>
-        <table>
-            <tr>
-                <th class="col1"></th>
-                <th class="col2"></th>
-            </tr>
-            <tr>
-                <td><label for="calcYear">Year to Calculate To</label></td>
-                <td><input type="number" id="calcYear" name="calcYear" min="2000" max="2100" step="1" value="2030"></td>
-            </tr>
-        </table>
         <section id="output">
             <p>Total net up to input year:</p>
             <p id="totalNet"></p>
         </section>
-        <section id="charts">
+        <section id="charts" class="box">
             <canvas id="netChart" width="500px" height="150px"></canvas>
             <canvas id="cumNetChart" width="500px" height="150px"></canvas>
             <canvas id="preTaxSalaryChart" width="500px" height="150px"></canvas>

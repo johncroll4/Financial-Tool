@@ -7295,6 +7295,7 @@ window.sessionStorage.setItem('salaryConsumed', 0);
 window.sessionStorage.setItem('loanDistributed', 0);
 window.sessionStorage.setItem('loanConsumed', 0);
 window.sessionStorage.setItem('basicMode', 0);
+console.log("Hope this commit worked");
 
 function replaceInputValues() {
   if (window.sessionStorage.getItem('defaultStored') == null) {
@@ -8231,7 +8232,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60162" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64435" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

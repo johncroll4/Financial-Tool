@@ -1215,7 +1215,7 @@ var taxImports = require('./taxes.js');
 
 var calculateNetIncome = taxImports.calculateNetIncome;
 var calculateAddtlNetIncome = taxImports.calculateAddtlNetIncome;
-console.log("Time retirement page top at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+console.log("??Time retirement page top at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
 var investmentAccounts = [];
 var rothAccounts = [];
 var f401kAccounts = [];
@@ -1241,7 +1241,6 @@ function insertAccountValues() {
   }
 
   console.log("Retirement page all acounts list is ".concat(JSON.stringify(allAccounts)));
-  debugger;
 
   function returnFirstElements(array) {
     var newArray = array.map(function (element) {
@@ -1263,7 +1262,6 @@ function insertAccountValues() {
     return x[2] - y[2];
   });
   sortedAccountsNeg = returnFirstElements(sortedAccountsNeg);
-  debugger;
   investmentAccounts = [];
   rothAccounts = [];
   f401kAccounts = [];
@@ -1279,7 +1277,6 @@ function insertAccountValues() {
     return account[0] instanceof F401k;
   });
   f401kAccounts = returnFirstElements(f401kAccounts);
-  debugger;
   console.log("Retirement page sorted pos accounts list is ".concat(JSON.stringify(sortedAccountsPos)));
   console.log("Retirement page sorted neg accounts list is ".concat(JSON.stringify(sortedAccountsNeg)));
   console.log("Retirement page reg accounts2 list is ".concat(JSON.stringify(investmentAccounts)));
@@ -1696,7 +1693,6 @@ var balanceYearOfCashFlow = function balanceYearOfCashFlow(year, net) {
       }
     }
 
-    debugger;
     return net;
   } else {
     console.log("Net was exactly 0???");
@@ -22178,7 +22174,7 @@ var _ChartBundle = _interopRequireDefault(require("./Chart.bundle.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log("Time Calculate js page top part at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+console.log("?? Time Calculate js page top part at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
 
 var basicFunctions = require('./basicfunctions.js');
 
@@ -22600,7 +22596,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60162" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64435" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

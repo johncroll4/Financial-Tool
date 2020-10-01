@@ -14,14 +14,17 @@ const growAgainstInflation = (start, years=1, grow=rateDefaults.growth, inflatio
 }
 
 const calcMonthlyLoanPayment = (loanAmount=0, loanRate=rateDefaults.mortgageInterest, loanLength=10) => {
-    const monthlyPayment = (loanAmount)*((loanRate/12)*(1+(loanRate/12))**(loanLength*12))/(((1+(loanRate/12))**(loanLength*12))-1);
-    return monthlyPayment;
+    if(loanRate===0){
+        return loanAmount/loanLength/12;
+    }else{
+        const monthlyPayment = (loanAmount)*((loanRate/12)*(1+(loanRate/12))**(loanLength*12))/(((1+(loanRate/12))**(loanLength*12))-1);
+        return monthlyPayment;
+    }
 }
 
 const numberFormatter = (number, digits=2, keepNumber=true, dollarSign=false) =>{
     if(keepNumber==true){
-        const numString = number.toFixed(digits);
-        return parseFloat(numString);
+        return parseFloat((Math.round(number*100)/100).toFixed(digits));
     }else{
         if(dollarSign==false){
             return new Intl.NumberFormat('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits}).format(number);

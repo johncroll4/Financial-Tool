@@ -1,5 +1,3 @@
-const personImports = require('./person.js');
-const householdMembers = personImports.householdMembers;
 
 let monthlySpending;
 let monthlyRetirementSpending;
@@ -14,19 +12,19 @@ function insertCostValues (){
 }
 window.addEventListener('load', insertCostValues);
 
-const regSpending = (year, spend=monthlySpending, retir=monthlyRetirementSpending) =>{
+const regSpending = (year, spend=monthlySpending, retir=monthlyRetirementSpending, personArray) =>{
     console.log(`Time Cost page regspending called at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
     let annualCost=0;
-    if (householdMembers.length==1){
-        if (year>=householdMembers[0]._retirementYear){
+    if (personArray.length==1){
+        if (year>=personArray[0]._retirementYear){
             annualCost = retir*12;
             return annualCost;
         }else{
             annualCost = spend*12;
             return annualCost;
         }
-    }else if (householdMembers.length==2){
-        if(year>=householdMembers[0]._retirementYear || year>=householdMembers[1]._retirementYear){
+    }else if (personArray.length==2){
+        if(year>=personArray[0]._retirementYear || year>=personArray[1]._retirementYear){
             annualCost = retir*12;
             return annualCost;
         }else{

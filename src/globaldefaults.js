@@ -19,7 +19,7 @@ const rateDefaults = {
         if(typeof this._growth === 'number'){
             return this._growth;
         } else {
-            console.log(`Enter valid number for growth rate`);
+            console.log(`Enter valid number for growth rate GET`);
         }
     },
     get inflation() {
@@ -68,7 +68,7 @@ const rateDefaults = {
         if (typeof newGrowth==='number' && newGrowth<1 && newGrowth > -.5){
             this._growth = newGrowth;
         }else{
-            console.log(`Enter valid number for growth rate`);
+            console.log(`Enter valid number for growth rate SET`);
         }
     },
     set inflation(newInflation){

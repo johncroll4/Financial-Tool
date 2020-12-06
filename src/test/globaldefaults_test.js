@@ -1,5 +1,7 @@
 const assert = require('assert');
-const rateDefaults = require('../globaldefaults.js');
+const fillOutInputValues = require('./mockinputs.js');
+fillOutInputValues();
+const rateDefaults = require('../calculate.js').rateDefaults;
 
 describe('globalDefaults', ()=>{
     //setup

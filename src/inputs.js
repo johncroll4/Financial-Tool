@@ -2,18 +2,11 @@
 //test comment for branch
 import Handlebars from './handlebars-v4.7.6.js';
 
-window.sessionStorage.setItem('defaultDistributed', 0);
-window.sessionStorage.setItem('housingDistributed', 0);
 window.sessionStorage.setItem('housingConsumed', 0);
-window.sessionStorage.setItem('accountDistributed', 0);
 window.sessionStorage.setItem('accountConsumed', 0);
-window.sessionStorage.setItem('regCostDistributed', 0);
-window.sessionStorage.setItem('kidCostDistributed', 0);
 window.sessionStorage.setItem('regCostConsumed', 0);
 window.sessionStorage.setItem('kidCostConsumed', 0);
-window.sessionStorage.setItem('salaryDistributed', 0);
 window.sessionStorage.setItem('salaryConsumed', 0);
-window.sessionStorage.setItem('loanDistributed', 0);
 window.sessionStorage.setItem('loanConsumed', 0);
 window.sessionStorage.setItem('basicMode', 0);
 

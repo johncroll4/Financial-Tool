@@ -7,6 +7,9 @@ const standardDeduction = 12400;
 
 //function to determine net income based on filing status and pretax income coming in.  Do not account for pre-tax 401k contributions, that is taken care of upstream
 const calculateNetIncome = (numPeople, salary) => {
+    if(salary<0){
+        return 0;
+    }
     let tax=0;
     //remove standard deduction from taxable income to lessen tax buren
     let deductedSalary = salary-(standardDeduction*numPeople);
@@ -19,15 +22,17 @@ const calculateNetIncome = (numPeople, salary) => {
         let relevantTaxBrackets = taxBracketsSingle.filter(bracket => {
             return bracket[1] < deductedSalary;            
         })
-        //Then add the very next bracket above deducted salary to calculate final portion of tax owed
-        relevantTaxBrackets.push(taxBracketsSingle[relevantTaxBrackets.length]);
+        //Then add the very next bracket above deducted salary to calculate final portion of tax owed (unless deducted salary > largest bracket)
+        if(deductedSalary<=taxBracketsSingle.slice(-1)[0][1]){
+            relevantTaxBrackets.push(taxBracketsSingle[relevantTaxBrackets.length]);
+        }
         //add up tax owed in each bracket that is crossed completely by deducted. i starts at 1 so i-1 can be used to determine $ difference between each bracket, with 0,0 bracket in place at the beginning
         //i goes up to length-1 so that final tax bracket can be calculated differently-using deducted salary instead of the full bracket width
-        for (i=1; i<relevantTaxBrackets.length-1; i++){
+        for (let i=1; i<relevantTaxBrackets.length-1; i++){
             tax +=(relevantTaxBrackets[i][0]*(relevantTaxBrackets[i][1]-relevantTaxBrackets[i-1][1]));
         }
         //then add tax in the final bracket, using deducted salary as the upper bound
-        tax += relevantTaxBrackets[relevantTaxBrackets.length-1][0]*(deductedSalary-relevantTaxBrackets[relevantTaxBrackets.length-2][1]);
+        tax += relevantTaxBrackets.slice(-1)[0][0]*(deductedSalary-relevantTaxBrackets[relevantTaxBrackets.length-2][1]);
         return salary-tax;
     //then calculate for joint filers
     }else if(numPeople===2){
@@ -36,14 +41,16 @@ const calculateNetIncome = (numPeople, salary) => {
             return bracket[1] < deductedSalary;            
         })
         //Then add the very next bracket above deducted salary to calculate final portion of tax owed
-        relevantTaxBrackets.push(taxBracketsJoint[relevantTaxBrackets.length]);
+        if(deductedSalary<=taxBracketsJoint.slice(-1)[0][1]){
+            relevantTaxBrackets.push(taxBracketsJoint[relevantTaxBrackets.length]);
+        }    
         //add up tax owed in each bracket that is crossed completely by deducted. i starts at 1 so i-1 can be used to determine $ difference between each bracket, with 0,0 bracket in place at the beginning
         //i goes up to length-1 so that final tax bracket can be calculated differently-using deducted salary instead of the full bracket width
-        for (i=1; i<relevantTaxBrackets.length-1; i++){
+        for (let i=1; i<relevantTaxBrackets.length-1; i++){
             tax +=(relevantTaxBrackets[i][0]*(relevantTaxBrackets[i][1]-relevantTaxBrackets[i-1][1]));
         }
         //then add tax in the final bracket, using deducted salary as the upper bound
-        tax += relevantTaxBrackets[relevantTaxBrackets.length-1][0]*(deductedSalary-relevantTaxBrackets[relevantTaxBrackets.length-2][1]);
+        tax += relevantTaxBrackets.slice(-1)[0][0]*(deductedSalary-relevantTaxBrackets[relevantTaxBrackets.length-2][1]);
         return salary-tax;
     //If number of earners isn't 1 or 2, can't calculate tax
     }else{
@@ -52,12 +59,70 @@ const calculateNetIncome = (numPeople, salary) => {
 }
 
 const calculateAddtlNetIncome = (numPeople, newSalary, previousSalary) => {
-    origNet = calculateNetIncome(numPeople, previousSalary);
-    newNet = calculateNetIncome(numPeople, newSalary+previousSalary);
-    netNet = newNet - origNet;
+    const origNet = calculateNetIncome(numPeople, previousSalary);
+    const newNet = calculateNetIncome(numPeople, newSalary+previousSalary);
+    const netNet = newNet - origNet;
     return netNet;
 }
 
+const reverseTaxCalc = (numPeople, postTaxAmount, previousSalary)=>{
+    if(postTaxAmount<0){
+        return 0;
+    }
+    let amount=0;
+    const deductedAmount=(postTaxAmount+previousSalary)-(standardDeduction*numPeople);
+    if(deductedAmount<=0){
+        return postTaxAmount;
+    //have to check New Francis google sheet, Testing tab for detail here-need a better way to calculate this
+    }else if(numPeople===1){
+        if(postTaxAmount<=21287.5){
+            amount=(((postTaxAmount-standardDeduction)/(21287.5-standardDeduction))*(22275-standardDeduction))+standardDeduction;
+            return amount;
+        }else if(postTaxAmount<=47907.5){
+            amount=(((postTaxAmount-21287.5)/(47907.5-21287.5))*(52525-22275))+22275;
+            return amount;
+        }else if(postTaxAmount<=83319.5){
+            amount=(((postTaxAmount-47907.5)/(83319.5-47907.5))*(97925-52525))+52525;
+            return amount;
+        }else if(postTaxAmount<=142428.5){
+            amount=(((postTaxAmount-83319.5)/(142428.5-83319.5))*(175700-97925))+97925;
+            return amount;
+        }else if(postTaxAmount<=172382.5){
+            amount=(((postTaxAmount-142428.5)/(172382.5-142428.5))*(219750-175700))+175700;
+            return amount;
+        }else if(postTaxAmount<=374565){
+            amount=(((postTaxAmount-172382.5)/(374565-172382.5))*(530800-219750))+219750;
+            return amount;
+        }else if(postTaxAmount<=677973){
+            amount=(((postTaxAmount-374565)/(677973-374565))*(1012400-530800))+530800;
+            return amount;
+        }
+    }else if(numPeople===2){
+        if(postTaxAmount<=42575){
+            amount=(((postTaxAmount-(standardDeduction*2))/(42575-(standardDeduction*2)))*(44550-(standardDeduction*2)))+standardDeduction;
+            return amount;
+        }else if(postTaxAmount<=95815){
+            amount=(((postTaxAmount-42575)/(95815-42575))*(105050-44550))+44550;
+            return amount;
+        }else if(postTaxAmount<=166639){
+            amount=(((postTaxAmount-95815)/(166639-95815))*(195850-105050))+105050;
+            return amount;
+        }else if(postTaxAmount<=284857){
+            amount=(((postTaxAmount-166639)/(284857-166639))*(351400-195850))+195850;
+            return amount;
+        }else if(postTaxAmount<=344765){
+            amount=(((postTaxAmount-284857)/(344765-284857))*(439500-351400))+351400;
+            return amount;
+        }else if(postTaxAmount<=479543){
+            amount=(((postTaxAmount-344765)/(479543-344765))*(646850-439500))+439500;
+            return amount;
+        }else if(postTaxAmount<=717651){
+            amount=(((postTaxAmount-479543)/(717651-479543))*(1024800-646850))+646850;
+            return amount;
+        }
+    }
+}
+
 //Export calculate net income function.  Will be used when calculating life income/net cash flow each year
-const taxExports = {calculateNetIncome, calculateAddtlNetIncome}
+const taxExports = {calculateNetIncome, calculateAddtlNetIncome, reverseTaxCalc}
 module.exports = taxExports;

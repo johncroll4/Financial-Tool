@@ -1,18 +1,4 @@
-
-let monthlySpending;
-let monthlyRetirementSpending;
-function insertCostValues (){
-    monthlySpending=parseInt(window.sessionStorage.getItem('spend'), 10);
-       monthlyRetirementSpending=parseInt(window.sessionStorage.getItem('retir'), 10);
-    console.log(`Cost page monthly spending is ${monthlySpending}`);
-    console.log(`Cost page retirement is ${monthlyRetirementSpending}`);
-    window.sessionStorage.setItem('regCostDistributed', 1);
-    console.log(`Time Cost page values inserted at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
-    window.sessionStorage.setItem('regCostConsumed', 1);
-}
-window.addEventListener('load', insertCostValues);
-
-const regSpending = (year, spend=monthlySpending, retir=monthlyRetirementSpending, personArray) =>{
+const regSpending = (year, spend, retir, personArray) =>{
     console.log(`Time Cost page regspending called at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
     let annualCost=0;
     if (personArray.length==1){

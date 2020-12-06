@@ -1,6 +1,9 @@
 //Kid creator takes all the required variables related to the cost of a kid, and saves them as an object.  This is a factory function for kid objects
 //Really only need a name and year born, default values are reasonable
 //Important method is yearlyCost
+console.log(`Time kid page top at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
+
+const taxCredit = 1500;
 const kidCreator = (_name='Kid', _yearBorn=2020, _dayCareCost=0, _collegeCost=30000) =>{
     return {
         _name,
@@ -8,7 +11,7 @@ const kidCreator = (_name='Kid', _yearBorn=2020, _dayCareCost=0, _collegeCost=30
         _dayCareCost,
         _collegeCost,
         //With above information, can calculate estimated cost for this kid for a given year
-        yearlyCost(seekingYear){
+        yearlyCost(seekingYear, monthlyCost){
             let cost = 0;
             //if seeking year is before birth year, cost is 0
             if (seekingYear<this._yearBorn){
@@ -32,38 +35,15 @@ const kidCreator = (_name='Kid', _yearBorn=2020, _dayCareCost=0, _collegeCost=30
     }
 }
 
-console.log(`Time kid page top at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
-
-//Kiddos is an array which contains the kids invovled, each kid being an object defined above by kid creator
-let kiddos = [];
-let monthlyCost;
-//standard tax credit for dependent
-const taxCredit = 1500;
-function insertKidValues (){
-    let numberOfKids=parseInt(window.sessionStorage.getItem('NOK'), 10);
-    const kidArray = JSON.parse(window.sessionStorage.getItem('kidArray'));
-    kidArray.forEach((kid, index)=>{
-        kiddos[index]=kidCreator(undefined, kid[0], kid[1], kid[2])
-    });
-    console.log(`Kid page NOK is ${numberOfKids}`);
-    monthlyCost=parseInt(window.sessionStorage.getItem('monthlyKid'), 10);
-    console.log(`Kid page monthly cost is ${monthlyCost}`);
-    dayCareMonthly=parseInt(window.sessionStorage.getItem('dayCare'), 10);
-    console.log(`Kid page kid arry is ${JSON.stringify(kidArray)}`);
-    window.sessionStorage.setItem('kidCostConsumed', 1);
-    console.log(`Time kid page values inserted at ${new Date().getSeconds()} and ${new Date().getMilliseconds()}`);
-}
-window.addEventListener('load', insertKidValues);
-
 //This function takes a year as a parameter and returns the annual cost of having kids for that year.  Will add up costs of multiple kids at the same time
-const returnAnnualKidCost = year =>{
-    if(kiddos.length==0){
+const returnAnnualKidCost = (year, kidList, monthlyCost) =>{
+    if(kidList.length==0){
         return 0;
     }
     const annualCostValues = [];
-    kiddos.forEach(kid => {
+    kidList.forEach(kid => {
         //for each kid, add the cost for the given year to an array
-        annualCostValues.push(kid.yearlyCost(year));
+        annualCostValues.push(kid.yearlyCost(year, monthlyCost));
     })
     //then reduce above array to sum up kid cost values into one total cost number
     const annualCost = annualCostValues.reduce((previousValue, currentValue)=>{
@@ -73,4 +53,5 @@ const returnAnnualKidCost = year =>{
 }
 
 //export annual kid cost calculator to be used in overall life yearly calculations
-module.exports = returnAnnualKidCost;
+const kidExports = {returnAnnualKidCost, kidCreator}
+module.exports = kidExports;

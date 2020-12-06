@@ -1,5 +1,4 @@
 const basicFunctions = require('./basicfunctions.js');
-//const growAgainstInflation = basicFunctions.growAgainstInflation;
 const calcMonthlyLoanPayment = basicFunctions.calcMonthlyLoanPayment;
 
 const loanCreator = (_number, _yearOriginated, _amount, _interestRate, _length, _cashInflow) =>{
@@ -30,10 +29,11 @@ const loanCreator = (_number, _yearOriginated, _amount, _interestRate, _length, 
             }
         },
         set number (newNumber){
-            if (typeof newNumber==='number' && newNumber>0 && newNumber > 100){
+            if (typeof newNumber==='number' && newNumber>0 && newNumber < 100){
                 this._number = newNumber;
+                console.log(`New Loan number is set`);
             }else{
-                console.log(`Enter valid number for which house number this is`);
+                console.log(`Enter valid number for which loan number this is`);
             }
         },
         get yearOriginated(){
@@ -109,27 +109,11 @@ const loanCreator = (_number, _yearOriginated, _amount, _interestRate, _length, 
     }
 };
 
-function insertLoanValues (){
-    numberOfLoans=parseInt(window.sessionStorage.getItem('NOL'), 10);
-    const loanArray = JSON.parse(window.sessionStorage.getItem('loanArray'));
-
-    console.log(`Loan page NOL is ${numberOfLoans}`);
-    window.sessionStorage.setItem('loanDistributed', 1);
-      
-    loans=[];
-    for (let i=0; i<numberOfLoans; i++){
-        loans[i]=loanCreator(i+1, loanArray[i][0], loanArray[i][1], loanArray[i][2], loanArray[i][3], loanArray[i][4]);
-    }
-    console.log(`Loan page loan list is ${JSON.stringify(loans)}`);
-    window.sessionStorage.setItem('loanConsumed', 1);
-}
-window.addEventListener('load', insertLoanValues);
-
-const returnAnnualLoanCost = year =>{
+const returnAnnualLoanCost = (year, loanList) =>{
     const annualLoanCostValues = [];
     //Create array of the annual cost of all loans in the system for that year
-    if(loans.length>0){
-        loans.forEach(loan => {
+    if(loanList.length>0){
+        loanList.forEach(loan => {
             if(loan.yearOriginated==year && loan.cashInflow==true){
                 annualLoanCostValues.push((loan.monthlyPayment(year)*12)-loan.amount);
             }else{
@@ -146,5 +130,5 @@ const returnAnnualLoanCost = year =>{
     }
 }
 
-const loanExports = {returnAnnualLoanCost};
+const loanExports = {returnAnnualLoanCost, loanCreator};
 module.exports = loanExports;

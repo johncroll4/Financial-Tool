@@ -1,6 +1,3 @@
-//import rate default values for use in below functions-primarily growth rate and inflation rate.  
-//These are passed as default paramter values to the function but can be changed at the function call
-const rateDefaults = require('./globaldefaults.js');
 
 //Grow Against Inflation is the basic function which calculates the new value of an amount of money after one year of growth.  
 //Values are entered with raw growth rate and inflation is separate, with inflation discounting the growth rate within the calculation
@@ -8,17 +5,19 @@ const rateDefaults = require('./globaldefaults.js');
 //called with any number of years to calculate the future value of something.  This is particularly useful when calculating future salaries
 //Start is the starting value of whatever is being grown.  ** is the symbol for exponent in JavaScript
 
-const growAgainstInflation = (start, years=1, grow=rateDefaults.growth, inflation=rateDefaults.inflation) => {
+const growAgainstInflation = (start, years=1, grow, inflation) => {
     let newAmount = start*((1+(grow-inflation))**years);
     return newAmount;
 }
 
-const calcMonthlyLoanPayment = (loanAmount=0, loanRate=rateDefaults.mortgageInterest, loanLength=10) => {
+const calcMonthlyLoanPayment = (loanAmount=0, loanRate, loanLength=10) => {
     if(loanRate===0){
         return loanAmount/loanLength/12;
-    }else{
+    }else if(loanRate<1){
         const monthlyPayment = (loanAmount)*((loanRate/12)*(1+(loanRate/12))**(loanLength*12))/(((1+(loanRate/12))**(loanLength*12))-1);
         return monthlyPayment;
+    }else{
+        console.log("Invalid interest rate in calcMonthlyLoanPayment");
     }
 }
 

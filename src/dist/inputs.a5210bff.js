@@ -7281,18 +7281,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //handlebars demo and read from form
 //test comment for branch
-window.sessionStorage.setItem('defaultDistributed', 0);
-window.sessionStorage.setItem('housingDistributed', 0);
 window.sessionStorage.setItem('housingConsumed', 0);
-window.sessionStorage.setItem('accountDistributed', 0);
 window.sessionStorage.setItem('accountConsumed', 0);
-window.sessionStorage.setItem('regCostDistributed', 0);
-window.sessionStorage.setItem('kidCostDistributed', 0);
 window.sessionStorage.setItem('regCostConsumed', 0);
 window.sessionStorage.setItem('kidCostConsumed', 0);
-window.sessionStorage.setItem('salaryDistributed', 0);
 window.sessionStorage.setItem('salaryConsumed', 0);
-window.sessionStorage.setItem('loanDistributed', 0);
 window.sessionStorage.setItem('loanConsumed', 0);
 window.sessionStorage.setItem('basicMode', 0);
 console.log("Hope this commit worked");
@@ -8232,7 +8225,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64435" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65423" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

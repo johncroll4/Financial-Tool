@@ -117,186 +117,33 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"globaldefaults.js":[function(require,module,exports) {
-//This object is exported from this file and imported to most other files.  The idea is that there are default values used across the application.  
-//The user would in general be able to modify these values from a simple UI or just accept the defaults
-//Each value has a getter and setter method associated with it
-var rateDefaults = {
-  //growth is used as the default value for the annual growth of money in any year.  The value is considered without considering inflation, whihc is separately deducted 
-  _growth: .05,
-  //inflation rate is used to deduct against regular growth to keep all income/money value in today's dollars.  Income is discounted while costs are not and remain in 2020 dollars
-  _inflation: .02,
-  //real estate tax rate is used to determine total cost of homeownership-realEstateTax*home value.
-  _realEstateTax: .02,
-  //This is the default length of a home loan and can be changed for any specific home/loan
-  _mortgageYears: 30,
-  //This is the default interest rate of a home loan and can be changed for any specific home/loan
-  _mortgageInterest: .035,
-  //This is the assumed rate of annual home value growth.  This value does not account for inflation, but inflation is discounted when this value is used in any formula
-  _homeValueGrowth: .03,
-  _brokerSellCommission: .06,
-
-  get growth() {
-    if (typeof this._growth === 'number') {
-      return this._growth;
-    } else {
-      console.log("Enter valid number for growth rate");
-    }
-  },
-
-  get inflation() {
-    if (typeof this._inflation === 'number') {
-      return this._inflation;
-    } else {
-      console.log("Enter valid number for inflation rate");
-    }
-  },
-
-  get realEstateTax() {
-    if (typeof this._realEstateTax === 'number') {
-      return this._realEstateTax;
-    } else {
-      console.log("Enter valid number for real estate tax rate");
-    }
-  },
-
-  get mortgageYears() {
-    if (typeof this._mortgageYears === 'number') {
-      return this._mortgageYears;
-    } else {
-      console.log("Enter valid number for years of mortgage");
-    }
-  },
-
-  get mortgageInterest() {
-    if (typeof this._mortgageInterest === 'number') {
-      return this._mortgageInterest;
-    } else {
-      console.log("Enter valid number for mortgage interest rate");
-    }
-  },
-
-  get homeValueGrowth() {
-    if (typeof this._homeValueGrowth === 'number') {
-      return this._homeValueGrowth;
-    } else {
-      console.log("Enter valid number for home value growth rate");
-    }
-  },
-
-  get brokerSellCommission() {
-    if (typeof this._brokerSellCommission === 'number') {
-      return this._brokerSellCommission;
-    } else {
-      console.log("Enter valid number for broker commision for house sale");
-    }
-  },
-
-  set growth(newGrowth) {
-    if (typeof newGrowth === 'number' && newGrowth < 1 && newGrowth > -.5) {
-      this._growth = newGrowth;
-    } else {
-      console.log("Enter valid number for growth rate");
-    }
-  },
-
-  set inflation(newInflation) {
-    if (typeof newInflation === 'number' && newInflation < 1 && newInflation > -.5) {
-      this._inflation = newInflation;
-    } else {
-      console.log("Enter valid number for inflation rate");
-    }
-  },
-
-  set realEstateTax(newRealEstateTax) {
-    if (typeof newRealEstateTax === 'number' && newRealEstateTax < 1 && newRealEstateTax > 0) {
-      this._realEstateTax = newRealEstateTax;
-    } else {
-      console.log("Enter valid number for real estate tax rate");
-    }
-  },
-
-  set mortgageYears(newMortgageYears) {
-    if (typeof newMortgageYears === 'number' && newMortgageYears < 100 && newMortgageYears > 0) {
-      this._mortgageYears = newMortgageYears;
-    } else {
-      console.log("Enter valid number for years of mortgage");
-    }
-  },
-
-  set mortgageInterest(newMortgageInterest) {
-    if (typeof newMortgageInterest === 'number' && newMortgageInterest < 1 && newMortgageInterest > 0) {
-      this._mortgageInterest = newMortgageInterest;
-    } else {
-      console.log("Enter valid number for mortgage interest rate");
-    }
-  },
-
-  set homeValueGrowth(newHomeValueGrowth) {
-    if (typeof newHomeValueGrowth === 'number' && newHomeValueGrowth < 1 && newHomeValueGrowth > -.5) {
-      this._homeValueGrowth = newHomeValueGrowth;
-    } else {
-      console.log("Enter valid number for home value growth rate");
-    }
-  },
-
-  set brokerSellCommission(newbrokerSellCommission) {
-    if (typeof newbrokerSellCommission === 'number' && newbrokerSellCommission < 1 && newbrokerSellCommission >= 0) {
-      this._brokerSellCommission = newbrokerSellCommission;
-    } else {
-      console.log("Enter valid number for broker commision for house sale");
-    }
-  }
-
-};
-
-function insertDefaultValues() {
-  rateDefaults.growth = parseFloat(window.sessionStorage.getItem('growthRate'), 10);
-  console.log("global defaults growth rate is now ".concat(rateDefaults.growth));
-  rateDefaults.inflation = parseFloat(window.sessionStorage.getItem('inflation'), 10);
-  console.log("global defaults inflation rate is now ".concat(rateDefaults.inflation));
-  rateDefaults.realEstateTax = parseFloat(window.sessionStorage.getItem('propertyTax'), 10);
-  console.log("global defaults property tax rate is now ".concat(rateDefaults.realEstateTax));
-  rateDefaults.mortgageYears = parseInt(window.sessionStorage.getItem('mortgageLength'), 10);
-  console.log("global defaults mortage length is now ".concat(rateDefaults.mortgageYears));
-  rateDefaults.mortgageInterest = parseFloat(window.sessionStorage.getItem('mortgageRate'), 10);
-  console.log("global defaults mortgage rate is now ".concat(rateDefaults.mortgageInterest));
-  rateDefaults.homeValueGrowth = parseFloat(window.sessionStorage.getItem('homeGrowth'), 10);
-  console.log("global defaults home value growth rate is now ".concat(rateDefaults.homeValueGrowth));
-  rateDefaults.brokerSellCommission = parseFloat(window.sessionStorage.getItem('broker'), 10);
-  console.log("global defaults broker commission is now ".concat(rateDefaults.brokerSellCommission));
-  window.sessionStorage.setItem('defaultDistributed', 1);
-  window.sessionStorage.setItem('defaultConsumed', 1);
-  console.log("Time Default page insert values at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-}
-
-window.addEventListener('load', insertDefaultValues); //Only exporting one object from this file for now.  Future default values can be added to the same object or split out as needed
-
-module.exports = rateDefaults;
-},{}],"basicfunctions.js":[function(require,module,exports) {
-//import rate default values for use in below functions-primarily growth rate and inflation rate.  
-//These are passed as default paramter values to the function but can be changed at the function call
-var rateDefaults = require('./globaldefaults.js'); //Grow Against Inflation is the basic function which calculates the new value of an amount of money after one year of growth.  
+})({"basicfunctions.js":[function(require,module,exports) {
+//Grow Against Inflation is the basic function which calculates the new value of an amount of money after one year of growth.  
 //Values are entered with raw growth rate and inflation is separate, with inflation discounting the growth rate within the calculation
 //Typically this function will be called with years=1, to take one value and "grow" it by one year.  But in general this function can be 
 //called with any number of years to calculate the future value of something.  This is particularly useful when calculating future salaries
 //Start is the starting value of whatever is being grown.  ** is the symbol for exponent in JavaScript
-
-
 var growAgainstInflation = function growAgainstInflation(start) {
   var years = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  var grow = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : rateDefaults.growth;
-  var inflation = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : rateDefaults.inflation;
+  var grow = arguments.length > 2 ? arguments[2] : undefined;
+  var inflation = arguments.length > 3 ? arguments[3] : undefined;
   var newAmount = start * Math.pow(1 + (grow - inflation), years);
   return newAmount;
 };
 
 var calcMonthlyLoanPayment = function calcMonthlyLoanPayment() {
   var loanAmount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  var loanRate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : rateDefaults.mortgageInterest;
+  var loanRate = arguments.length > 1 ? arguments[1] : undefined;
   var loanLength = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
-  var monthlyPayment = loanAmount * (loanRate / 12 * Math.pow(1 + loanRate / 12, loanLength * 12)) / (Math.pow(1 + loanRate / 12, loanLength * 12) - 1);
-  return monthlyPayment;
+
+  if (loanRate === 0) {
+    return loanAmount / loanLength / 12;
+  } else if (loanRate < 1) {
+    var monthlyPayment = loanAmount * (loanRate / 12 * Math.pow(1 + loanRate / 12, loanLength * 12)) / (Math.pow(1 + loanRate / 12, loanLength * 12) - 1);
+    return monthlyPayment;
+  } else {
+    console.log("Invalid interest rate in calcMonthlyLoanPayment");
+  }
 };
 
 var numberFormatter = function numberFormatter(number) {
@@ -305,8 +152,7 @@ var numberFormatter = function numberFormatter(number) {
   var dollarSign = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
   if (keepNumber == true) {
-    var numString = number.toFixed(digits);
-    return parseFloat(numString);
+    return parseFloat((Math.round(number * 100) / 100).toFixed(digits));
   } else {
     if (dollarSign == false) {
       return new Intl.NumberFormat('en-US', {
@@ -332,385 +178,21 @@ var basicFunctions = {
   numberFormatter: numberFormatter
 };
 module.exports = basicFunctions;
-},{"./globaldefaults.js":"globaldefaults.js"}],"taxes.js":[function(require,module,exports) {
-//define relevant tax brackets for sigle filers and joint filers, per 2020 tax code
-//Added 0,0 bracket to make it easier to use for loops below
-var taxBracketsSingle = [[0, 0], [.1, 9875], [.12, 40125], [.22, 85525], [.24, 163300], [.32, 207350], [.35, 518400], [.37, 1000000]];
-var taxBracketsJoint = [[0, 0], [.1, 19750], [.12, 80250], [.22, 171050], [.24, 326600], [.32, 414700], [.35, 622050], [.37, 1000000]]; //standard deduction for single filers as of 2020 tax code.  Need to be careful that this deduction is only used once per year-it will be applied once per function call
-
-var standardDeduction = 12400; //function to determine net income based on filing status and pretax income coming in.  Do not account for pre-tax 401k contributions, that is taken care of upstream
-
-var calculateNetIncome = function calculateNetIncome(numPeople, salary) {
-  var tax = 0; //remove standard deduction from taxable income to lessen tax buren
-
-  var deductedSalary = salary - standardDeduction * numPeople; //if salary entered is less than standard deduction, no tax is owed, so the full salary is returned
-
-  if (deductedSalary <= 0) {
-    return salary; //first calculate for single filers
-  } else if (numPeople === 1) {
-    //create array of relevant tax brackets based on deducted salary-only those which are below deducted salary
-    var relevantTaxBrackets = taxBracketsSingle.filter(function (bracket) {
-      return bracket[1] < deductedSalary;
-    }); //Then add the very next bracket above deducted salary to calculate final portion of tax owed
-
-    relevantTaxBrackets.push(taxBracketsSingle[relevantTaxBrackets.length]); //add up tax owed in each bracket that is crossed completely by deducted. i starts at 1 so i-1 can be used to determine $ difference between each bracket, with 0,0 bracket in place at the beginning
-    //i goes up to length-1 so that final tax bracket can be calculated differently-using deducted salary instead of the full bracket width
-
-    for (i = 1; i < relevantTaxBrackets.length - 1; i++) {
-      tax += relevantTaxBrackets[i][0] * (relevantTaxBrackets[i][1] - relevantTaxBrackets[i - 1][1]);
-    } //then add tax in the final bracket, using deducted salary as the upper bound
-
-
-    tax += relevantTaxBrackets[relevantTaxBrackets.length - 1][0] * (deductedSalary - relevantTaxBrackets[relevantTaxBrackets.length - 2][1]);
-    return salary - tax; //then calculate for joint filers
-  } else if (numPeople === 2) {
-    //create array of relevant tax brackets based on deducted salary-only those which are below deducted salary
-    var _relevantTaxBrackets = taxBracketsJoint.filter(function (bracket) {
-      return bracket[1] < deductedSalary;
-    }); //Then add the very next bracket above deducted salary to calculate final portion of tax owed
-
-
-    _relevantTaxBrackets.push(taxBracketsJoint[_relevantTaxBrackets.length]); //add up tax owed in each bracket that is crossed completely by deducted. i starts at 1 so i-1 can be used to determine $ difference between each bracket, with 0,0 bracket in place at the beginning
-    //i goes up to length-1 so that final tax bracket can be calculated differently-using deducted salary instead of the full bracket width
-
-
-    for (i = 1; i < _relevantTaxBrackets.length - 1; i++) {
-      tax += _relevantTaxBrackets[i][0] * (_relevantTaxBrackets[i][1] - _relevantTaxBrackets[i - 1][1]);
-    } //then add tax in the final bracket, using deducted salary as the upper bound
-
-
-    tax += _relevantTaxBrackets[_relevantTaxBrackets.length - 1][0] * (deductedSalary - _relevantTaxBrackets[_relevantTaxBrackets.length - 2][1]);
-    return salary - tax; //If number of earners isn't 1 or 2, can't calculate tax
-  } else {
-    console.log("Please enter a valid number of salary earners");
-  }
-};
-
-var calculateAddtlNetIncome = function calculateAddtlNetIncome(numPeople, newSalary, previousSalary) {
-  origNet = calculateNetIncome(numPeople, previousSalary);
-  newNet = calculateNetIncome(numPeople, newSalary + previousSalary);
-  netNet = newNet - origNet;
-  return netNet;
-}; //Export calculate net income function.  Will be used when calculating life income/net cash flow each year
-
-
-var taxExports = {
-  calculateNetIncome: calculateNetIncome,
-  calculateAddtlNetIncome: calculateAddtlNetIncome
-};
-module.exports = taxExports;
-},{}],"person.js":[function(require,module,exports) {
-//const rateDefaults = require('./globaldefaults.js');
-//Import basic functions object and extract grow against infaltion function for calculating future home values as the value grows over time
-var basicFunctions = require('./basicfunctions.js');
-
-var growAgainstInflation = basicFunctions.growAgainstInflation;
-
-var taxImports = require('./taxes.js');
-
-var calculateNetIncome = taxImports.calculateNetIncome;
-var calculateAddlNetIncome = taxImports.calculateAddlNetIncome;
-console.log("Time Person page top part at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds())); //person creator takes all the required variables related to a person and their earnings, and saves them as an object.  This is a factory function for person objects
-//Only certain values have a getter and setter method, these are the ones used by retirement functions
-//Important method is yearly salary
-
-var personCreator = function personCreator() {
-  var _name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Person';
-
-  var _age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 30;
-
-  var _startingSalary = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 100000;
-
-  var _salaryGrowth = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : .05;
-
-  var _salaryBumps = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
-
-  var _salaryPlateau = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : [];
-
-  var _retirementYear = arguments.length > 6 ? arguments[6] : undefined;
-
-  var _preTaxContribution = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0;
-
-  var _companyMatch = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : 0;
-
-  return {
-    //Name used to identify account owners for retirement
-    _name: _name,
-    //age when app is being run, important for retirement/RMD considerations
-    _age: _age,
-    _startingSalary: _startingSalary,
-    //Salary growth is not tied to default 5% growth of money-likely to vary widely across people
-    _salaryGrowth: _salaryGrowth,
-    //Salary bumps are one time (one year) increases in salary meant to approximate promotion related income increases
-    _salaryBumps: _salaryBumps,
-    //salary plateau is a year after which salary growth slows, ceases, or reverses.  Has to be after all bumps
-    _salaryPlateau: _salaryPlateau,
-    //Salary is set to 0 after retirement year-no partial retirement support, though could accomplish this with bump/plateau theoretically
-    _retirementYear: _retirementYear,
-    //Only relevant if 401k account will be tied to this person.  If it doesn't apply, should be set to 0
-    _preTaxContribution: _preTaxContribution,
-    _companyMatch: _companyMatch,
-    //With above information, can calculate estimated salary for this person for a given year
-    yearlySalary: function yearlySalary(seekingYear) {
-      var newSalary = this._startingSalary; //console.log(`Initial newSalary is ${newSalary}`);
-      //y is the current year that function is being called in (2020)
-
-      var y = new Date().getFullYear(); //First check if seeking year is before the current year, which wouldn't make much sense.  Return starting salary, which is always discounted by pre tax contribution rate (which could be 0 and therefore have no impact)
-
-      if (seekingYear < y) {
-        //console.log(`Seeking year before current year code is being executed`);
-        return newSalary * (1 - this.preTaxContribution); //if seeking year is after retirement, salary is 0
-      } else if (seekingYear >= this._retirementYear) {
-        newSalary = 0; //console.log(`Seeking year after retirement year code is being executed`);
-
-        return newSalary; //Check if there are salary bumps defined, and seeking year is after at least one of the bumps.  Or if plateau is defined, and seeking year is after plateau
-      } else if (this._salaryBumps.length > 0 && seekingYear >= this._salaryBumps[0][0] || this._salaryPlateau.length > 0 && seekingYear >= this._salaryPlateau[0]) {
-        //console.log(this._salaryBumps.length);
-        //console.log(this._salaryPlateau.length);
-        //Then check if seeking year is before plateau year (or there is no plateau)-therefore can only focus on salary bumps
-        if (this._salaryPlateau.length === 0 || seekingYear < this._salaryPlateau[0]) {
-          //first grow salary using growth rate and number of years between seeking year and current year (standard)
-          newSalary = growAgainstInflation(newSalary, seekingYear - y, this._salaryGrowth); //console.log(`Second newSalary is ${newSalary}`);
-          //relevant salary bumps are determined as the bumps which occur before the seeking year
-
-          var relevantSalaryBumps = this._salaryBumps.filter(function (bump) {
-            return bump[0] < seekingYear;
-          }); //Then use relevant salary bumps to increase salary accoringly.  Important to note that percentage increases commute so order of operation doesn't matter                
-
-
-          for (i = 0; i < relevantSalaryBumps.length; i++) {
-            newSalary = growAgainstInflation(newSalary, 1, relevantSalaryBumps[i][1]); //console.log(`For loop with i = ${i}, newSalary is ${newSalary}`);
-          } //console.log(`Salary bump return statement code is being executed`);
-
-
-          return newSalary * (1 - this.preTaxContribution); //Now we are in the section where seeking year is after the salary plateau year
-        } else {
-          //If there are nonzero number of salary bumps, first repeat above section to calculate the salary at the end of the pre-plateau period.  No need to use relevant bumps since all bumps will be relevant
-          if (this._salaryBumps.length > 0) {
-            newSalary = growAgainstInflation(newSalary, this._salaryPlateau[0] - y - 1, this._salaryGrowth); //console.log(`Plateau before For loop, newSalary is ${newSalary}`);
-
-            for (i = 0; i < this._salaryBumps.length; i++) {
-              newSalary = growAgainstInflation(newSalary, 1, this._salaryBumps[i][1]); //console.log(`Plateau For loop with i = ${i}, newSalary is ${newSalary}`);
-            } //then calculate salary growth in plateau period, using the relevant years and new salary growth value
-
-
-            newSalary = growAgainstInflation(newSalary, seekingYear + 1 - this._salaryPlateau[0], this._salaryPlateau[1]); //console.log(`Plateau after For loop, newSalary is ${newSalary}`);
-
-            return newSalary * (1 - this.preTaxContribution); //If there were no salary bumps to begin with, calculate salary at beginning of plateau period, then salary within plateau period
-          } else {
-            newSalary = growAgainstInflation(newSalary, this._salaryPlateau[0] - y - 1, this._salaryGrowth);
-            newSalary = growAgainstInflation(newSalary, seekingYear + 1 - this._salaryPlateau[0], this._salaryPlateau[1]); //console.log(`Post plateau, no salary bumps code is being executed`);
-
-            return newSalary * (1 - this.preTaxContribution);
-          }
-        } //if not, salary is calculated based on basic growth rate and number of years between first year and seeking year
-
-      } else {
-        newSalary = growAgainstInflation(this._startingSalary, seekingYear - y, this._salaryGrowth); //console.log(`no salary bumps code is being executed`);
-
-        return newSalary * (1 - this.preTaxContribution);
-      }
-    },
-
-    get name() {
-      if (typeof this._name === 'string') {
-        return this._name;
-      } else {
-        console.log("Enter valid name for this person (get)");
-      }
-    },
-
-    set name(newName) {
-      if (typeof newName === 'string') {
-        this._name = newName;
-      } else {
-        console.log("Enter valid name for this person (set)");
-      }
-    },
-
-    //method to return person's age for a given year
-    age: function (_age2) {
-      function age(_x) {
-        return _age2.apply(this, arguments);
-      }
-
-      age.toString = function () {
-        return _age2.toString();
-      };
-
-      return age;
-    }(function (year) {
-      var y = new Date().getFullYear();
-
-      if (year < y || year > 2200) {
-        console.log("Enter a valid year to return person's age");
-      } else {
-        age = year - y + this._age;
-        return age;
-      }
-    }),
-
-    get preTaxContribution() {
-      if (typeof this._preTaxContribution === 'number') {
-        return this._preTaxContribution;
-      } else {
-        console.log("Enter valid pre tax contribution rate (get)");
-      }
-    },
-
-    set preTaxContribution(newRate) {
-      if (typeof newRate === 'number' && newRate >= 0 && rewRate <= .5) {
-        this._preTaxContribution = newRate;
-      } else {
-        console.log("Enter valid pre tax contribution rate (set)");
-      }
-    },
-
-    get companyMatch() {
-      if (typeof this._companyMatch === 'number') {
-        return this._companyMatch;
-      } else {
-        console.log("Enter valid company match contribution rate (get)");
-      }
-    },
-
-    set companyMatch(newRate) {
-      if (typeof newRate === 'number' && newRate >= 0 && rewRate <= .5) {
-        this._companyMatch = newRate;
-      } else {
-        console.log("Enter valid company match contribution rate (set)");
-      }
-    }
-
-  };
-}; //Household members is an array which contains the people invovled, each person being an object defined above by person creator
-
-
-var householdMembers = [];
-
-function insertPersonValues() {
-  numberOfPeople = parseInt(window.sessionStorage.getItem('NOP'), 10);
-  var personArray = JSON.parse(window.sessionStorage.getItem('personArray'));
-  var names = [];
-  var age = [];
-  var startingSalary = [];
-  var salaryGrowth = [];
-  var salaryPlateau = [[], []];
-  var retirementYears = [];
-  var preTax = [];
-  var companyMatch = [];
-  var salaryBumps = [[], []];
-
-  for (var _i = 0; _i < numberOfPeople; _i++) {
-    names[_i] = personArray[_i][0];
-    age[_i] = personArray[_i][1];
-    startingSalary[_i] = personArray[_i][2];
-    salaryGrowth[_i] = personArray[_i][3];
-    salaryPlateau[_i][0] = personArray[_i][4];
-    salaryPlateau[_i][1] = personArray[_i][5];
-    retirementYears[_i] = personArray[_i][6];
-    preTax[_i] = personArray[_i][7];
-    companyMatch[_i] = personArray[_i][8];
-  }
-
-  console.log("Person page array is ".concat(personArray));
-  console.log("Person page NOP is ".concat(numberOfPeople));
-  console.log("Person page names is ".concat(names));
-  console.log("Person page ages are ".concat(age));
-  console.log("Person page starting salaries are ".concat(startingSalary));
-  console.log("Person page salary growth is ".concat(salaryGrowth));
-  console.log("Person page salary plateaus is ".concat(salaryPlateau));
-  console.log("Person page retirement years are ".concat(retirementYears));
-  console.log("Person page pre tax are ".concat(preTax));
-  console.log("Person page company match are ".concat(companyMatch));
-  var bumpArray = JSON.parse(window.sessionStorage.getItem('bumpArray'));
-  salaryBumps = bumpArray;
-  console.log("Person page bump array is ".concat(salaryBumps));
-  window.sessionStorage.setItem('salaryDistributed', 1); //For loop to run through the people defined by UI inputs and create a person object for each using the defined values
-
-  for (i = 0; i < names.length; i++) {
-    householdMembers[i] = personCreator(names[i], age[i], startingSalary[i], salaryGrowth[i], salaryBumps[i], salaryPlateau[i], retirementYears[i], preTax[i], companyMatch[i]);
-  }
-
-  console.log("Household members are ".concat(householdMembers));
-  window.sessionStorage.setItem('salaryConsumed', 1);
-  console.log("Time Person page values inserted at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-}
-
-window.addEventListener('load', insertPersonValues);
-console.log("Time Person page bottom at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-
-var returnAnnualSalary = function returnAnnualSalary(year) {
-  var annualSalaryValues = []; //Create array of the annual salary of all people in the household
-
-  householdMembers.forEach(function (person) {
-    annualSalaryValues.push(person.yearlySalary(year));
-  }); //then reduce above array to sum up all those annual salary values into one value, representing total salary
-
-  var annualSalary = annualSalaryValues.reduce(function (previousValue, currentValue) {
-    return previousValue + currentValue;
-  });
-  var salaryReturn = {
-    annualSalaryValues: annualSalaryValues,
-    annualSalary: annualSalary
-  };
-  return salaryReturn;
-};
-
-var yearlyHouseSalary = function yearlyHouseSalary(year) {
-  var annualSalaryReturn = returnAnnualSalary(year);
-  var totalSalary = annualSalaryReturn.annualSalary;
-  var netSalary = calculateNetIncome(householdMembers.length, totalSalary);
-  var salaryValues = annualSalaryReturn.annualSalaryValues;
-  var salaryReturn = {
-    salaryValues: salaryValues,
-    netSalary: netSalary
-  };
-  return salaryReturn;
-}; //Consolidate function to return person creator function (which may not be necessary) and household members array, to be exported and used in overall scheme to calculate life for each year 
-
-
-var personExports = {
-  householdMembers: householdMembers,
-  returnAnnualSalary: returnAnnualSalary,
-  yearlyHouseSalary: yearlyHouseSalary
-};
-module.exports = personExports;
-},{"./basicfunctions.js":"basicfunctions.js","./taxes.js":"taxes.js"}],"regularcost.js":[function(require,module,exports) {
-var personImports = require('./person.js');
-
-var householdMembers = personImports.householdMembers;
-var monthlySpending;
-var monthlyRetirementSpending;
-
-function insertCostValues() {
-  monthlySpending = parseInt(window.sessionStorage.getItem('spend'), 10);
-  monthlyRetirementSpending = parseInt(window.sessionStorage.getItem('retir'), 10);
-  console.log("Cost page monthly spending is ".concat(monthlySpending));
-  console.log("Cost page retirement is ".concat(monthlyRetirementSpending));
-  window.sessionStorage.setItem('regCostDistributed', 1);
-  console.log("Time Cost page values inserted at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-  window.sessionStorage.setItem('regCostConsumed', 1);
-}
-
-window.addEventListener('load', insertCostValues);
-
-var regSpending = function regSpending(year) {
-  var spend = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : monthlySpending;
-  var retir = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : monthlyRetirementSpending;
+},{}],"regularcost.js":[function(require,module,exports) {
+var regSpending = function regSpending(year, spend, retir, personArray) {
   console.log("Time Cost page regspending called at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
   var annualCost = 0;
 
-  if (householdMembers.length == 1) {
-    if (year >= householdMembers[0]._retirementYear) {
+  if (personArray.length == 1) {
+    if (year >= personArray[0]._retirementYear) {
       annualCost = retir * 12;
       return annualCost;
     } else {
       annualCost = spend * 12;
       return annualCost;
     }
-  } else if (householdMembers.length == 2) {
-    if (year >= householdMembers[0]._retirementYear || year >= householdMembers[1]._retirementYear) {
+  } else if (personArray.length == 2) {
+    if (year >= personArray[0]._retirementYear || year >= personArray[1]._retirementYear) {
       annualCost = retir * 12;
       return annualCost;
     } else {
@@ -724,12 +206,8 @@ var regSpending = function regSpending(year) {
 
 console.log("Time Cost page bottom at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
 module.exports = regSpending;
-},{"./person.js":"person.js"}],"homecalcs.js":[function(require,module,exports) {
-//import rate default values for use in below functions-growth rate, inflation rate, mortgage interest rate, mortgage years 
-////These are passed as default paramter values to the function but can be changed at the function call
-var rateDefaults = require('./globaldefaults.js'); //Import basic functions object and extract grow against infaltion function for calculating future home values as the value grows over time
-
-
+},{}],"homecalcs.js":[function(require,module,exports) {
+//Import basic functions object and extract grow against infaltion function for calculating future home values as the value grows over time
 var basicFunctions = require('./basicfunctions.js');
 
 var growAgainstInflation = basicFunctions.growAgainstInflation;
@@ -737,16 +215,10 @@ var calcMonthlyLoanPayment = basicFunctions.calcMonthlyLoanPayment; //home creat
 //Every value has a getter and setter method, though most of them are probably not necessary
 //Important method is yearly values
 
-var homeCreator = function homeCreator(_number, _yearPurchased, _yearSold, _originalValue) {
-  var _growthRate = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : rateDefaults.homeValueGrowth;
+var homeCreator = function homeCreator(_number, _yearPurchased, _yearSold, _originalValue, _growthRate, _mortgageInterestRate, _realEstateTaxRate) {
+  var _downPayment = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : .2;
 
-  var _mortgageInterestRate = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : rateDefaults.mortgageInterest;
-
-  var _realEstateTaxRate = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : rateDefaults.realEstateTax;
-
-  var _downPayment = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : .2 * _originalValue;
-
-  var _mortgageYears = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : rateDefaults.mortgageYears;
+  var _mortgageYears = arguments.length > 8 ? arguments[8] : undefined;
 
   var _HOA = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : 0;
 
@@ -780,66 +252,75 @@ var homeCreator = function homeCreator(_number, _yearPurchased, _yearSold, _orig
     _monthlyRent: _monthlyRent,
     yearlyValues: function yearlyValues() {
       var seekingYear = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._yearPurchased;
+      var inflation = arguments.length > 1 ? arguments[1] : undefined;
 
       //start by making sure the year being passed to method is reasonable
       if (seekingYear > 2100 || seekingYear < 1950) {
         console.log("Please enter a valid year to return relevant home values");
+        return 0;
+      } else if (inflation == undefined) {
+        console.log("Please enter an inflation rate");
+        return 0;
+      } //Then calculate the monthly payment of the loan based on outstanding principle, interest rate, length of mortgage, etc.  Standard loan calculator formula
+      //This payment is monthly which is one of the only values in the app which refers to a montly value-hence the *12 and /12 in the formula
+
+
+      var monthlyPayment;
+
+      if (seekingYear >= this._yearSold || seekingYear < this._yearPurchased) {
+        monthlyPayment = 0;
+      } else if (this._renting == false) {
+        monthlyPayment = calcMonthlyLoanPayment(this._originalValue * (1 - this._downPayment), this._mortgageInterestRate, this._mortgageYears);
+      } else if (this._renting == true) {
+        monthlyPayment = this._monthlyRent;
       } else {
-        //Then calculate the monthly payment of the loan based on outstanding principle, interest rate, length of mortgage, etc.  Standard loan calculator formula
-        //This payment is monthly which is one of the only values in the app which refers to a montly value-hence the *12 and /12 in the formula
-        var monthlyPayment;
-
-        if (this._renting == false) {
-          monthlyPayment = calcMonthlyLoanPayment(this._originalValue - this._downPayment, this._mortgageInterestRate, this._mortgageYears);
-        } else {
-          monthlyPayment = 0;
-        } //Annual cost section
+        monthlyPayment = 0;
+      } //Annual cost section
 
 
-        var annualCost; //If seeking year does not fall within the range of when the house is actually owned, annual cost is 0
+      var annualCost; //If seeking year does not fall within the range of when the house is actually owned, annual cost is 0
 
-        if (seekingYear >= this._yearSold || seekingYear < this._yearPurchased) {
-          annualCost = 0; //Check if seeking year is after the loan has been fully paid but also before the year sold-basically when the only cost associated with the home is ongoing real estate tax payments
-        } else if (this._renting == true) {
-          annualCost = this._monthlyRent * 12;
-        } else if (seekingYear >= this._yearPurchased + this._mortgageYears) {
-          //annual cost in this scenario is just the growing value of the home times the real estate tax rate
-          annualCost = growAgainstInflation(this._originalValue, seekingYear - this._yearPurchased, this._growthRate, rateDefaults.inflation) * this._realEstateTaxRate + this._HOA * 12;
-        } //Now we are in the "normal" range when the house is actually owned and not yet paid off
-        else {
-            //annual cost is the constant monthly payment*12 + the growing value of the home times the real estate tax rate
-            annualCost = monthlyPayment * 12 + growAgainstInflation(this._originalValue, seekingYear - this._yearPurchased, this._growthRate, rateDefaults.inflation) * this._realEstateTaxRate + this._HOA * 12;
-          } //Remaining balance on the loan section
-
-
-        var remainingBalance; //If the seeking year is before the house is purchased, after it is sold, or after the loan is fully paid off, remaining balance is 0
-
-        if (seekingYear >= this._yearPurchased + this._mortgageYears || seekingYear > this._yearSold || seekingYear < this._yearPurchased || this._renting == true) {
-          remainingBalance = 0;
-        } else {
-          //If not, remaining balance is calculated by another, related loan calculator formula using loan starting value, length, and interest rate
-          remainingBalance = (this._originalValue - this._downPayment) * (Math.pow(1 + this._mortgageInterestRate / 12, this._mortgageYears * 12) - Math.pow(1 + this._mortgageInterestRate / 12, (seekingYear - this._yearPurchased) * 12)) / (Math.pow(1 + this._mortgageInterestRate / 12, this._mortgageYears * 12) - 1);
-        } //Equity section-how much money the owner has as an asset in the home
+      if (seekingYear >= this._yearSold || seekingYear < this._yearPurchased) {
+        annualCost = 0; //Check if seeking year is after the loan has been fully paid but also before the year sold-basically when the only cost associated with the home is ongoing real estate tax payments
+      } else if (this._renting == true) {
+        annualCost = this._monthlyRent * 12;
+      } else if (seekingYear >= this._yearPurchased + this._mortgageYears) {
+        //annual cost in this scenario is just the growing value of the home times the real estate tax rate
+        annualCost = growAgainstInflation(this._originalValue, seekingYear - this._yearPurchased, this._growthRate, inflation) * this._realEstateTaxRate + this._HOA * 12;
+      } //Now we are in the "normal" range when the house is actually owned and not yet paid off
+      else {
+          //annual cost is the constant monthly payment*12 + the growing value of the home times the real estate tax rate
+          annualCost = monthlyPayment * 12 + growAgainstInflation(this._originalValue, seekingYear - this._yearPurchased, this._growthRate, inflation) * this._realEstateTaxRate + this._HOA * 12;
+        } //Remaining balance on the loan section
 
 
-        var equity; //If the house hasn't been purhcased yet, or has already been sold, equity is 0 (equity from a home sale will have already been transferred to a cash account or to another home)
+      var remainingBalance; //If the seeking year is before the house is purchased, after it is sold, or after the loan is fully paid off, remaining balance is 0
 
-        if (seekingYear > this._yearSold || seekingYear <= this._yearPurchased || this._renting == true) {
-          equity = 0;
-        } else {
-          //If the home is owned in the seeking year, equity is calculated as the value of the home minus the above calculated remaining balance on the loan
-          equity = growAgainstInflation(this._originalValue, seekingYear - this._yearPurchased, this._growthRate, rateDefaults.inflation) - remainingBalance;
-        } //define object which is used to return all releavnt values for that home in the given year 
+      if (seekingYear >= this._yearPurchased + this._mortgageYears || seekingYear > this._yearSold || seekingYear < this._yearPurchased || this._renting == true) {
+        remainingBalance = 0;
+      } else {
+        //If not, remaining balance is calculated by another, related loan calculator formula using loan starting value, length, and interest rate
+        remainingBalance = this._originalValue * (1 - this._downPayment) * (Math.pow(1 + this._mortgageInterestRate / 12, this._mortgageYears * 12) - Math.pow(1 + this._mortgageInterestRate / 12, (seekingYear - this._yearPurchased) * 12)) / (Math.pow(1 + this._mortgageInterestRate / 12, this._mortgageYears * 12) - 1);
+      } //Equity section-how much money the owner has as an asset in the home
 
 
-        var homeValueAtCertainYear = {
-          monthlyPayment: monthlyPayment,
-          annualCost: annualCost,
-          remainingBalance: remainingBalance,
-          equity: equity
-        };
-        return homeValueAtCertainYear;
-      }
+      var equity; //If the house hasn't been purhcased yet, or has already been sold, equity is 0 (equity from a home sale will have already been transferred to a cash account or to another home)
+
+      if (seekingYear > this._yearSold || seekingYear < this._yearPurchased || this._renting == true) {
+        equity = 0;
+      } else {
+        //If the home is owned in the seeking year, equity is calculated as the value of the home minus the above calculated remaining balance on the loan
+        equity = growAgainstInflation(this._originalValue, seekingYear - this._yearPurchased, this._growthRate, inflation) - remainingBalance;
+      } //define object which is used to return all releavnt values for that home in the given year 
+
+
+      var homeValueAtCertainYear = {
+        monthlyPayment: monthlyPayment,
+        annualCost: annualCost,
+        remainingBalance: remainingBalance,
+        equity: equity
+      };
+      return homeValueAtCertainYear;
     },
 
     get number() {
@@ -851,7 +332,7 @@ var homeCreator = function homeCreator(_number, _yearPurchased, _yearSold, _orig
     },
 
     set number(newNumber) {
-      if (typeof newNumber === 'number' && newNumber > 0 && newNumber > 100) {
+      if (typeof newNumber === 'number' && newNumber > 0 && newNumber < 100) {
         this._number = newNumber;
       } else {
         console.log("Enter valid number for which house number this is");
@@ -899,7 +380,7 @@ var homeCreator = function homeCreator(_number, _yearPurchased, _yearSold, _orig
     },
 
     set originalValue(newValue) {
-      if (typeof newValue === 'number' && newValue < 1 && newValue > -.5) {
+      if (typeof newValue === 'number' && newValue > 0 && newValue < 1000000000) {
         this._originalValue = newValue;
       } else {
         console.log("Enter valid number for the original value of the house");
@@ -963,7 +444,7 @@ var homeCreator = function homeCreator(_number, _yearPurchased, _yearSold, _orig
     },
 
     set downPayment(newDP) {
-      if (typeof newDP === 'number' && newDP < 1 && newDP > -.5) {
+      if (typeof newDP === 'number' && newDP < 1 && newDP > 0) {
         this._downPayment = newDP;
       } else {
         console.log("Enter valid number for the down payment");
@@ -987,82 +468,34 @@ var homeCreator = function homeCreator(_number, _yearPurchased, _yearSold, _orig
     },
 
     get mortgagePayment() {
-      if (typeof this._mortgagePayment === 'number') {
-        return this._mortgagePayment;
+      if (typeof this._originalValue === 'number') {
+        return calcMonthlyLoanPayment(this._originalValue * (1 - this._downPayment), this._mortgageInterestRate, this._mortgageYears);
       } else {
         console.log("Error calculating mortgage payment");
+      }
+    },
+
+    get renting() {
+      if (typeof this._renting === 'boolean') {
+        return this._renting;
+      } else {
+        console.log("Problem with renting flag");
       }
     }
 
   };
-}; //House progression is an array which contains all the homes to be owned, each home being an object defined above by home creator
+}; //This function takes a year as a parameter and returns the annual cost of ownership for each home for that year.  This function is probably set up to support owning multiple homes at once, but the above for loop is not
 
 
-var houseProgression = []; //House purchase cash flow is an array of numbers which define years where homes are bought or sold, and what the cashs flow consequences are for those actions.  If a home is bought, maybe the DP is a negative cashflow
-//out of some account.  If a home is bought and previous one is sold, there could be a net positive cash flow if the second downpayment is less than the equity in the previous home, etc.
-//This array only has values during years where home purchase/selling activity takes place.  Each element has a year and a cash flow value in it
-
-var housePurchaseCashFlow = [];
-
-function insertHousingValues() {
-  var houseArray = JSON.parse(window.sessionStorage.getItem('houseArray'));
-  houseArray.push([2200]);
-  window.sessionStorage.setItem('housingDistributed', 1); //For loop to run through all the houses defined by UI inputs and create a home object for each using the defined values
-  //In general this would need to be extended to look at more variables-independent growth rates for each house, for example
-
-  for (var j = 0; j < houseArray.length - 1; j++) {
-    //Have to treat first house separately, as there is no chance of a "transfer", it has to just be purchased with a negative DP cashflow
-    if (j === 0) {
-      //Create the home with specified values, and add to house purchase cash flow array with year and DP value
-      houseProgression[j] = homeCreator(j + 1, houseArray[j][0], houseArray[j + 1][0], houseArray[j][1], undefined, undefined, undefined, houseArray[j][3], undefined, houseArray[j][4], houseArray[j][5], houseArray[j][6]);
-
-      if (!houseArray[j][5]) {
-        housePurchaseCashFlow[j] = [houseProgression[j].yearPurchased, -(houseProgression[j].downPayment * houseProgression[j].originalValue)];
-      } else {
-        housePurchaseCashFlow[j] = [houseArray[j][0], 0];
-      }
-    } else {
-      //If full transfer is false, still create the home object but fill in cash flow array with the year purchased, and the difference between the previous homes equity in the sale year and the current homes downpayment
-      //For year purchased, using yearsPurchased[i].  For year sold using [i+1] which means the assumption is that only one home is owned at at a time-limitation here
-      if (!houseArray[j][2]) {
-        houseProgression[j] = homeCreator(j + 1, houseArray[j][0], houseArray[j + 1][0], houseArray[j][1], undefined, undefined, undefined, houseArray[j][3], undefined, houseArray[j][4], houseArray[j][5], houseArray[j][6]);
-
-        if (!houseArray[j][5]) {
-          //Pull relevant home values for previous house in the year that the new house is being purchased.  Equity + remaining balance gives the total value of the home in that year
-          var relevantValues = houseProgression[j - 1].yearlyValues(houseArray[j][0]);
-          housePurchaseCashFlow[j] = [houseArray[j][0], relevantValues.equity - (relevantValues.equity + relevantValues.remainingBalance) * rateDefaults.brokerSellCommission - houseProgression[j].downPayment];
-        } else {
-          housePurchaseCashFlow[j] = [houseArray[j][0], 0];
-        } //If full transfer is true, have to set the downpayment value explicity by calculating the previous homes equity at in the year of sale.  Undefined parameters are just keeping the default value
-
-      } else {
-        var _relevantValues = houseProgression[j - 1].yearlyValues(houseArray[j][0]);
-
-        houseProgression[j] = homeCreator(j + 1, houseArray[j][0], houseArray[j + 1][0], houseArray[j][1], undefined, undefined, undefined, _relevantValues.equity - (_relevantValues.equity + _relevantValues.remainingBalance) * rateDefaults.brokerSellCommission, undefined, houseArray[j][4], houseArray[j][5], houseArray[j][6]); //In this case, no effect to cash flow with full transfer=true
-
-        housePurchaseCashFlow[j] = [houseArray[j][0], 0];
-      }
-    }
-  }
-
-  window.sessionStorage.setItem('housingConsumed', 1);
-  console.log("Time House page insert values at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-}
-
-window.addEventListener('load', insertHousingValues);
-/* const insertHousingButton = document.getElementById("saveHousing");
-insertHousingButton.addEventListener("click", insertHousingValues); */
-//This function takes a year as a parameter and returns the annual cost of ownership for each home for that year.  This function is probably set up to support owning multiple homes at once, but the above for loop is not
-
-var returnAnnualHousingCost = function returnAnnualHousingCost(year) {
-  if (houseProgression.length == 0) {
+var returnAnnualHousingCost = function returnAnnualHousingCost(year, houseList, inflation) {
+  if (houseList.length == 0) {
     return 0;
   }
 
   var annualCostValues = []; //Create array of the annual cost of all homes in the system for that year
 
-  houseProgression.forEach(function (home) {
-    annualCostValues.push(home.yearlyValues(year).annualCost);
+  houseList.forEach(function (home) {
+    annualCostValues.push(home.yearlyValues(year, inflation).annualCost);
   }); //then reduce above array to sum up all those annual cost values into one value, representing all home value ownership costs
 
   var annualCost = annualCostValues.reduce(function (previousValue, currentValue) {
@@ -1071,32 +504,39 @@ var returnAnnualHousingCost = function returnAnnualHousingCost(year) {
   return annualCost;
 };
 
-function findHousePurchaseYearCashFlow(propValue) {
-  var valueToReturn;
-
-  for (var i = 0; i < housePurchaseCashFlow.length; i++) {
-    if (housePurchaseCashFlow[i][0] === propValue) {
-      valueToReturn = housePurchaseCashFlow[i][1];
-    }
-  }
-
-  if (valueToReturn === undefined) {
+function findHousePurchaseYearCashFlow(year, houseList, inflation, commission) {
+  if (houseList.length == 0) {
     return 0;
-  } else {
-    return valueToReturn;
   }
+
+  var cashflow = 0;
+  houseList.forEach(function (home) {
+    if (home.yearPurchased === year) {
+      if (home.renting === false) {
+        cashflow -= home.originalValue * home.downPayment;
+      }
+    } else if (home.yearSold === year) {
+      var relevantValues = home.yearlyValues(year, inflation);
+      cashflow += relevantValues.equity - (relevantValues.equity + relevantValues.remainingBalance) * commission;
+    }
+  });
+  return cashflow;
 } //Consolidate function to return annual housing cost, and cash flow array, to be exported and used in overall scheme to calculate life for each year 
 
 
 var housingExports = {
   returnAnnualHousingCost: returnAnnualHousingCost,
-  findHousePurchaseYearCashFlow: findHousePurchaseYearCashFlow
+  findHousePurchaseYearCashFlow: findHousePurchaseYearCashFlow,
+  homeCreator: homeCreator
 };
 module.exports = housingExports;
-},{"./globaldefaults.js":"globaldefaults.js","./basicfunctions.js":"basicfunctions.js"}],"kiddos.js":[function(require,module,exports) {
+},{"./basicfunctions.js":"basicfunctions.js"}],"kiddos.js":[function(require,module,exports) {
 //Kid creator takes all the required variables related to the cost of a kid, and saves them as an object.  This is a factory function for kid objects
 //Really only need a name and year born, default values are reasonable
 //Important method is yearlyCost
+console.log("Time kid page top at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+var taxCredit = 1500;
+
 var kidCreator = function kidCreator() {
   var _name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Kid';
 
@@ -1112,7 +552,7 @@ var kidCreator = function kidCreator() {
     _dayCareCost: _dayCareCost,
     _collegeCost: _collegeCost,
     //With above information, can calculate estimated cost for this kid for a given year
-    yearlyCost: function yearlyCost(seekingYear) {
+    yearlyCost: function yearlyCost(seekingYear, monthlyCost) {
       var cost = 0; //if seeking year is before birth year, cost is 0
 
       if (seekingYear < this._yearBorn) {
@@ -1131,41 +571,18 @@ var kidCreator = function kidCreator() {
       return cost;
     }
   };
-};
+}; //This function takes a year as a parameter and returns the annual cost of having kids for that year.  Will add up costs of multiple kids at the same time
 
-console.log("Time kid page top at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds())); //Kiddos is an array which contains the kids invovled, each kid being an object defined above by kid creator
 
-var kiddos = [];
-var monthlyCost; //standard tax credit for dependent
-
-var taxCredit = 1500;
-
-function insertKidValues() {
-  var numberOfKids = parseInt(window.sessionStorage.getItem('NOK'), 10);
-  var kidArray = JSON.parse(window.sessionStorage.getItem('kidArray'));
-  kidArray.forEach(function (kid, index) {
-    kiddos[index] = kidCreator(undefined, kid[0], kid[1], kid[2]);
-  });
-  console.log("Kid page NOK is ".concat(numberOfKids));
-  monthlyCost = parseInt(window.sessionStorage.getItem('monthlyKid'), 10);
-  console.log("Kid page monthly cost is ".concat(monthlyCost));
-  dayCareMonthly = parseInt(window.sessionStorage.getItem('dayCare'), 10);
-  console.log("Kid page kid arry is ".concat(JSON.stringify(kidArray)));
-  window.sessionStorage.setItem('kidCostConsumed', 1);
-  console.log("Time kid page values inserted at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-}
-
-window.addEventListener('load', insertKidValues); //This function takes a year as a parameter and returns the annual cost of having kids for that year.  Will add up costs of multiple kids at the same time
-
-var returnAnnualKidCost = function returnAnnualKidCost(year) {
-  if (kiddos.length == 0) {
+var returnAnnualKidCost = function returnAnnualKidCost(year, kidList, monthlyCost) {
+  if (kidList.length == 0) {
     return 0;
   }
 
   var annualCostValues = [];
-  kiddos.forEach(function (kid) {
+  kidList.forEach(function (kid) {
     //for each kid, add the cost for the given year to an array
-    annualCostValues.push(kid.yearlyCost(year));
+    annualCostValues.push(kid.yearlyCost(year, monthlyCost));
   }); //then reduce above array to sum up kid cost values into one total cost number
 
   var annualCost = annualCostValues.reduce(function (previousValue, currentValue) {
@@ -1175,8 +592,360 @@ var returnAnnualKidCost = function returnAnnualKidCost(year) {
 }; //export annual kid cost calculator to be used in overall life yearly calculations
 
 
-module.exports = returnAnnualKidCost;
-},{}],"retirement.js":[function(require,module,exports) {
+var kidExports = {
+  returnAnnualKidCost: returnAnnualKidCost,
+  kidCreator: kidCreator
+};
+module.exports = kidExports;
+},{}],"taxes.js":[function(require,module,exports) {
+//define relevant tax brackets for sigle filers and joint filers, per 2020 tax code
+//Added 0,0 bracket to make it easier to use for loops below
+var taxBracketsSingle = [[0, 0], [.1, 9875], [.12, 40125], [.22, 85525], [.24, 163300], [.32, 207350], [.35, 518400], [.37, 1000000]];
+var taxBracketsJoint = [[0, 0], [.1, 19750], [.12, 80250], [.22, 171050], [.24, 326600], [.32, 414700], [.35, 622050], [.37, 1000000]]; //standard deduction for single filers as of 2020 tax code.  Need to be careful that this deduction is only used once per year-it will be applied once per function call
+
+var standardDeduction = 12400; //function to determine net income based on filing status and pretax income coming in.  Do not account for pre-tax 401k contributions, that is taken care of upstream
+
+var calculateNetIncome = function calculateNetIncome(numPeople, salary) {
+  if (salary < 0) {
+    return 0;
+  }
+
+  var tax = 0; //remove standard deduction from taxable income to lessen tax buren
+
+  var deductedSalary = salary - standardDeduction * numPeople; //if salary entered is less than standard deduction, no tax is owed, so the full salary is returned
+
+  if (deductedSalary <= 0) {
+    return salary; //first calculate for single filers
+  } else if (numPeople === 1) {
+    //create array of relevant tax brackets based on deducted salary-only those which are below deducted salary
+    var relevantTaxBrackets = taxBracketsSingle.filter(function (bracket) {
+      return bracket[1] < deductedSalary;
+    }); //Then add the very next bracket above deducted salary to calculate final portion of tax owed (unless deducted salary > largest bracket)
+
+    if (deductedSalary <= taxBracketsSingle.slice(-1)[0][1]) {
+      relevantTaxBrackets.push(taxBracketsSingle[relevantTaxBrackets.length]);
+    } //add up tax owed in each bracket that is crossed completely by deducted. i starts at 1 so i-1 can be used to determine $ difference between each bracket, with 0,0 bracket in place at the beginning
+    //i goes up to length-1 so that final tax bracket can be calculated differently-using deducted salary instead of the full bracket width
+
+
+    for (var i = 1; i < relevantTaxBrackets.length - 1; i++) {
+      tax += relevantTaxBrackets[i][0] * (relevantTaxBrackets[i][1] - relevantTaxBrackets[i - 1][1]);
+    } //then add tax in the final bracket, using deducted salary as the upper bound
+
+
+    tax += relevantTaxBrackets.slice(-1)[0][0] * (deductedSalary - relevantTaxBrackets[relevantTaxBrackets.length - 2][1]);
+    return salary - tax; //then calculate for joint filers
+  } else if (numPeople === 2) {
+    //create array of relevant tax brackets based on deducted salary-only those which are below deducted salary
+    var _relevantTaxBrackets = taxBracketsJoint.filter(function (bracket) {
+      return bracket[1] < deductedSalary;
+    }); //Then add the very next bracket above deducted salary to calculate final portion of tax owed
+
+
+    if (deductedSalary <= taxBracketsJoint.slice(-1)[0][1]) {
+      _relevantTaxBrackets.push(taxBracketsJoint[_relevantTaxBrackets.length]);
+    } //add up tax owed in each bracket that is crossed completely by deducted. i starts at 1 so i-1 can be used to determine $ difference between each bracket, with 0,0 bracket in place at the beginning
+    //i goes up to length-1 so that final tax bracket can be calculated differently-using deducted salary instead of the full bracket width
+
+
+    for (var _i = 1; _i < _relevantTaxBrackets.length - 1; _i++) {
+      tax += _relevantTaxBrackets[_i][0] * (_relevantTaxBrackets[_i][1] - _relevantTaxBrackets[_i - 1][1]);
+    } //then add tax in the final bracket, using deducted salary as the upper bound
+
+
+    tax += _relevantTaxBrackets.slice(-1)[0][0] * (deductedSalary - _relevantTaxBrackets[_relevantTaxBrackets.length - 2][1]);
+    return salary - tax; //If number of earners isn't 1 or 2, can't calculate tax
+  } else {
+    console.log("Please enter a valid number of salary earners");
+  }
+};
+
+var calculateAddtlNetIncome = function calculateAddtlNetIncome(numPeople, newSalary, previousSalary) {
+  var origNet = calculateNetIncome(numPeople, previousSalary);
+  var newNet = calculateNetIncome(numPeople, newSalary + previousSalary);
+  var netNet = newNet - origNet;
+  return netNet;
+};
+
+var reverseTaxCalc = function reverseTaxCalc(numPeople, postTaxAmount, previousSalary) {
+  if (postTaxAmount < 0) {
+    return 0;
+  }
+
+  var amount = 0;
+  var deductedAmount = postTaxAmount + previousSalary - standardDeduction * numPeople;
+
+  if (deductedAmount <= 0) {
+    return postTaxAmount; //have to check New Francis google sheet, Testing tab for detail here-need a better way to calculate this
+  } else if (numPeople === 1) {
+    if (postTaxAmount <= 21287.5) {
+      amount = (postTaxAmount - standardDeduction) / (21287.5 - standardDeduction) * (22275 - standardDeduction) + standardDeduction;
+      return amount;
+    } else if (postTaxAmount <= 47907.5) {
+      amount = (postTaxAmount - 21287.5) / (47907.5 - 21287.5) * (52525 - 22275) + 22275;
+      return amount;
+    } else if (postTaxAmount <= 83319.5) {
+      amount = (postTaxAmount - 47907.5) / (83319.5 - 47907.5) * (97925 - 52525) + 52525;
+      return amount;
+    } else if (postTaxAmount <= 142428.5) {
+      amount = (postTaxAmount - 83319.5) / (142428.5 - 83319.5) * (175700 - 97925) + 97925;
+      return amount;
+    } else if (postTaxAmount <= 172382.5) {
+      amount = (postTaxAmount - 142428.5) / (172382.5 - 142428.5) * (219750 - 175700) + 175700;
+      return amount;
+    } else if (postTaxAmount <= 374565) {
+      amount = (postTaxAmount - 172382.5) / (374565 - 172382.5) * (530800 - 219750) + 219750;
+      return amount;
+    } else if (postTaxAmount <= 677973) {
+      amount = (postTaxAmount - 374565) / (677973 - 374565) * (1012400 - 530800) + 530800;
+      return amount;
+    }
+  } else if (numPeople === 2) {
+    if (postTaxAmount <= 42575) {
+      amount = (postTaxAmount - standardDeduction * 2) / (42575 - standardDeduction * 2) * (44550 - standardDeduction * 2) + standardDeduction;
+      return amount;
+    } else if (postTaxAmount <= 95815) {
+      amount = (postTaxAmount - 42575) / (95815 - 42575) * (105050 - 44550) + 44550;
+      return amount;
+    } else if (postTaxAmount <= 166639) {
+      amount = (postTaxAmount - 95815) / (166639 - 95815) * (195850 - 105050) + 105050;
+      return amount;
+    } else if (postTaxAmount <= 284857) {
+      amount = (postTaxAmount - 166639) / (284857 - 166639) * (351400 - 195850) + 195850;
+      return amount;
+    } else if (postTaxAmount <= 344765) {
+      amount = (postTaxAmount - 284857) / (344765 - 284857) * (439500 - 351400) + 351400;
+      return amount;
+    } else if (postTaxAmount <= 479543) {
+      amount = (postTaxAmount - 344765) / (479543 - 344765) * (646850 - 439500) + 439500;
+      return amount;
+    } else if (postTaxAmount <= 717651) {
+      amount = (postTaxAmount - 479543) / (717651 - 479543) * (1024800 - 646850) + 646850;
+      return amount;
+    }
+  }
+}; //Export calculate net income function.  Will be used when calculating life income/net cash flow each year
+
+
+var taxExports = {
+  calculateNetIncome: calculateNetIncome,
+  calculateAddtlNetIncome: calculateAddtlNetIncome,
+  reverseTaxCalc: reverseTaxCalc
+};
+module.exports = taxExports;
+},{}],"person.js":[function(require,module,exports) {
+//Import basic functions object and extract grow against infaltion function for calculating future home values as the value grows over time
+var basicFunctions = require('./basicfunctions.js');
+
+var growAgainstInflation = basicFunctions.growAgainstInflation;
+
+var taxImports = require('./taxes.js');
+
+var calculateNetIncome = taxImports.calculateNetIncome;
+var calculateAddlNetIncome = taxImports.calculateAddlNetIncome;
+console.log("Time Person page top part at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds())); //person creator takes all the required variables related to a person and their earnings, and saves them as an object.  This is a factory function for person objects
+//Only certain values have a getter and setter method, these are the ones used by retirement functions
+//Important method is yearly salary
+
+var personCreator = function personCreator() {
+  var _name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Person';
+
+  var _age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 30;
+
+  var _startingSalary = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 100000;
+
+  var _salaryGrowth = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : .05;
+
+  var _salaryBumps = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
+
+  var _salaryPlateau = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : [];
+
+  var _retirementYear = arguments.length > 6 ? arguments[6] : undefined;
+
+  var _preTaxContribution = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0;
+
+  var _companyMatch = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : 0;
+
+  return {
+    //Name used to identify account owners for retirement
+    _name: _name,
+    //age when app is being run, important for retirement/RMD considerations
+    _age: _age,
+    _startingSalary: _startingSalary,
+    //Salary growth is not tied to default 5% growth of money-likely to vary widely across people
+    _salaryGrowth: _salaryGrowth,
+    //Salary bumps are one time (one year) increases in salary meant to approximate promotion related income increases
+    _salaryBumps: _salaryBumps,
+    //salary plateau is a year after which salary growth slows, ceases, or reverses.  Has to be after all bumps
+    _salaryPlateau: _salaryPlateau,
+    //Salary is set to 0 after retirement year-no partial retirement support, though could accomplish this with bump/plateau theoretically
+    _retirementYear: _retirementYear,
+    //Only relevant if 401k account will be tied to this person.  If it doesn't apply, should be set to 0
+    _preTaxContribution: _preTaxContribution,
+    _companyMatch: _companyMatch,
+    //With above information, can calculate estimated salary for this person for a given year
+    yearlySalary: function yearlySalary(seekingYear, inflation) {
+      var newSalary = this._startingSalary; //console.log(`Initial newSalary is ${newSalary}`);
+      //y is the current year that function is being called in (2020)
+
+      var y = new Date().getFullYear(); //First check if seeking year is before the current year, which wouldn't make much sense.  Return starting salary, which is always discounted by pre tax contribution rate (which could be 0 and therefore have no impact)
+
+      if (seekingYear < y) {
+        //console.log(`Seeking year before current year code is being executed`);
+        return newSalary * (1 - this.preTaxContribution); //if seeking year is after retirement, salary is 0
+      } else if (seekingYear >= this._retirementYear) {
+        newSalary = 0; //console.log(`Seeking year after retirement year code is being executed`);
+
+        return newSalary; //Check if there are salary bumps defined, and seeking year is after at least one of the bumps.  Or if plateau is defined, and seeking year is after plateau
+      } else if (this._salaryBumps.length > 0 && seekingYear >= this._salaryBumps[0][0] || this._salaryPlateau.length > 0 && seekingYear >= this._salaryPlateau[0]) {
+        //console.log(this._salaryBumps.length);
+        //console.log(this._salaryPlateau.length);
+        //Then check if seeking year is before plateau year (or there is no plateau)-therefore can only focus on salary bumps
+        if (this._salaryPlateau.length === 0 || seekingYear < this._salaryPlateau[0]) {
+          //first grow salary using growth rate and number of years between seeking year and current year (standard)
+          newSalary = growAgainstInflation(newSalary, seekingYear - y, this._salaryGrowth, inflation); //console.log(`Second newSalary is ${newSalary}`);
+          //relevant salary bumps are determined as the bumps which occur before the seeking year
+
+          var relevantSalaryBumps = this._salaryBumps.filter(function (bump) {
+            return bump[0] < seekingYear;
+          }); //Then use relevant salary bumps to increase salary accoringly.  Important to note that percentage increases commute so order of operation doesn't matter.  Use 0 for inflation since this is an instantaneous increase               
+
+
+          for (var i = 0; i < relevantSalaryBumps.length; i++) {
+            newSalary = growAgainstInflation(newSalary, 1, relevantSalaryBumps[i][1], 0); //console.log(`For loop with i = ${i}, newSalary is ${newSalary}`);
+          } //console.log(`Salary bump return statement code is being executed`);
+
+
+          return newSalary * (1 - this.preTaxContribution); //Now we are in the section where seeking year is after the salary plateau year
+        } else {
+          //If there are nonzero number of salary bumps, first repeat above section to calculate the salary at the end of the pre-plateau period.  No need to use relevant bumps since all bumps will be relevant.  Use zero for inflation since its an instantaneous increase
+          if (this._salaryBumps.length > 0) {
+            newSalary = growAgainstInflation(newSalary, this._salaryPlateau[0] - y - 1, this._salaryGrowth, inflation); //console.log(`Plateau before For loop, newSalary is ${newSalary}`);
+
+            for (var _i = 0; _i < this._salaryBumps.length; _i++) {
+              newSalary = growAgainstInflation(newSalary, 1, this._salaryBumps[_i][1], 0); //console.log(`Plateau For loop with i = ${i}, newSalary is ${newSalary}`);
+            } //then calculate salary growth in plateau period, using the relevant years and new salary growth value
+
+
+            newSalary = growAgainstInflation(newSalary, seekingYear + 1 - this._salaryPlateau[0], this._salaryPlateau[1], inflation); //console.log(`Plateau after For loop, newSalary is ${newSalary}`);
+
+            return newSalary * (1 - this.preTaxContribution); //If there were no salary bumps to begin with, calculate salary at beginning of plateau period, then salary within plateau period
+          } else {
+            newSalary = growAgainstInflation(newSalary, this._salaryPlateau[0] - y - 1, this._salaryGrowth, inflation);
+            newSalary = growAgainstInflation(newSalary, seekingYear + 1 - this._salaryPlateau[0], this._salaryPlateau[1], inflation); //console.log(`Post plateau, no salary bumps code is being executed`);
+
+            return newSalary * (1 - this.preTaxContribution);
+          }
+        } //if not, salary is calculated based on basic growth rate and number of years between first year and seeking year
+
+      } else {
+        newSalary = growAgainstInflation(this._startingSalary, seekingYear - y, this._salaryGrowth, inflation); //console.log(`no salary bumps code is being executed`);
+
+        return newSalary * (1 - this.preTaxContribution);
+      }
+    },
+
+    get name() {
+      if (typeof this._name === 'string') {
+        return this._name;
+      } else {
+        console.log("Enter valid name for this person (get)");
+      }
+    },
+
+    set name(newName) {
+      if (typeof newName === 'string') {
+        this._name = newName;
+      } else {
+        console.log("Enter valid name for this person (set)");
+      }
+    },
+
+    //method to return person's age for a given year
+    age: function age(year) {
+      var y = new Date().getFullYear();
+
+      if (year < y || year > 2200) {
+        console.log("Enter a valid year to return person's age");
+        return undefined;
+      } else {
+        var age = year - y + this._age;
+        return age;
+      }
+    },
+
+    get preTaxContribution() {
+      if (typeof this._preTaxContribution === 'number') {
+        return this._preTaxContribution;
+      } else {
+        console.log("Enter valid pre tax contribution rate (get)");
+      }
+    },
+
+    set preTaxContribution(newRate) {
+      if (typeof newRate === 'number' && newRate >= 0 && newRate <= .5) {
+        this._preTaxContribution = newRate;
+      } else {
+        console.log("Enter valid pre tax contribution rate (set)");
+      }
+    },
+
+    get companyMatch() {
+      if (typeof this._companyMatch === 'number') {
+        return this._companyMatch;
+      } else {
+        console.log("Enter valid company match contribution rate (get)");
+      }
+    },
+
+    set companyMatch(newRate) {
+      if (typeof newRate === 'number' && newRate >= 0 && newRate <= .5) {
+        this._companyMatch = newRate;
+      } else {
+        console.log("Enter valid company match contribution rate (set)");
+      }
+    }
+
+  };
+};
+
+var returnAnnualSalary = function returnAnnualSalary(year, personArray, inflation) {
+  var annualSalaryValues = []; //Create array of the annual salary of all people in the household
+
+  personArray.forEach(function (person) {
+    annualSalaryValues.push(person.yearlySalary(year, inflation));
+  }); //then reduce above array to sum up all those annual salary values into one value, representing total salary
+
+  var annualSalary = annualSalaryValues.reduce(function (previousValue, currentValue) {
+    return previousValue + currentValue;
+  });
+  var salaryReturn = {
+    annualSalaryValues: annualSalaryValues,
+    annualSalary: annualSalary
+  };
+  return salaryReturn;
+};
+
+var yearlyHouseSalary = function yearlyHouseSalary(year, personArray, inflation) {
+  var annualSalaryReturn = returnAnnualSalary(year, personArray, inflation);
+  var totalSalary = annualSalaryReturn.annualSalary;
+  var netSalary = calculateNetIncome(personArray.length, totalSalary);
+  var salaryValues = annualSalaryReturn.annualSalaryValues;
+  var salaryReturn = {
+    salaryValues: salaryValues,
+    netSalary: netSalary
+  };
+  return salaryReturn;
+}; //Consolidate function to return person creator function (which may not be necessary) and household members array, to be exported and used in overall scheme to calculate life for each year 
+
+
+var personExports = {
+  returnAnnualSalary: returnAnnualSalary,
+  yearlyHouseSalary: yearlyHouseSalary,
+  personCreator: personCreator
+};
+module.exports = personExports;
+},{"./basicfunctions.js":"basicfunctions.js","./taxes.js":"taxes.js"}],"retirement.js":[function(require,module,exports) {
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -1199,94 +968,22 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-//Import rate defaults and growth function for account growth calculations
-var rateDefaults = require('./globaldefaults.js');
-
+//Import growth function for account growth calculations
 var basicFunctions = require('./basicfunctions.js');
 
 var growAgainstInflation = basicFunctions.growAgainstInflation; //Import household members array to assign owners to accounts-especially relevant for 401k contribution information
 
-var personImports = require('./person.js');
+var personImports = require('./person.js'); //const householdMembers = personImports.householdMembers;
 
-var householdMembers = personImports.householdMembers;
+
 var returnAnnualSalary = personImports.returnAnnualSalary;
 
 var taxImports = require('./taxes.js');
 
 var calculateNetIncome = taxImports.calculateNetIncome;
 var calculateAddtlNetIncome = taxImports.calculateAddtlNetIncome;
-console.log("??Time retirement page top at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-var investmentAccounts = [];
-var rothAccounts = [];
-var f401kAccounts = [];
-var allAccounts = [];
-var sortedAccountsPos = [];
-var sortedAccountsNeg = [];
-
-function insertAccountValues() {
-  var accountArray = JSON.parse(window.sessionStorage.getItem('accountArray'));
-  window.sessionStorage.setItem('accountDistributed', 1);
-  allAccounts = [];
-
-  for (var m = 0; m < accountArray.length; m++) {
-    if (accountArray[m][0] == "401k") {
-      allAccounts[m] = [new F401k(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), (m + 1) * 100, (m + 1) * 100];
-    } else if (accountArray[m][0] == "Regular") {
-      allAccounts[m] = [new RegInvestment(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), (m + 1) * 10, m + 1];
-    } else if (accountArray[m][0] == "Roth") {
-      allAccounts[m] = [new RothIRA(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1]), m + 1, (m + 1) * 10];
-    } else {
-      console.log("Something wrong with account type for account ".concat(m, " in account array"));
-    }
-  }
-
-  console.log("Retirement page all acounts list is ".concat(JSON.stringify(allAccounts)));
-
-  function returnFirstElements(array) {
-    var newArray = array.map(function (element) {
-      return element[0];
-    });
-    return newArray;
-  }
-
-  sortedAccountsPos = [];
-  sortedAccountsNeg = [];
-  sortedAccountsPos = allAccounts.sort(function (x, y) {
-    return x[1] - y[1];
-  });
-  sortedAccountsPos = sortedAccountsPos.filter(function (account) {
-    return !(account[0] instanceof F401k);
-  });
-  sortedAccountsPos = returnFirstElements(sortedAccountsPos);
-  sortedAccountsNeg = allAccounts.sort(function (x, y) {
-    return x[2] - y[2];
-  });
-  sortedAccountsNeg = returnFirstElements(sortedAccountsNeg);
-  investmentAccounts = [];
-  rothAccounts = [];
-  f401kAccounts = [];
-  investmentAccounts = allAccounts.filter(function (account) {
-    return account[0] instanceof RegInvestment;
-  });
-  investmentAccounts = returnFirstElements(investmentAccounts);
-  rothAccounts = allAccounts.filter(function (account) {
-    return account[0] instanceof RothIRA;
-  });
-  rothAccounts = returnFirstElements(rothAccounts);
-  f401kAccounts = allAccounts.filter(function (account) {
-    return account[0] instanceof F401k;
-  });
-  f401kAccounts = returnFirstElements(f401kAccounts);
-  console.log("Retirement page sorted pos accounts list is ".concat(JSON.stringify(sortedAccountsPos)));
-  console.log("Retirement page sorted neg accounts list is ".concat(JSON.stringify(sortedAccountsNeg)));
-  console.log("Retirement page reg accounts2 list is ".concat(JSON.stringify(investmentAccounts)));
-  console.log("Retirement page roth accounts2 list is ".concat(JSON.stringify(rothAccounts)));
-  console.log("Retirement page 401k accounts2 list is ".concat(JSON.stringify(f401kAccounts)));
-  window.sessionStorage.setItem('accountConsumed', 1);
-  console.log("Time Retirement page insert values at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
-}
-
-window.addEventListener('load', insertAccountValues); //This find element index function is used to find the index number of a specific person (account owner) in the household members array.  Returns the index of that person in the array to be used later
+var reverseTaxCalc = taxImports.reverseTaxCalc;
+console.log("??Time retirement page top at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds())); //This find element index function is used to find the index number of a specific person (account owner) in the household members array.  Returns the index of that person in the array to be used later
 
 function findElementIndex(arr, propValue) {
   for (var m = 0; m < arr.length; m++) {
@@ -1300,27 +997,28 @@ function findElementIndex(arr, propValue) {
 var rmdFactor = function rmdFactor(age) {
   //If age is less than 70, no RMDs.  Is actually 70.5
   if (age < 70) {
-    return 0; //RMDs technically go past 100 but this one stops at 100
-  } else if (age >= 70 && age <= 100) {
+    return 0; //RMDs past 115 are all the same
+  } else if (age >= 70 && age <= 115) {
     var factorIndex = age - 70; //age values are excluded from the array, but they start at 70 and continue to 100, using index number in the array to loate
 
-    var factors = [27.4, 26.5, 25.6, 24.7, 23.8, 22.9, 22, 21.2, 20.4, 19.6, 18.8, 18, 17.2, 16.4, 15.6, 14.9, 14.2, 13.5, 12.8, 12.1, 11.5, 10.9, 10.3, 9.7, 9.1, 8.6, 8.1, 7.6, 7.1, 6.7, 6.3];
+    var factors = [27.4, 26.5, 25.6, 24.7, 23.8, 22.9, 22, 21.2, 20.3, 19.5, 18.7, 17.9, 17.1, 16.3, 15.5, 14.8, 14.1, 13.4, 12.7, 12, 11.4, 10.8, 10.2, 9.6, 9.1, 8.6, 8.1, 7.6, 7.1, 6.7, 6.3, 5.9, 5.5, 5.2, 4.9, 4.5, 4.2, 3.9, 3.7, 3.4, 3.1, 2.9, 2.6, 2.4, 2.1, 1.9];
     var factor = factors[factorIndex]; //only return the factor, which is used along with value of the account in that year to determin the RMD $ value
 
     return factor;
   } else {
-    console.log("You are too old");
-    return 0;
+    return 1.9;
   }
-}; //Parent class InvestmentAccount.  Accoutns below inherit qualities from this class.  This class will probably not have any real instances of it, only instances of subclasses
+}; //Parent class InvestmentAccount.  Accounts below inherit qualities from this class.  This class will probably not have any real instances of it, only instances of subclasses
 //Lots of getters and setters defined for relevant values
 
 
 var InvestmentAccount = /*#__PURE__*/function () {
   function InvestmentAccount(name) {
     var currentValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var growth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : rateDefaults.growth;
+    var growth = arguments.length > 2 ? arguments[2] : undefined;
     var owner = arguments.length > 3 ? arguments[3] : undefined;
+    var personArray = arguments.length > 4 ? arguments[4] : undefined;
+    var inflation = arguments.length > 5 ? arguments[5] : undefined;
 
     _classCallCheck(this, InvestmentAccount);
 
@@ -1328,18 +1026,20 @@ var InvestmentAccount = /*#__PURE__*/function () {
     this._name = name;
     this._currentValue = currentValue; //growth rate set to rate defaults value but can be changed in general based on type of account
 
-    this._growth = growth; //Owner value is importand and must match householdmembers name values-need UI to mandate this
+    this._growth = growth; //Owner value is importand and must match personArray name values-need UI to mandate this
 
     this._owner = owner; //find owner index value within household members array for use below
 
-    this._ownerIndex = findElementIndex(householdMembers, this.owner);
+    this._personArray = personArray;
+    this._ownerIndex = findElementIndex(personArray, this.owner);
+    this._inflation = inflation;
   } //Grow method just grows the account valuee for 1 year-to be used in yearly life calculations
 
 
   _createClass(InvestmentAccount, [{
     key: "grow",
     value: function grow() {
-      this.currentValue = growAgainstInflation(this.currentValue, 1, this.growth);
+      this.currentValue = growAgainstInflation(this.currentValue, 1, this.growth, this.inflation);
     }
   }, {
     key: "name",
@@ -1374,22 +1074,6 @@ var InvestmentAccount = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "type",
-    get: function get() {
-      if (typeof this._type === 'number') {
-        return this._type;
-      } else {
-        console.log("Enter valid type for this investment account");
-      }
-    },
-    set: function set(newtype) {
-      if (typeof newtype === 'number' && newtype > 0 && newtype < 6) {
-        this._type = newtype;
-      } else {
-        console.log("Enter valid type for this investment account");
-      }
-    }
-  }, {
     key: "growth",
     get: function get() {
       if (typeof this._growth === 'number') {
@@ -1415,10 +1099,26 @@ var InvestmentAccount = /*#__PURE__*/function () {
       }
     },
     set: function set(newOwner) {
-      if (typeof newowner === 'string') {
+      if (typeof newOwner === 'string') {
         this._owner = newOwner;
       } else {
         console.log("Enter valid owner for this investment account (set)");
+      }
+    }
+  }, {
+    key: "inflation",
+    get: function get() {
+      if (typeof this._inflation === 'number') {
+        return this._inflation;
+      } else {
+        console.log("Enter valid inflation for this investment account (get)");
+      }
+    },
+    set: function set(newInflation) {
+      if (typeof newInflation === 'number') {
+        this._inflation = newInflation;
+      } else {
+        console.log("Enter valid inflation for this investment account (set)");
       }
     }
   }]);
@@ -1435,12 +1135,14 @@ var RegInvestment = /*#__PURE__*/function (_InvestmentAccount) {
   //standard constructor, all the same values as parent class
   function RegInvestment(name) {
     var startingValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var growth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : rateDefaults.growth;
+    var growth = arguments.length > 2 ? arguments[2] : undefined;
     var owner = arguments.length > 3 ? arguments[3] : undefined;
+    var personArray = arguments.length > 4 ? arguments[4] : undefined;
+    var inflation = arguments.length > 5 ? arguments[5] : undefined;
 
     _classCallCheck(this, RegInvestment);
 
-    return _super.call(this, name, startingValue, growth, owner);
+    return _super.call(this, name, startingValue, growth, owner, personArray, inflation);
   } //Change value method takes in an amount from a year of cash flow.  Positive means money is coming in to the account, negative means money is required from the account to balance cashflow
   //Need year parameter just for consistency with other account types
 
@@ -1459,38 +1161,78 @@ var RegInvestment = /*#__PURE__*/function (_InvestmentAccount) {
   }, {
     key: "withdrawMoney",
     value: function withdrawMoney(year, amount) {
-      if (amount > 0) {
-        console.log("Please enter a negative amount to call withdraw money method");
-      } //if amount is negative, need to check if that amount is greater than the value of the account.  If so, set current value to 0 and return only the amount actually in the account to begin with
-      else if (-amount >= this.currentValue) {
-          var returnAmount = this.currentValue;
-          this.currentValue = 0; //below section reduces returned amount according to capital gains taxes on values over $40,000 or $441,450
-          //account is still zeroed out, just less money is returned to balance cash flow
+      amount = -1 * amount;
+      var amountWithTax;
 
-          if (returnAmount <= 40000) {
-            return returnAmount;
-          } else if (returnAmount <= 441450) {
-            returnAmount = 40000 + (returnAmount - 40000) / 1.15;
-            return returnAmount;
-          } else {
-            returnAmount = 40000 + (441450 - 40000) / 1.15 + (returnAmount - 441450) / 1.20;
-            return returnAmount;
-          } //This section is for negative amounts (requests from the account) but not such that account value is zeroed out
-          //Now for tax purposes, the amount deducted from account value is increased according to capital gains tax, but the returned amount is exactly what is "requested"
-
-        } else if (-amount <= 40000) {
-          this.currentValue += amount;
-          return -amount;
-        } else if (-amount <= 441450) {
-          var decAmount = -40000 + 1.15 * (amount + 40000);
-          this.currentValue += decAmount;
-          return -amount;
+      if (this._personArray.length == 1) {
+        if (amount <= 40000) {
+          amountWithTax = amount;
+        } else if (amount > 40000 && amount <= 441450) {
+          amountWithTax = (amount - 40000) / .85 + 40000;
+        } else if (amount > 441450) {
+          amountWithTax = (amount - 441450) / .8 + (441450 - 40000) / .85 + 40000;
         } else {
-          var _decAmount = -40000 + 1.15 * (-441450 + 40000) + 1.2 * (amount + 441450);
-
-          this.currentValue += _decAmount;
-          return -amount;
+          console.log("Please enter a valid amount to call withdraw money method");
         }
+
+        if (amountWithTax < 0) {
+          console.log("Please enter a negative amount to call withdraw money method");
+        } //if amount is negative, need to check if that amount is greater than the value of the account.  If so, set current value to 0 and return only the amount actually in the account to begin with
+        else if (amountWithTax >= this.currentValue) {
+            var returnAmount = this.currentValue;
+            this.currentValue = 0; //below section reduces returned amount according to capital gains taxes on values over $40,000 or $441,450
+            //account is still zeroed out, just less money is returned to balance cash flow
+
+            if (returnAmount <= 40000) {
+              return returnAmount;
+            } else if (returnAmount <= 441450) {
+              returnAmount -= (returnAmount - 40000) * .15;
+              return returnAmount;
+            } else {
+              returnAmount -= (441450 - 40000) * .15 + (returnAmount - 441450) * .20;
+              return returnAmount;
+            } //This section is for negative amounts (requests from the account) but not such that account value is zeroed out
+            //Now for tax purposes, the amount deducted from account value is increased according to capital gains tax, but the returned amount is exactly what is "requested"
+
+          } else {
+            this.currentValue -= amountWithTax;
+            return amount;
+          }
+      } else if (this._personArray.length == 2) {
+        if (amount <= 80000) {
+          amountWithTax = amount;
+        } else if (amount > 80000 && amount <= 496600) {
+          amountWithTax = (amount - 80000) / .85 + 80000;
+        } else if (amount > 496600) {
+          amountWithTax = (amount - 496600) / .8 + (496600 - 80000) / .85 + 80000;
+        } else {
+          console.log("Please enter a valid amount to call withdraw money method");
+        }
+
+        if (amountWithTax < 0) {
+          console.log("Please enter a negative amount to call withdraw money method");
+        } //if amount is negative, need to check if that amount is greater than the value of the account.  If so, set current value to 0 and return only the amount actually in the account to begin with
+        else if (amountWithTax >= this.currentValue) {
+            var _returnAmount = this.currentValue;
+            this.currentValue = 0; //below section reduces returned amount according to capital gains taxes on values over $40,000 or $441,450
+            //account is still zeroed out, just less money is returned to balance cash flow
+
+            if (_returnAmount <= 80000) {
+              return _returnAmount;
+            } else if (_returnAmount <= 496600) {
+              _returnAmount -= (_returnAmount - 80000) * .15;
+              return _returnAmount;
+            } else {
+              _returnAmount -= (496600 - 80000) * .15 + (_returnAmount - 496600) * .20;
+              return _returnAmount;
+            } //This section is for negative amounts (requests from the account) but not such that account value is zeroed out
+            //Now for tax purposes, the amount deducted from account value is increased according to capital gains tax, but the returned amount is exactly what is "requested"
+
+          } else {
+            this.currentValue -= amountWithTax;
+            return amount;
+          }
+      }
     }
   }]);
 
@@ -1505,12 +1247,14 @@ var RothIRA = /*#__PURE__*/function (_InvestmentAccount2) {
   //standard constructor, all the same values as parent class
   function RothIRA(name) {
     var startingValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var growth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : rateDefaults.growth;
+    var growth = arguments.length > 2 ? arguments[2] : undefined;
     var owner = arguments.length > 3 ? arguments[3] : undefined;
+    var personArray = arguments.length > 4 ? arguments[4] : undefined;
+    var inflation = arguments.length > 5 ? arguments[5] : undefined;
 
     _classCallCheck(this, RothIRA);
 
-    return _super2.call(this, name, startingValue, growth, owner);
+    return _super2.call(this, name, startingValue, growth, owner, personArray, inflation);
   }
 
   _createClass(RothIRA, [{
@@ -1521,7 +1265,7 @@ var RothIRA = /*#__PURE__*/function (_InvestmentAccount2) {
         console.log("Please enter a valid year to add money to this account"); //check if amount if negative-shouldn't call addMoney with negative amount
       } else if (amount < 0) {
         console.log("Can't call addMoney with negative amount of money"); //Roth IRA has a contribution cap of $6k per year in 2020.  Can't add more than that in a given year.  Cap grows over time but inflation adjustments should keep this cap pretty close to $6k
-      } else if (householdMembers.length === 1 && returnAnnualSalary(year) > 139000 || householdMembers.length === 2 && returnAnnualSalary(year) > 206000) {
+      } else if (this._personArray.length === 1 && returnAnnualSalary(year, this._personArray, this.inflation).annualSalary > 139000 || this._personArray.length === 2 && returnAnnualSalary(year, this._personArray, this.inflation).annualSalary > 206000) {
         return amount;
       } else if (amount > 6000) {
         this.currentValue += 6000;
@@ -1535,17 +1279,16 @@ var RothIRA = /*#__PURE__*/function (_InvestmentAccount2) {
   }, {
     key: "getRMD",
     value: function getRMD(year) {
-      var ownerAge = householdMembers[this._ownerIndex].age(year);
+      var ownerAge = this._personArray[this._ownerIndex].age(year);
 
       var RMD = 0; //first check if year is reasonable
 
       if (year < 2020 || year > 2200) {
         console.log("Please enter a valid year to return RMD info for this Roth account"); //Check if owner age is outside of RMD range
-      } else if (ownerAge < 70 || ownerAge > 100) {
+      } else if (ownerAge < 70) {
         return RMD; //If owner age within RMD range, subtract RMD from value of account and return RMD
-      } else if (ownerAge >= 70 && ownerAge <= 100) {
+      } else if (ownerAge >= 70 && ownerAge <= 200) {
         RMD = this.currentValue / rmdFactor(ownerAge);
-        console.log("Roth RMD is ".concat(RMD));
         this.currentValue -= RMD;
         return RMD;
       } else {
@@ -1561,12 +1304,10 @@ var RothIRA = /*#__PURE__*/function (_InvestmentAccount2) {
         //If magnitude of amount is less than current value, can return full amount.  Sign is changed to indicate positive money is flowing to the bottom line
         if (-amount < this.currentValue) {
           this.currentValue += amount;
-          console.log("amount less than current value section, currentValue is ".concat(this.currentValue));
           return -amount; //If magnitue of amount is greater than the value of the account, set current value to 0 and return only the amount actually in the account to begin with.  No tax concerns with Roth
         } else if (-amount >= this.currentValue) {
           var returnAmount = this.currentValue;
           this.currentValue = 0;
-          console.log("amount greater than current value section, currentValue is ".concat(this.currentValue));
           return returnAmount;
         }
       } else {
@@ -1588,31 +1329,32 @@ var F401k = /*#__PURE__*/function (_InvestmentAccount3) {
     var _this;
 
     var startingValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var growth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : rateDefaults.growth;
+    var growth = arguments.length > 2 ? arguments[2] : undefined;
     var owner = arguments.length > 3 ? arguments[3] : undefined;
+    var personArray = arguments.length > 4 ? arguments[4] : undefined;
+    var inflation = arguments.length > 5 ? arguments[5] : undefined;
 
     _classCallCheck(this, F401k);
 
-    _this = _super3.call(this, name, startingValue, growth, owner);
-    _this._preTaxContribution = householdMembers[_this._ownerIndex].preTaxContribution;
-    _this._companyMatch = householdMembers[_this._ownerIndex].companyMatch;
+    _this = _super3.call(this, name, startingValue, growth, owner, personArray, inflation);
+    _this._preTaxContribution = personArray[_this._ownerIndex].preTaxContribution;
+    _this._companyMatch = personArray[_this._ownerIndex].companyMatch;
     return _this;
   }
 
   _createClass(F401k, [{
     key: "getRMD",
     value: function getRMD(year) {
-      var ownerAge = householdMembers[this._ownerIndex].age(year);
+      var ownerAge = this._personArray[this._ownerIndex].age(year);
 
       var RMD = 0; //first check if year is reasonable
 
       if (year < 2020 || year > 2200) {
         console.log("Please enter a valid year to return RMD info for this 401k account"); //Check if owner age is outside of RMD range
-      } else if (ownerAge < 70 || ownerAge > 100) {
+      } else if (ownerAge < 70) {
         return RMD; //If owner age within RMD range, subtract RMD from value of account and return RMD
-      } else if (ownerAge >= 70 && ownerAge <= 100) {
+      } else if (ownerAge >= 70 && ownerAge <= 200) {
         RMD = this.currentValue / rmdFactor(ownerAge);
-        console.log("401k RMD is ".concat(RMD));
         this.currentValue -= RMD;
         return RMD;
       } else {
@@ -1627,37 +1369,37 @@ var F401k = /*#__PURE__*/function (_InvestmentAccount3) {
       if (year < 2020 || year > 2200) {
         console.log("Please enter a valid year to increase this 401k account value"); //now enter into meat of the method
       } else {
-        //figure out salary for the owner of the account for the year in question
-        var salary = householdMembers[this._ownerIndex].yearlySalary(year); //console.log(`salary is ${salary}`);
+        //figure out salary for the owner of the account for the year in question--yearly salary method includes discount for pre tax contribution, which must be un-discounted here in this method
+        var salary = this._personArray[this._ownerIndex].yearlySalary(year, this.inflation); //console.log(`salary is ${salary}`);
         //figure out how salary contributes to increase of account value.  In retirement, salary will be zero, so will value increase
 
 
-        var valueIncrease = salary * (this._preTaxContribution + this._companyMatch); //console.log(`valueIncrease is ${valueIncrease}`);
+        var valueIncrease = salary * (this._preTaxContribution + this._companyMatch) / (1 - this._preTaxContribution); //console.log(`valueIncrease is ${valueIncrease}`);
 
-        console.log("401k account starting currentValue is ".concat(this.currentValue));
         this.currentValue += valueIncrease;
-        console.log("401k account after currentValue is ".concat(this.currentValue));
       }
     }
   }, {
     key: "withdrawMoney",
     value: function withdrawMoney(year, amount) {
       //remember amount is going to be negative for withdrawMoney
-      var amountWithTax = 2 * amount + calculateAddtlNetIncome(householdMembers.length, -amount, returnAnnualSalary(year).annualSalary);
+      var preTaxRequired = reverseTaxCalc(this._personArray.length, -amount, returnAnnualSalary(year, this._personArray, this.inflation).annualSalary);
 
-      if (amount > 0) {
-        console.log("Can't use withdraw money method to add money");
+      if (year < 2020 || year > 2200) {
+        console.log("Enter a valid year to withdraw money from this 401k account");
+      } else if (amount > 0) {
+        console.log("Can't use withdraw money method to add money to this 401k account");
       } else {
-        if (-amountWithTax < this.currentValue) {
-          this.currentValue += amountWithTax;
-          console.log("amount less than current value section, currentValue is ".concat(this.currentValue));
+        if (preTaxRequired < this.currentValue) {
+          //this won't be accurate if withdrawal is taking place before retirement, and there is income before this 401k withdrawal income
+          this.currentValue -= preTaxRequired;
           return -amount;
-        }
+        } //this won't be accurate if withdrawal is taking place before retirement, and there is income before this 401k withdrawal income               
 
-        if (-amountWithTax >= this.currentValue) {
-          var returnAmount = calculateAddtlNetIncome(householdMembers.length, this.currentValue, returnAnnualSalary(year).annualSalary);
+
+        if (preTaxRequired >= this.currentValue) {
+          var returnAmount = calculateAddtlNetIncome(this._personArray.length, this.currentValue, returnAnnualSalary(year, this._personArray, this.inflation).annualSalary);
           this.currentValue = 0;
-          console.log("amount greater than current value section, currentValue is ".concat(this.currentValue));
           return returnAmount;
         }
       }
@@ -1667,14 +1409,13 @@ var F401k = /*#__PURE__*/function (_InvestmentAccount3) {
   return F401k;
 }(InvestmentAccount);
 
-var balanceYearOfCashFlow = function balanceYearOfCashFlow(year, net) {
-  console.log("Initial net is ".concat(net));
-
-  if (net > 0) {
-    for (var i = 0; i < sortedAccountsPos.length; i++) {
-      net = sortedAccountsPos[i].addMoney(year, net);
-      console.log("Positive section, Post net is ".concat(net));
-      console.log(sortedAccountsPos[i]);
+var balanceYearOfCashFlow = function balanceYearOfCashFlow(year, net, posList, negList) {
+  if (year > 2200 || year < 2020) {
+    console.log("Invalid year in balanceYearOfCashflow");
+    return net;
+  } else if (net > 0) {
+    for (var i = 0; i < posList.length; i++) {
+      net = posList[i].addMoney(year, net);
 
       if (net === 0) {
         break;
@@ -1683,10 +1424,8 @@ var balanceYearOfCashFlow = function balanceYearOfCashFlow(year, net) {
 
     return net;
   } else if (net < 0) {
-    for (var _i = 0; _i < sortedAccountsNeg.length; _i++) {
-      net = net + sortedAccountsNeg[_i].withdrawMoney(year, net);
-      console.log("Negative section, Post net is ".concat(net));
-      console.log(sortedAccountsNeg[_i]);
+    for (var _i = 0; _i < negList.length; _i++) {
+      net = net + negList[_i].withdrawMoney(year, net);
 
       if (net === 0) {
         break;
@@ -1699,62 +1438,52 @@ var balanceYearOfCashFlow = function balanceYearOfCashFlow(year, net) {
   }
 };
 
-var processRMDs = function processRMDs(year, net) {
+var processRMDs = function processRMDs(year, net, personArray2, rothList, f401kList, inflation) {
   var rmd = 0;
 
-  for (var i = 0; i < rothAccounts.length; i++) {
-    rmd = rmd + rothAccounts[i].getRMD(year);
-    console.log("RMD roth is ".concat(rmd));
-  }
-
-  for (var _i2 = 0; _i2 < f401kAccounts.length; _i2++) {
-    rmd = rmd + f401kAccounts[_i2].getRMD(year);
-    console.log("RMD 401k is ".concat(rmd));
-  }
-
-  net = net + calculateAddtlNetIncome(householdMembers.length, rmd, returnAnnualSalary(year).annualSalary);
-  return net;
-};
-
-var growAccounts = function growAccounts() {
-  for (var i = 0; i < rothAccounts.length; i++) {
-    rothAccounts[i].grow();
-  }
-
-  for (var _i3 = 0; _i3 < f401kAccounts.length; _i3++) {
-    f401kAccounts[_i3].grow();
-  }
-
-  for (var _i4 = 0; _i4 < investmentAccounts.length; _i4++) {
-    investmentAccounts[_i4].grow();
-  }
-
-  console.log(rothAccounts);
-  console.log(f401kAccounts);
-  console.log(investmentAccounts);
-};
-
-var increase401ks = function increase401ks(year) {
-  if (f401kAccounts.length > 0) {
-    for (var i = 0; i < f401kAccounts.length; i++) {
-      f401kAccounts[i].increaseValue(year);
-    }
+  if (year > 2200 || year < 2020) {
+    return 0;
   } else {
-    console.log("No 401k accounts");
+    rothList.forEach(function (element) {
+      rmd += element.getRMD(year);
+    });
+    f401kList.forEach(function (element) {
+      rmd += element.getRMD(year);
+    });
+    net += calculateAddtlNetIncome(personArray2.length, rmd, returnAnnualSalary(year, personArray2, inflation).annualSalary);
+    return net;
   }
 };
 
-var returnAccountValues = function returnAccountValues() {
+var growAccounts = function growAccounts(rothList, f401kList, regList) {
+  rothList.forEach(function (element) {
+    element.grow();
+  });
+  f401kList.forEach(function (element) {
+    element.grow();
+  });
+  regList.forEach(function (element) {
+    element.grow();
+  });
+};
+
+var increase401ks = function increase401ks(year, f401kList) {
+  f401kList.forEach(function (element) {
+    element.increaseValue(year);
+  });
+};
+
+var returnAccountValues = function returnAccountValues(rothList, f401kList, regList) {
   var regularValue = 0;
   var retirementValue = 0;
-  investmentAccounts.forEach(function (element) {
+  rothList.forEach(function (element) {
+    retirementValue += element.currentValue;
+  });
+  f401kList.forEach(function (element) {
+    retirementValue += element.currentValue;
+  });
+  regList.forEach(function (element) {
     regularValue += element.currentValue;
-  });
-  rothAccounts.forEach(function (element) {
-    retirementValue += element.currentValue;
-  });
-  f401kAccounts.forEach(function (element) {
-    retirementValue += element.currentValue;
   });
   var returnValue = {
     regularValue: regularValue,
@@ -1770,13 +1499,16 @@ var retirementExports = {
   processRMDs: processRMDs,
   growAccounts: growAccounts,
   increase401ks: increase401ks,
-  insertAccountValues: insertAccountValues,
-  returnAccountValues: returnAccountValues
+  returnAccountValues: returnAccountValues,
+  RegInvestment: RegInvestment,
+  RothIRA: RothIRA,
+  F401k: F401k,
+  findElementIndex: findElementIndex,
+  rmdFactor: rmdFactor
 };
 module.exports = retirementExports;
-},{"./globaldefaults.js":"globaldefaults.js","./basicfunctions.js":"basicfunctions.js","./person.js":"person.js","./taxes.js":"taxes.js"}],"loan.js":[function(require,module,exports) {
-var basicFunctions = require('./basicfunctions.js'); //const growAgainstInflation = basicFunctions.growAgainstInflation;
-
+},{"./basicfunctions.js":"basicfunctions.js","./person.js":"person.js","./taxes.js":"taxes.js"}],"loan.js":[function(require,module,exports) {
+var basicFunctions = require('./basicfunctions.js');
 
 var calcMonthlyLoanPayment = basicFunctions.calcMonthlyLoanPayment;
 
@@ -1810,10 +1542,11 @@ var loanCreator = function loanCreator(_number, _yearOriginated, _amount, _inter
     },
 
     set number(newNumber) {
-      if (typeof newNumber === 'number' && newNumber > 0 && newNumber > 100) {
+      if (typeof newNumber === 'number' && newNumber > 0 && newNumber < 100) {
         this._number = newNumber;
+        console.log("New Loan number is set");
       } else {
-        console.log("Enter valid number for which house number this is");
+        console.log("Enter valid number for which loan number this is");
       }
     },
 
@@ -1900,28 +1633,11 @@ var loanCreator = function loanCreator(_number, _yearOriginated, _amount, _inter
   };
 };
 
-function insertLoanValues() {
-  numberOfLoans = parseInt(window.sessionStorage.getItem('NOL'), 10);
-  var loanArray = JSON.parse(window.sessionStorage.getItem('loanArray'));
-  console.log("Loan page NOL is ".concat(numberOfLoans));
-  window.sessionStorage.setItem('loanDistributed', 1);
-  loans = [];
-
-  for (var i = 0; i < numberOfLoans; i++) {
-    loans[i] = loanCreator(i + 1, loanArray[i][0], loanArray[i][1], loanArray[i][2], loanArray[i][3], loanArray[i][4]);
-  }
-
-  console.log("Loan page loan list is ".concat(JSON.stringify(loans)));
-  window.sessionStorage.setItem('loanConsumed', 1);
-}
-
-window.addEventListener('load', insertLoanValues);
-
-var returnAnnualLoanCost = function returnAnnualLoanCost(year) {
+var returnAnnualLoanCost = function returnAnnualLoanCost(year, loanList) {
   var annualLoanCostValues = []; //Create array of the annual cost of all loans in the system for that year
 
-  if (loans.length > 0) {
-    loans.forEach(function (loan) {
+  if (loanList.length > 0) {
+    loanList.forEach(function (loan) {
       if (loan.yearOriginated == year && loan.cashInflow == true) {
         annualLoanCostValues.push(loan.monthlyPayment(year) * 12 - loan.amount);
       } else {
@@ -1939,7 +1655,8 @@ var returnAnnualLoanCost = function returnAnnualLoanCost(year) {
 };
 
 var loanExports = {
-  returnAnnualLoanCost: returnAnnualLoanCost
+  returnAnnualLoanCost: returnAnnualLoanCost,
+  loanCreator: loanCreator
 };
 module.exports = loanExports;
 },{"./basicfunctions.js":"basicfunctions.js"}],"Chart.bundle.js":[function(require,module,exports) {
@@ -22186,12 +21903,17 @@ var housingImports = require('./homecalcs.js');
 
 var returnAnnualHousingCost = housingImports.returnAnnualHousingCost;
 var findHousePurchaseYearCashFlow = housingImports.findHousePurchaseYearCashFlow;
+var homeCreator = housingImports.homeCreator;
 
-var returnAnnualKidCost = require('./kiddos.js');
+var kidImports = require('./kiddos.js');
+
+var returnAnnualKidCost = kidImports.returnAnnualKidCost;
+var kidCreator = kidImports.kidCreator;
 
 var personImports = require('./person.js');
 
 var yearlyHouseSalary = personImports.yearlyHouseSalary;
+var personCreator = personImports.personCreator;
 
 var retirementImports = require('./retirement.js');
 
@@ -22199,12 +21921,372 @@ var balanceYearOfCashFlow = retirementImports.balanceYearOfCashFlow;
 var processRMDs = retirementImports.processRMDs;
 var growAccounts = retirementImports.growAccounts;
 var increase401ks = retirementImports.increase401ks;
-var insertAccountValues = retirementImports.insertAccountValues;
 var returnAccountValues = retirementImports.returnAccountValues;
+var RegInvestment = retirementImports.RegInvestment;
+var RothIRA = retirementImports.RothIRA;
+var F401k = retirementImports.F401k;
 
 var loanImports = require('./loan.js');
 
 var returnAnnualLoanCost = loanImports.returnAnnualLoanCost;
+var loanCreator = loanImports.loanCreator; //default rate values pulled from session storage, saved to object rateDefaults
+
+var rateDefaults = {
+  //growth is used as the default value for the annual growth of money in any year.  The value is considered without considering inflation, whihc is separately deducted 
+  _growth: .05,
+  //inflation rate is used to deduct against regular growth to keep all income/money value in today's dollars.  Income is discounted while costs are not and remain in 2020 dollars
+  _inflation: .02,
+  //real estate tax rate is used to determine total cost of homeownership-realEstateTax*home value.
+  _realEstateTax: .02,
+  //This is the default length of a home loan and can be changed for any specific home/loan
+  _mortgageYears: 30,
+  //This is the default interest rate of a home loan and can be changed for any specific home/loan
+  _mortgageInterest: .035,
+  //This is the assumed rate of annual home value growth.  This value does not account for inflation, but inflation is discounted when this value is used in any formula
+  _homeValueGrowth: .03,
+  _brokerSellCommission: .06,
+
+  get growth() {
+    if (typeof this._growth === 'number') {
+      return this._growth;
+    } else {
+      console.log("Enter valid number for growth rate GET");
+    }
+  },
+
+  get inflation() {
+    if (typeof this._inflation === 'number') {
+      return this._inflation;
+    } else {
+      console.log("Enter valid number for inflation rate");
+    }
+  },
+
+  get realEstateTax() {
+    if (typeof this._realEstateTax === 'number') {
+      return this._realEstateTax;
+    } else {
+      console.log("Enter valid number for real estate tax rate");
+    }
+  },
+
+  get mortgageYears() {
+    if (typeof this._mortgageYears === 'number') {
+      return this._mortgageYears;
+    } else {
+      console.log("Enter valid number for years of mortgage");
+    }
+  },
+
+  get mortgageInterest() {
+    if (typeof this._mortgageInterest === 'number') {
+      return this._mortgageInterest;
+    } else {
+      console.log("Enter valid number for mortgage interest rate");
+    }
+  },
+
+  get homeValueGrowth() {
+    if (typeof this._homeValueGrowth === 'number') {
+      return this._homeValueGrowth;
+    } else {
+      console.log("Enter valid number for home value growth rate");
+    }
+  },
+
+  get brokerSellCommission() {
+    if (typeof this._brokerSellCommission === 'number') {
+      return this._brokerSellCommission;
+    } else {
+      console.log("Enter valid number for broker commision for house sale");
+    }
+  },
+
+  set growth(newGrowth) {
+    if (typeof newGrowth === 'number' && newGrowth < 1 && newGrowth > -.5) {
+      this._growth = newGrowth;
+    } else {
+      console.log("Enter valid number for growth rate SET");
+    }
+  },
+
+  set inflation(newInflation) {
+    if (typeof newInflation === 'number' && newInflation < 1 && newInflation > -.5) {
+      this._inflation = newInflation;
+    } else {
+      console.log("Enter valid number for inflation rate");
+    }
+  },
+
+  set realEstateTax(newRealEstateTax) {
+    if (typeof newRealEstateTax === 'number' && newRealEstateTax < 1 && newRealEstateTax > 0) {
+      this._realEstateTax = newRealEstateTax;
+    } else {
+      console.log("Enter valid number for real estate tax rate");
+    }
+  },
+
+  set mortgageYears(newMortgageYears) {
+    if (typeof newMortgageYears === 'number' && newMortgageYears < 100 && newMortgageYears > 0) {
+      this._mortgageYears = newMortgageYears;
+    } else {
+      console.log("Enter valid number for years of mortgage");
+    }
+  },
+
+  set mortgageInterest(newMortgageInterest) {
+    if (typeof newMortgageInterest === 'number' && newMortgageInterest < 1 && newMortgageInterest > 0) {
+      this._mortgageInterest = newMortgageInterest;
+    } else {
+      console.log("Enter valid number for mortgage interest rate");
+    }
+  },
+
+  set homeValueGrowth(newHomeValueGrowth) {
+    if (typeof newHomeValueGrowth === 'number' && newHomeValueGrowth < 1 && newHomeValueGrowth > -.5) {
+      this._homeValueGrowth = newHomeValueGrowth;
+    } else {
+      console.log("Enter valid number for home value growth rate");
+    }
+  },
+
+  set brokerSellCommission(newbrokerSellCommission) {
+    if (typeof newbrokerSellCommission === 'number' && newbrokerSellCommission < 1 && newbrokerSellCommission >= 0) {
+      this._brokerSellCommission = newbrokerSellCommission;
+    } else {
+      console.log("Enter valid number for broker commision for house sale");
+    }
+  }
+
+};
+
+function insertDefaultValues() {
+  rateDefaults.growth = parseFloat(window.sessionStorage.getItem('growthRate'), 10);
+  console.log("global defaults growth rate is now ".concat(rateDefaults.growth));
+  rateDefaults.inflation = parseFloat(window.sessionStorage.getItem('inflation'), 10);
+  console.log("global defaults inflation rate is now ".concat(rateDefaults.inflation));
+  rateDefaults.realEstateTax = parseFloat(window.sessionStorage.getItem('propertyTax'), 10);
+  console.log("global defaults property tax rate is now ".concat(rateDefaults.realEstateTax));
+  rateDefaults.mortgageYears = parseInt(window.sessionStorage.getItem('mortgageLength'), 10);
+  console.log("global defaults mortage length is now ".concat(rateDefaults.mortgageYears));
+  rateDefaults.mortgageInterest = parseFloat(window.sessionStorage.getItem('mortgageRate'), 10);
+  console.log("global defaults mortgage rate is now ".concat(rateDefaults.mortgageInterest));
+  rateDefaults.homeValueGrowth = parseFloat(window.sessionStorage.getItem('homeGrowth'), 10);
+  console.log("global defaults home value growth rate is now ".concat(rateDefaults.homeValueGrowth));
+  rateDefaults.brokerSellCommission = parseFloat(window.sessionStorage.getItem('broker'), 10);
+  console.log("global defaults broker commission is now ".concat(rateDefaults.brokerSellCommission));
+  window.sessionStorage.setItem('defaultConsumed', 1);
+  insertCostValues();
+  console.log("Time Default page insert values at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+} //Cost/Spending Values pulled from session storage, saved to variables
+
+
+var monthlySpending;
+var monthlyRetirementSpending;
+
+function insertCostValues() {
+  monthlySpending = parseInt(window.sessionStorage.getItem('spend'), 10);
+  monthlyRetirementSpending = parseInt(window.sessionStorage.getItem('retir'), 10);
+  console.log("Cost section monthly spending is ".concat(monthlySpending));
+  console.log("Cost section retirement is ".concat(monthlyRetirementSpending));
+  insertPersonValues();
+  console.log("Time Cost section values inserted at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+  window.sessionStorage.setItem('regCostConsumed', 1);
+} //end cost/spending section
+//Person values pulled from session storage, saved to househould members array of person objects
+
+
+var householdMembers = [];
+
+function insertPersonValues() {
+  var numberOfPeople = parseInt(window.sessionStorage.getItem('NOP'), 10);
+  var personArray = JSON.parse(window.sessionStorage.getItem('personArray'));
+  var names = [];
+  var age = [];
+  var startingSalary = [];
+  var salaryGrowth = [];
+  var salaryPlateau = [[], []];
+  var retirementYears = [];
+  var preTax = [];
+  var companyMatch = [];
+  var salaryBumps = [[], []];
+
+  for (var i = 0; i < numberOfPeople; i++) {
+    names[i] = personArray[i][0];
+    age[i] = personArray[i][1];
+    startingSalary[i] = personArray[i][2];
+    salaryGrowth[i] = personArray[i][3];
+    salaryPlateau[i][0] = personArray[i][4];
+    salaryPlateau[i][1] = personArray[i][5];
+    retirementYears[i] = personArray[i][6];
+    preTax[i] = personArray[i][7];
+    companyMatch[i] = personArray[i][8];
+  }
+
+  console.log("Person section array is ".concat(personArray));
+  console.log("Person section NOP is ".concat(numberOfPeople));
+  console.log("Person section names is ".concat(names));
+  console.log("Person section ages are ".concat(age));
+  console.log("Person section starting salaries are ".concat(startingSalary));
+  console.log("Person section salary growth is ".concat(salaryGrowth));
+  console.log("Person section salary plateaus is ".concat(salaryPlateau));
+  console.log("Person section retirement years are ".concat(retirementYears));
+  console.log("Person section pre tax are ".concat(preTax));
+  console.log("Person section company match are ".concat(companyMatch));
+  var bumpArray = JSON.parse(window.sessionStorage.getItem('bumpArray'));
+  salaryBumps = bumpArray;
+  console.log("Person section bump array is ".concat(salaryBumps)); //For loop to run through the people defined by UI inputs and create a person object for each using the defined values
+
+  for (var _i = 0; _i < names.length; _i++) {
+    householdMembers[_i] = personCreator(names[_i], age[_i], startingSalary[_i], salaryGrowth[_i], salaryBumps[_i], salaryPlateau[_i], retirementYears[_i], preTax[_i], companyMatch[_i]);
+  }
+
+  console.log("Household members are ".concat(householdMembers));
+  window.sessionStorage.setItem('salaryConsumed', 1);
+  insertAccountValues();
+  console.log("Time Person section values inserted at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+} //End person values section
+//Retirement/investment account section, pulling from session storage and creating accounts
+
+
+var investmentAccounts = [];
+var rothAccounts = [];
+var f401kAccounts = [];
+var allAccounts = [];
+var sortedAccountsPos = [];
+var sortedAccountsNeg = [];
+
+function insertAccountValues() {
+  var accountArray = JSON.parse(window.sessionStorage.getItem('accountArray'));
+  allAccounts = [];
+
+  for (var m = 0; m < accountArray.length; m++) {
+    if (accountArray[m][0] == "401k") {
+      allAccounts[m] = [new F401k(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1], householdMembers), (m + 1) * 100, (m + 1) * 100];
+    } else if (accountArray[m][0] == "Regular") {
+      allAccounts[m] = [new RegInvestment(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1], householdMembers), (m + 1) * 10, m + 1];
+    } else if (accountArray[m][0] == "Roth") {
+      allAccounts[m] = [new RothIRA(accountArray[m][0] + (m + 1), accountArray[m][2], undefined, accountArray[m][1], householdMembers), m + 1, (m + 1) * 10];
+    } else {
+      console.log("Something wrong with account type for account ".concat(m, " in account array"));
+    }
+  }
+
+  console.log("Retirement page all acounts list is ".concat(JSON.stringify(allAccounts)));
+
+  function returnFirstElements(array) {
+    var newArray = array.map(function (element) {
+      return element[0];
+    });
+    return newArray;
+  }
+
+  sortedAccountsPos = [];
+  sortedAccountsNeg = [];
+  sortedAccountsPos = allAccounts.sort(function (x, y) {
+    return x[1] - y[1];
+  });
+  sortedAccountsPos = sortedAccountsPos.filter(function (account) {
+    return !(account[0] instanceof F401k);
+  });
+  sortedAccountsPos = returnFirstElements(sortedAccountsPos);
+  sortedAccountsNeg = allAccounts.sort(function (x, y) {
+    return x[2] - y[2];
+  });
+  sortedAccountsNeg = returnFirstElements(sortedAccountsNeg);
+  investmentAccounts = [];
+  rothAccounts = [];
+  f401kAccounts = [];
+  investmentAccounts = allAccounts.filter(function (account) {
+    return account[0] instanceof RegInvestment;
+  });
+  investmentAccounts = returnFirstElements(investmentAccounts);
+  rothAccounts = allAccounts.filter(function (account) {
+    return account[0] instanceof RothIRA;
+  });
+  rothAccounts = returnFirstElements(rothAccounts);
+  f401kAccounts = allAccounts.filter(function (account) {
+    return account[0] instanceof F401k;
+  });
+  f401kAccounts = returnFirstElements(f401kAccounts);
+  console.log("Retirement section sorted pos accounts list is ".concat(JSON.stringify(sortedAccountsPos)));
+  console.log("Retirement section sorted neg accounts list is ".concat(JSON.stringify(sortedAccountsNeg)));
+  console.log("Retirement section reg accounts2 list is ".concat(JSON.stringify(investmentAccounts)));
+  console.log("Retirement section roth accounts2 list is ".concat(JSON.stringify(rothAccounts)));
+  console.log("Retirement section 401k accounts2 list is ".concat(JSON.stringify(f401kAccounts)));
+  window.sessionStorage.setItem('accountConsumed', 1);
+  insertLoanValues();
+  console.log("Time Retirement section insert values at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+} //End retirement/investment account section
+//Loan input value section
+
+
+var loans = [];
+
+function insertLoanValues() {
+  var numberOfLoans = parseInt(window.sessionStorage.getItem('NOL'), 10);
+  var loanArray = JSON.parse(window.sessionStorage.getItem('loanArray'));
+  console.log("Loan page NOL is ".concat(numberOfLoans));
+
+  for (var i = 0; i < numberOfLoans; i++) {
+    loans[i] = loanCreator(i + 1, loanArray[i][0], loanArray[i][1], loanArray[i][2], loanArray[i][3], loanArray[i][4]);
+  }
+
+  console.log("Loan page loan list is ".concat(JSON.stringify(loans)));
+  window.sessionStorage.setItem('loanConsumed', 1);
+  insertKidValues();
+} //End loan section
+//Kid cost input value section
+
+
+var kiddos = [];
+var monthlyCost;
+
+function insertKidValues() {
+  var numberOfKids = parseInt(window.sessionStorage.getItem('NOK'), 10);
+  var kidArray = JSON.parse(window.sessionStorage.getItem('kidArray'));
+  kidArray.forEach(function (kid, index) {
+    kiddos[index] = kidCreator(undefined, kid[0], kid[1], kid[2]);
+  });
+  console.log("Kid page NOK is ".concat(numberOfKids));
+  monthlyCost = parseInt(window.sessionStorage.getItem('monthlyKid'), 10);
+  console.log("Kid page monthly cost is ".concat(monthlyCost)); //dayCareMonthly=parseInt(window.sessionStorage.getItem('dayCare'), 10);
+
+  console.log("Kid page kid arry is ".concat(JSON.stringify(kidArray)));
+  window.sessionStorage.setItem('kidCostConsumed', 1);
+  insertHousingValues();
+  console.log("Time kid page values inserted at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+} //End kid cost section
+//House section pull input values from session storage and save them
+
+
+var houseProgression = []; //House purchase cash flow is an array of numbers which define years where homes are bought or sold, and what the cashs flow consequences are for those actions.  If a home is bought, maybe the DP is a negative cashflow
+//out of some account.  If a home is bought and previous one is sold, there could be a net positive cash flow if the second downpayment is less than the equity in the previous home, etc.
+//This array only has values during years where home purchase/selling activity takes place.  Each element has a year and a cash flow value in it
+//const housePurchaseCashFlow = [];
+
+function insertHousingValues() {
+  var houseArray = JSON.parse(window.sessionStorage.getItem('houseArray'));
+  houseArray.push([2200]); //For loop to run through all the houses defined by UI inputs and create a home object for each using the defined values
+  //In general this would need to be extended to look at more variables-independent growth rates for each house, for example
+
+  for (var j = 0; j < houseArray.length - 1; j++) {
+    //If full transfer is false, still create the home object but fill in cash flow array with the year purchased, and the difference between the previous homes equity in the sale year and the current homes downpayment
+    //For year purchased, using yearsPurchased[i].  For year sold using [i+1] which means the assumption is that only one home is owned at at a time-limitation here
+    if (!houseArray[j][2]) {
+      houseProgression[j] = homeCreator(j + 1, houseArray[j][0], houseArray[j + 1][0], houseArray[j][1], rateDefaults.homeValueGrowth, rateDefaults.mortgageInterest, rateDefaults.realEstateTax, houseArray[j][3], rateDefaults.mortgageYears, houseArray[j][4], houseArray[j][5], houseArray[j][6]); //If full transfer is true, have to set the downpayment value explicity by calculating the previous homes equity at in the year of sale
+    } else {
+      var relevantValues = houseProgression[j - 1].yearlyValues(houseArray[j][0], rateDefaults.inflation);
+      houseProgression[j] = homeCreator(j + 1, houseArray[j][0], houseArray[j + 1][0], houseArray[j][1], rateDefaults.homeValueGrowth, rateDefaults.mortgageInterest, rateDefaults.realEstateTax, (relevantValues.equity - (relevantValues.equity + relevantValues.remainingBalance) * rateDefaults.brokerSellCommission) / houseArray[j][1], rateDefaults.mortgageInterest, rateDefaults.realEstateTax, houseArray[j][3], rateDefaults.mortgageYears, houseArray[j][4], houseArray[j][5], houseArray[j][6]);
+    }
+  }
+
+  window.sessionStorage.setItem('housingConsumed', 1);
+  console.log("Time House page insert values at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+} //Start chain of pulling input values from session storage and saving them to proper variables here
+
+
+insertDefaultValues();
 var nets = [];
 var years = [];
 var cumulativeNet = [];
@@ -22224,17 +22306,17 @@ var costChart;
 var accountChart;
 
 var netAfterCost = function netAfterCost(year) {
-  var yearlyHouseSalaryReturn = yearlyHouseSalary(year);
+  var yearlyHouseSalaryReturn = yearlyHouseSalary(year, householdMembers, rateDefaults.inflation);
   var income = yearlyHouseSalaryReturn.netSalary;
-  var kidCost = returnAnnualKidCost(year);
-  var regCost = regSpending(year);
-  var houseCost = returnAnnualHousingCost(year);
-  var housePurchaseCashFlow = findHousePurchaseYearCashFlow(year);
-  var loanCost = returnAnnualLoanCost(year);
+  var kidCost = returnAnnualKidCost(year, kiddos, monthlyCost);
+  var regCost = regSpending(year, monthlySpending, monthlyRetirementSpending, householdMembers);
+  var houseCost = returnAnnualHousingCost(year, houseProgression, rateDefaults.inflation);
+  var currentHousePurchaseCashFlow = findHousePurchaseYearCashFlow(year, houseProgression, rateDefaults.inflation, rateDefaults.brokerSellCommission);
+  var loanCost = returnAnnualLoanCost(year, loans);
   costs.push(kidCost + regCost + houseCost + loanCost);
   netSalaries.push(income);
   preTaxSalaries.push(yearlyHouseSalaryReturn.salaryValues);
-  var net = income - kidCost - regCost - houseCost + housePurchaseCashFlow - loanCost;
+  var net = income - kidCost - regCost - houseCost + currentHousePurchaseCashFlow - loanCost;
   nets.push(net);
   return net;
 };
@@ -22247,14 +22329,14 @@ var calcCashFlowUpToYear = function calcCashFlowUpToYear(year) {
     console.log("i is ".concat(i));
     net = netAfterCost(i);
     console.log("big function first net is ".concat(net));
-    increase401ks(i);
-    net = processRMDs(i, net);
+    increase401ks(i, f401kAccounts);
+    net = processRMDs(i, net, householdMembers, rothAccounts, f401kAccounts, rateDefaults.inflation);
     console.log("big function post RMD net is ".concat(net));
-    net = balanceYearOfCashFlow(i, net);
+    net = balanceYearOfCashFlow(i, net, sortedAccountsPos, sortedAccountsNeg);
     console.log("big function post balance net is ".concat(net));
-    growAccounts();
-    regAccountTotals.push(returnAccountValues().regularValue);
-    retirementAccountTotals.push(returnAccountValues().retirementValue);
+    growAccounts(rothAccounts, f401kAccounts, investmentAccounts);
+    regAccountTotals.push(returnAccountValues(rothAccounts, f401kAccounts, investmentAccounts).regularValue);
+    retirementAccountTotals.push(returnAccountValues(rothAccounts, f401kAccounts, investmentAccounts).retirementValue);
     years.push(i);
   }
 
@@ -22276,7 +22358,6 @@ function resetChartArrays() {
 }
 
 function bigCalc() {
-  insertAccountValues();
   resetChartArrays();
   var testYear = document.getElementById('calcYear').valueAsNumber;
   var netTest = calcCashFlowUpToYear(testYear);
@@ -22485,7 +22566,11 @@ function bigCalc() {
   });
 }
 
-document.getElementById('bigCalc').addEventListener("click", bigCalc);
+var bigCalcButton = document.getElementById('bigCalc');
+
+if (bigCalcButton) {
+  bigCalcButton.addEventListener("click", bigCalc);
+}
 
 function formatChartArrays() {
   function elementFormatter(array) {
@@ -22505,69 +22590,19 @@ function formatChartArrays() {
   elementFormatter(person2Salaries);
 }
 
-function loadStatus() {
-  var defaultStored = window.sessionStorage.getItem('defaultStored');
-  var defaultDistributed = window.sessionStorage.getItem('defaultDistributed');
-  document.getElementById('defaultStored').innerHTML = defaultStored;
-  document.getElementById('defaultDistributed').innerHTML = defaultDistributed;
-  var defaultConsumed = window.sessionStorage.getItem('defaultConsumed');
-  document.getElementById('defaultConsumed').innerHTML = defaultConsumed;
-  var housingStored = window.sessionStorage.getItem('housingStored');
-  var housingDistributed = window.sessionStorage.getItem('housingDistributed');
-  var housingConsumed = window.sessionStorage.getItem('housingConsumed');
-  document.getElementById('housingStored').innerHTML = housingStored;
-  document.getElementById('housingDistributed').innerHTML = housingDistributed;
-  document.getElementById('housingConsumed').innerHTML = housingConsumed;
-  var salaryStored = window.sessionStorage.getItem('salaryStored');
-  var salaryDistributed = window.sessionStorage.getItem('salaryDistributed');
-  document.getElementById('salaryStored').innerHTML = salaryStored;
-  document.getElementById('salaryDistributed').innerHTML = salaryDistributed;
-  var salaryConsumed = window.sessionStorage.getItem('salaryConsumed');
-  document.getElementById('salaryConsumed').innerHTML = salaryConsumed;
-  var costStored = window.sessionStorage.getItem('costStored');
-  var regCostDistributed = window.sessionStorage.getItem('regCostDistributed');
-  document.getElementById('costStored').innerHTML = costStored;
-  document.getElementById('regCostDistributed').innerHTML = regCostDistributed;
-  var kidCostDistributed = window.sessionStorage.getItem('kidCostDistributed');
-  document.getElementById('kidCostDistributed').innerHTML = kidCostDistributed;
-  var regCostConsumed = window.sessionStorage.getItem('regCostConsumed');
-  document.getElementById('regCostConsumed').innerHTML = regCostConsumed;
-  var kidCostConsumed = window.sessionStorage.getItem('kidCostConsumed');
-  document.getElementById('kidCostConsumed').innerHTML = kidCostConsumed;
-  var accountStored = window.sessionStorage.getItem('accountStored');
-  var accountDistributed = window.sessionStorage.getItem('accountDistributed');
-  document.getElementById('accountStored').innerHTML = accountStored;
-  document.getElementById('accountDistributed').innerHTML = accountDistributed;
-  var accountConsumed = window.sessionStorage.getItem('accountConsumed');
-  document.getElementById('accountConsumed').innerHTML = accountConsumed;
-  var storedProduct = parseInt(window.sessionStorage.getItem('regCostConsumed'), 10) * parseInt(window.sessionStorage.getItem('kidCostConsumed'), 10) * parseInt(window.sessionStorage.getItem('accountConsumed'), 10) * parseInt(window.sessionStorage.getItem('defaultConsumed'), 10) * parseInt(window.sessionStorage.getItem('housingConsumed'), 10) * parseInt(window.sessionStorage.getItem('salaryConsumed'), 10) * parseInt(window.sessionStorage.getItem('loanConsumed'), 10);
-  bigCalc();
-  console.log("Time Calculate js page load status at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+function runBigCalc() {
+  if (bigCalcButton) {
+    bigCalc();
+    console.log("Time Calculate js page run big calc at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+  }
 }
 
-setTimeout(loadStatus, 1000);
-
-function resetStatus() {
-  window.sessionStorage.setItem('defaultStored', 0);
-  window.sessionStorage.setItem('housingStored', 0);
-  window.sessionStorage.setItem('salaryStored', 0);
-  window.sessionStorage.setItem('costStored', 0);
-  window.sessionStorage.setItem('accountStored', 0);
-  window.sessionStorage.setItem('defaultDistributed', 0);
-  window.sessionStorage.setItem('housingDistributed', 0);
-  window.sessionStorage.setItem('salarytDistributed', 0);
-  window.sessionStorage.setItem('regCostDistributed', 0);
-  window.sessionStorage.setItem('kidCostDistributed', 0);
-  window.sessionStorage.setItem('accountDistributed', 0);
-  window.sessionStorage.setItem('housingConsumed', 0);
-  window.sessionStorage.setItem('salaryConsumed', 0);
-  window.sessionStorage.setItem('kidCostConsumed', 0);
-  window.sessionStorage.setItem('regCostConsumed', 0);
-  window.sessionStorage.setItem('defaultConsumed', 0);
-  window.sessionStorage.setItem('accountConsumed', 0);
-}
-
+setTimeout(runBigCalc, 1000);
 console.log("Time Calculate js page bottom part at ".concat(new Date().getSeconds(), " and ").concat(new Date().getMilliseconds()));
+var calcPageExports = {
+  rateDefaults: rateDefaults
+};
+module.exports = calcPageExports;
 },{"./basicfunctions.js":"basicfunctions.js","./regularcost.js":"regularcost.js","./homecalcs.js":"homecalcs.js","./kiddos.js":"kiddos.js","./person.js":"person.js","./retirement.js":"retirement.js","./loan.js":"loan.js","./Chart.bundle.js":"Chart.bundle.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -22596,7 +22631,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64435" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65423" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
